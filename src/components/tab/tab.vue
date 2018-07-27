@@ -62,28 +62,24 @@ export default {
       this.two = false
       this.three = false
       this.four = false
-      console.log(this.one, this.two, this.three, this.four)
     },
     twoItem () {
       this.one = false
       this.two = true
       this.three = false
       this.four = false
-      console.log(this.one, this.two, this.three, this.four)
     },
     threeItem () {
       this.one = false
       this.two = false
       this.three = true
       this.four = false
-      console.log(this.one, this.two, this.three, this.four)
     },
     fourItem () {
       this.one = false
       this.two = false
       this.three = false
       this.four = true
-      console.log(this.one, this.two, this.three, this.four)
     }
   }
 }
@@ -100,6 +96,7 @@ export default {
   height: 98px;
   justify-content: space-between;
   border-top: 1px solid #ddd;
+  background: #fff;
 }
 .tab div {
   width: 25%;
