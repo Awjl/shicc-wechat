@@ -38,12 +38,12 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 50px;
+  line-height: 50px;
   background:  rgba(0,0,0,0.50);
   color: #fff;
   padding-left: 30px;
-  font-size: 18px;
+  font-size: 24px;
   box-sizing: border-box;
 }
 .hallItem img{

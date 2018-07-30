@@ -3,7 +3,7 @@
     <div class="foodItem" v-for="(str, index) in footList" :key="index" @click="goDetails(index)">
       <img :src="str.img" alt="">
       <div class="foodItem-text">
-       <span>{{str.text}}</span> <span><span style="font-size:8px;">惠后价：</span>￥{{str.Price}}</span>
+       <span>{{str.text}}</span> <span><span style="font-size:10px;">惠后价：</span>￥{{str.Price}}</span>
       </div>
     </div>
   </div>

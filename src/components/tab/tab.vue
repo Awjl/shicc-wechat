@@ -97,6 +97,7 @@ export default {
   justify-content: space-between;
   border-top: 1px solid #ddd;
   background: #fff;
+  z-index: 9;
 }
 .tab div {
   width: 25%;

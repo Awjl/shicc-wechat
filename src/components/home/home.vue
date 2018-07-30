@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Swiper :listImg="listImg"></Swiper>
-    <div class="he60"></div>
+    <div class="he40"></div>
     <div class="title">
       <div class="title-text">一期一会</div>
     </div>
@@ -17,6 +17,7 @@
       <div class="title-text">关于我们</div>
     </div>
     <div class="he20"></div>
+    <HomeList></HomeList>
   </div>
 </template>
 
@@ -24,6 +25,7 @@
 import Swiper from 'base/swiper/swiper'
 import Hall from 'base/hall/hall'
 import Food from 'base/food/food'
+import HomeList from 'base/homelist/homelist'
 
 export default {
   data () {
@@ -47,7 +49,8 @@ export default {
   components: {
     Swiper,
     Hall,
-    Food
+    Food,
+    HomeList
   }
 }
 </script>
@@ -57,8 +60,8 @@ export default {
 .he20{
   height: 20px;
 }
-.he60{
-  height: 60px;
+.he40{
+  height: 40px;
 }
 .title-text{
   width: 140px;
