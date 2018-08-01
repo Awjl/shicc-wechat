@@ -30,6 +30,9 @@
         <div class="Item">
           <div class="item-img" v-for="(str, index) in item" :key="index">
             <img :src="str.img" alt="">
+            <div class="img-box">
+              {{str.name}}
+            </div>
           </div>
         </div>
       </div>
@@ -44,11 +47,9 @@ export default {
       listImg: './static/img/listthree-1.png',
       listImgtwo: './static/img/listthree2.png',
       item: [
-        { img: './static/img/listItem-1.png', name: '上海厅' },
-        { img: './static/img/listItem-2.png', name: '上海厅' },
-        { img: './static/img/listItem-3.png', name: '上海厅' },
-        { img: './static/img/listItem-3.png', name: '上海厅' },
-        { img: './static/img/listItem-3.png', name: '上海厅' }
+        { img: './static/img/listItem-1.png', name: '滨江厅' },
+        { img: './static/img/listItem-2.png', name: '华夏厅' },
+        { img: './static/img/listItem-3.png', name: '国际厅' }
       ]
     }
   },
@@ -86,17 +87,38 @@ export default {
 .Item-box {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   overflow-x: auto;
   box-sizing: content-box;
+}
+.Item-box::-webkit-scrollbar {
+  display: none;
+  margin: 0;
+  padding: 0;
 }
 .Item {
   display: flex;
 }
 .item-img {
   margin: 0 10px;
+  position: relative;
+}
+.img-box {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  height: 200px;
+  line-height: 200px;
+  top: 0;
+  left: 0;
+  background: rgba(000, 000, 000, 0.5);
+  font-size: 20px;
+  color: #ffffff;
 }
 .item-img img {
   width: 300px;
   height: 200px;
+  margin: 0;
+  padding: 0;
 }
 </style>

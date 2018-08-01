@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-wechat-title="$route.meta.title"/>
   </div>
 </template>
 
@@ -12,6 +12,6 @@ export default {
 
 <style>
 #app {
-  margin-bottom: 120px;
+  margin-bottom: 100px;
 }
 </style>

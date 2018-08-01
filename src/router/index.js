@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Tab from '@/components/tab/tab'
 import Home from '@/components/home/home'
+import Reserve from '@/components/home/reserve' // 预定
+import Service from '@/components/home/service'
 import Purchase from '@/components/purchase/purchase'
 import Exchange from '@/components/exchange/exchange'
 import My from '@/components/my/my'
@@ -44,6 +46,20 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/Reserve',
+      component: Reserve,
+      meta: {
+        title: '会议预定'
+      }
+    },
+    {
+      path: '/Service',
+      component: Service,
+      meta: {
+        title: '服务'
+      }
     }
   ]
 })
