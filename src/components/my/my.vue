@@ -41,7 +41,7 @@
         <img src="./myicon/myitem2.png" alt=""> 资料修改
       </div>
     </div>
-    <div class="myall">
+    <div class="myall" @click="gowish">
       <div class="my-item">
         <img src="./myicon/myitem3.png" alt=""> 我的心愿单
       </div>
@@ -76,6 +76,13 @@ export default {
     return {
       imgbg: './static/myimg/my-bg.png',
       imgTou: './static/myimg/my-tou.png'
+    }
+  },
+  methods: {
+    gowish () {
+      this.$router.push({
+        path: '/MyWish'
+      })
     }
   }
 }

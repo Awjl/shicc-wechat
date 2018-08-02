@@ -12,7 +12,8 @@ import ExchangeDetalis from '@/components/exchange/exchangeDetalis'
 import TrueExchange from '@/components/exchange/trueexchange' // 确认兑换
 import My from '@/components/my/my'
 import MyAddres from '@/components/my/myAddres' // 收货地址列表
-import AddAddres from '@/components/my/addAddres'
+import AddAddres from '@/components/my/addAddres' // 新增收货
+import MyWish from '@/components/my/mywish'
 
 Vue.use(Router)
 
@@ -107,6 +108,13 @@ export default new Router({
       component: AddAddres,
       meta: {
         title: '添加收货地址'
+      }
+    },
+    {
+      path: '/MyWish',
+      component: MyWish,
+      meta: {
+        title: '心愿单'
       }
     }
   ]
