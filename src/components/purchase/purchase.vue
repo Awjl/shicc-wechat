@@ -11,7 +11,7 @@
       <span :class="{active: !show}" @click="tabTwo()">一 食</span>
     </div>
     <div class="purchase-list">
-      <div class="purchase-item" v-for="(item, index) in item" :key="index">
+      <div class="purchase-item" v-for="(item, index) in item" :key="index" @click="goDetalis">
         <div class="purchase-img">
           <img :src="item.img" alt="">
           <div class="purchase-name">
@@ -53,6 +53,11 @@ export default {
     },
     tabTwo () {
       this.show = false
+    },
+    goDetalis () {
+      this.$router.push({
+        path: `/PurchaseDetalis`
+      })
     }
   }
 }
