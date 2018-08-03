@@ -12,7 +12,7 @@
     <div class="list-inp">
       <input type="text" placeholder="详细地址（街道、楼牌号等）">
     </div>
-    <div class="btn" @click="btn">
+    <div class="addaddresbtn" @click="btn">
       保存
     </div>
   </div>
@@ -48,7 +48,7 @@ export default {
   width: 100%;
   outline: none;
 }
-.btn {
+.addaddresbtn {
   width: 690px;
   height: 80px;
   line-height: 80px;

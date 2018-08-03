@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="mydetalis">
+    <div class="mydetalis" @click="goOrder">
       <div class="my-item">
         <img src="./myicon/myitem1.png" alt=""> 我的订单
       </div>
@@ -36,7 +36,7 @@
         查看<img src="./myicon/my-right.png" alt="">
       </div>
     </div>
-    <div class="myall">
+    <div class="myall" @click="gomodify">
       <div class="my-item">
         <img src="./myicon/myitem2.png" alt=""> 资料修改
       </div>
@@ -46,23 +46,23 @@
         <img src="./myicon/myitem3.png" alt=""> 我的心愿单
       </div>
     </div>
-    <div class="myall">
+    <div class="myall"  @click="gointegral">
       <div class="my-item">
         <img src="./myicon/myitem4.png" alt=""> 积分兑换
       </div>
     </div>
-    <div class="myall">
+    <div class="myall" @click="gocoupon">
       <div class="my-item">
         <img src="./myicon/myitem5.png" alt=""> 我的优惠券
       </div>
     </div>
     <div class="he10"></div>
-    <div class="myall">
+    <div class="myall" @click="goaddres">
       <div class="my-item">
         <img src="./myicon/myitem6.png" alt=""> 收货地址
       </div>
     </div>
-    <div class="myall">
+    <div class="myall" @click="gopassword">
       <div class="my-item">
         <img src="./myicon/myitem7.png" alt=""> 修改密码
       </div>
@@ -82,6 +82,36 @@ export default {
     gowish () {
       this.$router.push({
         path: '/MyWish'
+      })
+    },
+    gocoupon () {
+      this.$router.push({
+        path: '/MyCoupon'
+      })
+    },
+    goOrder () {
+      this.$router.push({
+        path: '/MyOrder'
+      })
+    },
+    gomodify () {
+      this.$router.push({
+        path: '/MyModify'
+      })
+    },
+    goaddres () {
+      this.$router.push({
+        path: '/MyAddres'
+      })
+    },
+    gointegral () {
+      this.$router.push({
+        path: '/MyIntegral'
+      })
+    },
+    gopassword () {
+      this.$router.push({
+        path: '/MyPassword'
       })
     }
   }

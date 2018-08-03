@@ -13,7 +13,12 @@ import TrueExchange from '@/components/exchange/trueexchange' // 确认兑换
 import My from '@/components/my/my'
 import MyAddres from '@/components/my/myAddres' // 收货地址列表
 import AddAddres from '@/components/my/addAddres' // 新增收货
-import MyWish from '@/components/my/mywish'
+import MyWish from '@/components/my/mywish' // 心愿单
+import MyCoupon from '@/components/my/myCoupon' // 优惠券
+import MyOrder from '@/components/my/myOrder' // 我的订单
+import MyModify from '@/components/my/mymodify' // 个人资料修改
+import MyIntegral from '@/components/my/myintegral' // 积分中心
+import MyPassword from '@/components/my/mypassword' // 修改密码
 
 Vue.use(Router)
 
@@ -115,6 +120,41 @@ export default new Router({
       component: MyWish,
       meta: {
         title: '心愿单'
+      }
+    },
+    {
+      path: '/MyCoupon',
+      component: MyCoupon,
+      meta: {
+        title: '优惠券'
+      }
+    },
+    {
+      path: '/MyOrder',
+      component: MyOrder,
+      meta: {
+        title: '我的订单'
+      }
+    },
+    {
+      path: '/MyModify',
+      component: MyModify,
+      meta: {
+        title: '修改个人资料'
+      }
+    },
+    {
+      path: '/MyIntegral',
+      component: MyIntegral,
+      meta: {
+        title: '个人积分'
+      }
+    },
+    {
+      path: '/MyPassword',
+      component: MyPassword,
+      meta: {
+        title: '修改密码'
       }
     }
   ]

@@ -16,7 +16,7 @@
       <span :class="{active: show}" @click="tabOne()">V1会员区</span>
       <span :class="{active: !show}" @click="tabTwo()">V2尊享区</span>
     </div>
-    <div class="list">
+    <div class="exchangelist">
       <div class="item" v-for="(item, index) in items" :key="index" @click="goDetalis">
         <img :src="item.img" alt="">
         <div class="item-title">
@@ -129,7 +129,7 @@ img {
   border-bottom: 4px solid #59c2fa;
   box-sizing: border-box;
 }
-.list {
+.exchangelist {
   width: 100%;
   padding: 40px;
   box-sizing: border-box;
@@ -137,7 +137,7 @@ img {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.list .item {
+.exchangelist .item {
   width: 325px;
   height: 450px;
   margin-bottom: 20px;

@@ -1,6 +1,6 @@
 <template>
   <div class="trueexchange">
-    <div class="addres active" @click="goAddres" v-if="show">
+    <div class="addres addresactive" @click="goAddres" v-if="show">
       + 添加收货信息
     </div>
     <div class="addres" v-else>
@@ -88,7 +88,7 @@ img {
   text-align: center;
   background: #dcdcdc;
 }
-.active {
+.addresactive {
   line-height: 136px;
 }
 .list-content {
