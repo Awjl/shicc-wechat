@@ -3,6 +3,9 @@
     <div class="stack-wrapper">
       <stack ref="stack" :pages="someList" :stackinit="stackinit"></stack>
     </div>
+    <div class="OverBox-img" @click="goBack">
+        <img :src="overImg" alt="">
+      </div>
   </div>
 </template>
 <script>
@@ -10,6 +13,7 @@ import stack from 'base/stack/stack'
 export default {
   data () {
     return {
+      overImg: './static/icon/done.png',
       someList: [],
       stackinit: {
         visible: 3
@@ -55,11 +59,8 @@ export default {
     stack
   },
   methods: {
-    prev () {
-      this.$refs.stack.$emit('prev')
-    },
-    next () {
-      this.$refs.stack.$emit('next')
+    goBack () {
+      this.$router.back(-1)
     }
   }
 }
@@ -79,10 +80,9 @@ export default {
 }
 .stack-wrapper {
   left: 0;
-  top: 0;
-  bottom: 0;
+  top: 132px;
   right: 0;
-  margin:auto;
+  margin:0 auto;
   position: absolute;
   z-index: 1000;
   width: 550px;
@@ -90,5 +90,17 @@ export default {
   padding: 0;
   list-style: none;
   pointer-events: none;
+}
+.OverBox-img {
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.OverBox-img img {
+  width: 100%;
 }
 </style>

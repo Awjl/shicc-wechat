@@ -12,7 +12,7 @@
       </div>
       <div class="line"></div>
       <div class="modifyItem">
-        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span> <input type="text" placeholder="请输入昵称">
+        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span> <input type="text" placeholder="请输入昵称">
       </div>
       <div class="line"></div>
       <div class="modifyItem">
@@ -20,9 +20,10 @@
       </div>
       <div class="line"></div>
       <div class="modifyItem">
-        <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+        <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
         <div class="sex">
           <span @click="sexgentlemen"><img :src="trueiocn"  v-if="sexMen"> <img :src="weiiocn"  v-else>男</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span @click="sexLadies"><img :src="trueiocn"  v-if="!sexMen"> <img :src="weiiocn"  v-else>女</span>
         </div>
       </div>
@@ -110,7 +111,7 @@ img{
 .modifyItem>span{
   display: block;
   width: 130px;
-  font-size: 22px;
+  font-size: 24px;
   color: #4A4A4A;
 }
 .modifyItem input{

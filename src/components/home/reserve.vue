@@ -149,7 +149,7 @@ img {
   margin: auto;
   background: #59c2fa;
   border-radius: 10px;
-  font-size: 40px;
+  font-size: 24px;
   color: #fff;
 }
 .OverBox {
