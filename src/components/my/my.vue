@@ -4,7 +4,7 @@
       <img :src="imgbg" alt="">
       <div class="my-name">
         <div class="my-title">
-          <div class="my-tou">
+          <div class="my-tou" @click="gologin">
             <img :src="imgTou" alt="">
           </div>
           <div class="title-name">
@@ -112,6 +112,11 @@ export default {
     gopassword () {
       this.$router.push({
         path: '/MyPassword'
+      })
+    },
+    gologin () {
+      this.$router.push({
+        path: '/Login'
       })
     }
   }

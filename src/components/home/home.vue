@@ -23,7 +23,7 @@
       会议预定
     </div>
     <div class="he20"></div>
-    <div class="btn" @click="goSrver">
+    <div class="homebtn" @click="goSrver">
       <img :src="img" alt="">
     </div>
   </div>
@@ -109,14 +109,14 @@ export default {
   letter-spacing: 1.45px;
   text-align: center;
 }
-.btn {
+.homebtn {
   position: fixed;
   right: 40px;
   bottom: 128px;
   width: 100px;
   height: 100px;
 }
-.btn img {
+.homebtn img {
   width: 100%;
   height: 100%;
 }

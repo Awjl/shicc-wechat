@@ -20,6 +20,8 @@ import MyOrder from '@/components/my/myOrder' // 我的订单
 import MyModify from '@/components/my/mymodify' // 个人资料修改
 import MyIntegral from '@/components/my/myintegral' // 积分中心
 import MyPassword from '@/components/my/mypassword' // 修改密码
+import Login from '@/components/login' // 登录页面
+import Register from '@/components/register'
 
 Vue.use(Router)
 
@@ -163,6 +165,20 @@ export default new Router({
       component: Details,
       meta: {
         title: '商品详情'
+      }
+    },
+    {
+      path: '/Login',
+      component: Login,
+      meta: {
+        title: '登录'
+      }
+    },
+    {
+      path: '/Register',
+      component: Register,
+      meta: {
+        title: '注册'
       }
     }
   ]
