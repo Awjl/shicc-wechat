@@ -14,7 +14,9 @@ export default {
   props: ['hallList'],
   methods: {
     goDetails (index) {
-      console.log('去详情' + index)
+      this.$router.push({
+        path: `/Details`
+      })
     }
   }
 }

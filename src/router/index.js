@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Tab from '@/components/tab/tab'
 import Home from '@/components/home/home'
 import Reserve from '@/components/home/reserve' // 预定
-import Service from '@/components/home/service'
+import Service from '@/components/home/service' // 人工服务
+import Details from '@/components/home/details' // 详情
 import Purchase from '@/components/purchase/purchase'
 import PurchaseDetalis from '@/components/purchase/purchaseDetalis' // 商品详情
 import Submission from '@/components/purchase/submission' // 提交订单
@@ -155,6 +156,13 @@ export default new Router({
       component: MyPassword,
       meta: {
         title: '修改密码'
+      }
+    },
+    {
+      path: '/Details',
+      component: Details,
+      meta: {
+        title: '商品详情'
       }
     }
   ]
