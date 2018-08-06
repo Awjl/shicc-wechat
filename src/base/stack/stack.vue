@@ -1,7 +1,22 @@
 <template>
     <ul class="stack">
-      <li class="stack-item" v-for="(item, index) in pages" :style="[transformIndex(index),transform(index)]" @touchmove.stop.capture.prevent="touchmove" @touchstart.stop.capture.prevent="touchstart" @touchend.stop.capture.prevent="touchend" @touchcancel.stop.capture.prevent="touchend" @mousedown.stop.capture.prevent="touchstart" @mouseup.stop.capture.prevent="touchend" @mousemove.stop.capture.prevent="touchmove" @mouseout.stop.capture.prevent="touchend" @webkit-transition-end="onTransitionEnd(index)" @transitionend="onTransitionEnd(index)" :key="index">
+      <li class="stack-item" v-for="(item, index) in pages" :style="[transformIndex(index),transform(index)]" @touchmove.stop="touchmove" @touchstart.stop="touchstart" @touchend.stop="touchend" @touchcancel.stop="touchend"
+      @mousedown.stop.capture.prevent="touchstart" @mouseup.stop.capture.prevent="touchend" @mousemove.stop.capture.prevent="touchmove" @mouseout.stop.capture.prevent="touchend" @webkit-transition-end="onTransitionEnd(index)" @transitionend="onTransitionEnd(index)" :key="index">
         <div v-html="item.html" class = "stackimg"></div>
+        <div class="stacktext">
+          <div class="stackleft">
+            <div class="stackTitle">下午茶双人套餐</div>
+            <p>美式*2</p>
+            <p>牛油果沙拉*1</p>
+            <p>草莓芝士拿破仑*1</p>
+          </div>
+          <div class="stackRight"  @click.stop="addwish(index)">
+            <img src="./xin-icon.png" alt="" v-if="item.state == 1">
+            <p v-if="item.state == 1">加入心愿单</p>
+            <img src="./xinactive-icon.png" alt="" v-if="item.state == 2">
+            <p v-if="item.state == 2">已加入心愿单</p>
+          </div>
+        </div>
       </li>
     </ul>
 </template>
@@ -22,7 +37,9 @@ export default {
     return {
       basicdata: {
         start: {},
-        end: {}
+        end: {},
+        xinIcon: 'static/icon/xin-icon.png',
+        xinactiveIcon: './static/icon/xinactive-icon.png'
       },
       temporaryData: {
         prefixes: detectPrefixes(),
@@ -76,6 +93,14 @@ export default {
     })
   },
   methods: {
+    addwish (ind) {
+      if (this.pages[ind].state === 1) {
+        this.pages[ind].state = 2
+      } else {
+        this.pages[ind].state = 1
+      }
+      console.log(ind)
+    },
     touchstart (e) {
       if (this.temporaryData.tracking) {
         return
@@ -308,7 +333,7 @@ export default {
   user-select: none;
   pointer-events: auto;
 }
-.stack-item stackimg{
+.stack-item .stackimg{
   width:550px;
   height: 550px;
 }
@@ -316,6 +341,42 @@ export default {
   width: 100%;
   display: block;
   pointer-events: none;
+}
+.stacktext{
+  padding: 30px;
+  width: 100%;
+  height: 250px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+.stackTitle{
+  font-size: 24px;
+  color: #4A4A4A;
+  letter-spacing: 1.45px;
+  margin-bottom: 10px;
+}
+.stackleft {
+  text-align: left;
+  line-height: 35px;
+  font-size: 18px;
+  color: #9B9B9B;
+  letter-spacing: 1.09px;
+}
+.stackRight{
+  width:120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stackRight img{
+  width: 40px;
+  height: 40px;
+}
+.stackRight p{
+  font-size: 14px;
+  color: #ED6969;
+  letter-spacing: 0.85px;
 }
 .stack-container li.move-back {
   /* http://matthewlein.com/ceaser/ */

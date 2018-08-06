@@ -21,25 +21,32 @@ export default {
     setTimeout(function () {
       that.someList = [
         {
-          html: '<img src="static/imgone/1.png" alt="01">'
+          html: '<img src="static/imgone/1.png" alt="01">',
+          state: 1
         },
         {
-          html: '<img src="static/imgone/2.png" alt="02">'
+          html: '<img src="static/imgone/2.png" alt="02">',
+          state: 2
         },
         {
-          html: '<img src="static/imgone/3.png" alt="03">'
+          html: '<img src="static/imgone/3.png" alt="03">',
+          state: 2
         },
         {
-          html: '<img src="static/imgone/4.png" alt="04">'
+          html: '<img src="static/imgone/4.png" alt="04">',
+          state: 1
         },
         {
-          html: '<img src="static/imgone/5.png" alt="05">'
+          html: '<img src="static/imgone/5.png" alt="05">',
+          state: 1
         },
         {
-          html: '<img src="static/imgone/6.png" alt="06">'
+          html: '<img src="static/imgone/6.png" alt="06">',
+          state: 2
         },
         {
-          html: '<img src="static/imgone/7.png" alt="07">'
+          html: '<img src="static/imgone/7.png" alt="07">',
+          state: 1
         }
       ]
     }, 1000)
