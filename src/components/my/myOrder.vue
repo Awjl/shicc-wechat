@@ -252,8 +252,8 @@ img {
   align-items: center;
 }
 .Box-one {
-  width: 550px;
-  height: 700px;
+  width: 580px;
+  height: 800px;
   background: #fff;
   border-radius: 10px;
   position: relative;
@@ -279,7 +279,7 @@ img {
   padding: 0 40px;
   box-sizing: border-box;
   line-height: 35px;
-  font-size: 20px;
+  font-size: 24px;
   color: #9B9B9B;
 }
 .box-name{

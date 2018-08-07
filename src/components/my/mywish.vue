@@ -56,11 +56,11 @@ img {
   line-height: 35px;
 }
 .wish-name p:nth-child(1) {
-  font-size: 24px;
+  font-size: 26px;
   color: #4a4a4a;
 }
 .wish-name p:nth-child(2) {
-  font-size: 18px;
+  font-size: 20px;
   color: #9B9B9B;
   letter-spacing: 1.09px;
 }
@@ -82,6 +82,6 @@ img {
   border: 2px solid #59C2FA;
   border-radius: 100px;
   color: #59C2FA;
-  font-size: 18px;
+  font-size: 20px;
 }
 </style>

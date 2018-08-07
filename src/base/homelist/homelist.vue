@@ -112,7 +112,7 @@ export default {
   top: 0;
   left: 0;
   background: rgba(000, 000, 000, 0.5);
-  font-size: 20px;
+  font-size: 24px;
   color: #ffffff;
 }
 .item-img img {

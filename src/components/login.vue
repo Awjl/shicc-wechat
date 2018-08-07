@@ -17,7 +17,7 @@
         <span @click="goRegister">没有账号？</span>
         <span>忘记密码</span>
       </div>
-      <div class="btn">
+      <div class="loginbtn">
         登录
       </div>
     </div>
@@ -100,7 +100,7 @@ img {
   display: flex;
   justify-content: space-between;
 }
-.btn {
+.loginbtn {
   width: 100%;
   height: 80px;
   line-height: 80px;

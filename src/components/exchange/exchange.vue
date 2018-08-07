@@ -121,7 +121,7 @@ img {
   line-height: 83px;
   width: 120px;
   text-align: center;
-  font-size: 24px;
+  font-size: 28px;
   color: #4a4a4a;
 }
 .purchase-nav span.active {

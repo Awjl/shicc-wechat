@@ -139,7 +139,7 @@ img{
   line-height: 100px;
   background: #59c2fa;
   text-align: center;
-  font-size: 24px;
+  font-size: 28px;
   color: #ffffff;
   letter-spacing: 1.45px;
 }

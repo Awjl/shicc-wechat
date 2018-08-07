@@ -88,13 +88,13 @@ export default {
 }
 .title-text {
   width: 140px;
-  height: 30px;
+  height: 40px;
   background: #59c2fa;
   color: #fff;
-  line-height: 30px;
+  line-height: 42px;
   text-align: center;
   border-radius: 0 100px 100px 0;
-  font-size: 20px;
+  font-size: 24px;
 }
 .reserve {
   width: 300px;

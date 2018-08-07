@@ -108,7 +108,7 @@ img {
   line-height: 100px;
   background: #59c2fa;
   text-align: center;
-  font-size: 24px;
+  font-size: 28px;
   color: #ffffff;
   letter-spacing: 1.45px;
 }
@@ -144,6 +144,10 @@ img {
   font-size: 24px;
   color: #59c2fa;
   letter-spacing: 1.45px;
+}
+.num-title{
+  font-size: 24px;
+  color: #4a4a4a;
 }
 .num {
   height: 73px;
@@ -181,6 +185,10 @@ img {
   justify-content: space-between;
   align-items: center;
   background: #fff;
+}
+.iph-title {
+  color: #4a4a4a;
+  font-size: 24px;
 }
 .iph-jiage img {
   width: 10px;

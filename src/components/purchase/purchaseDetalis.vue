@@ -192,13 +192,13 @@ img {
   background: #dcdcdc;
 }
 .Detalislist {
-  font-size: 22px;
+  font-size: 24px;
   color: #4a4a4a;
   height: 40px;
   line-height: 40px;
 }
 .DetalisItem {
-  font-size: 22px;
+  font-size: 24px;
   line-height: 35px;
   color: #9b9b9b;
 }
@@ -213,11 +213,11 @@ img {
   color: #4A4A4A;
 }
 .text-center {
-  font-size: 22px;
+  font-size: 24px;
   color: #9B9B9B;
   padding: 0 40px;
   box-sizing: border-box;
-  line-height: 30px;
+  line-height: 40px;
   margin-bottom: 30px;
 }
 .footer {
@@ -265,7 +265,7 @@ img {
 }
 .footer-over{
   background: #59C2FA;
-  font-size: 24px;
+  font-size: 28px;
   color: #FFFFFF;
 }
 </style>

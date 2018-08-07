@@ -174,7 +174,7 @@ img{
   text-align: center;
   line-height: 88px;
   background: #59C2FA;
-  font-size: 24px;
+  font-size: 28px;
   color: #FFFFFF;
 }
 </style>
