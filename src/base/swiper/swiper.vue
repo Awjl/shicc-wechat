@@ -21,14 +21,12 @@ export default {
       observeParents: true,
       pagination: {
         el: '.swiper-pagination'
-        // bulletClass: 'my-bullet',
-        // bulletActiveClass: 'my-bullet-active'
       },
       paginationClickable: true,
       loop: true,
       speed: 600,
       autoplay: {
-        delay: 1000,
+        delay: 3000,
         disableOnInteraction: false
       },
       onTouchEnd: function () {
@@ -38,11 +36,7 @@ export default {
   },
   methods: {
     goDetails (item) {
-      // 路由跳转
-      // this.$router.push({
-      //   path: `/Details/${item}`
-      // })
-      // console.log(item)
+      // console.log('123')
     }
   }
 }

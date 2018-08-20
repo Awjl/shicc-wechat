@@ -265,7 +265,7 @@ export default {
       if (this.inStack(index, currentPage)) {
         let perIndex = index - currentPage > 0 ? index - currentPage : index - currentPage + length
         style['opacity'] = '1'
-        style['transform'] = 'translate3D(0,0,' + -1 * 60 * (perIndex - this.offsetRatio) + 'px' + ')'
+        style['transform'] = 'translate3D(0,0,' + -1 * 70 * (perIndex - this.offsetRatio) + 'px' + ')'
         style['zIndex'] = visible - perIndex
         if (!this.temporaryData.tracking) {
           style[this.temporaryData.prefixes.transition + 'TimingFunction'] = 'ease'

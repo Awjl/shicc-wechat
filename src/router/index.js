@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Tab from '@/components/tab/tab'
-import Home from '@/components/home/home'
+import Home from '@/components/home/home' // 首页
 import Reserve from '@/components/home/reserve' // 预定
 import Service from '@/components/home/service' // 人工服务
 import Details from '@/components/home/details' // 详情
 import Purchase from '@/components/purchase/purchase'
 import PurchaseDetalis from '@/components/purchase/purchaseDetalis' // 商品详情
 import Submission from '@/components/purchase/submission' // 提交订单
-import Exchange from '@/components/exchange/exchange'
-import ExchangeDetalis from '@/components/exchange/exchangeDetalis'
+import Exchange from '@/components/exchange/exchange' // 积分商城
+import ExchangeDetalis from '@/components/exchange/exchangeDetalis' // 积分商城详情
 import TrueExchange from '@/components/exchange/trueexchange' // 确认兑换
-import My from '@/components/my/my'
+import My from '@/components/my/my' //  个人中心
 import MyAddres from '@/components/my/myAddres' // 收货地址列表
 import AddAddres from '@/components/my/addAddres' // 新增收货
 import MyWish from '@/components/my/mywish' // 心愿单
@@ -21,7 +21,9 @@ import MyModify from '@/components/my/mymodify' // 个人资料修改
 import MyIntegral from '@/components/my/myintegral' // 积分中心
 import MyPassword from '@/components/my/mypassword' // 修改密码
 import Login from '@/components/login' // 登录页面
-import Register from '@/components/register'
+import Register from '@/components/register' // 注册页面
+
+import index from '@/base/homelist/homelist'
 
 Vue.use(Router)
 
@@ -179,6 +181,13 @@ export default new Router({
       component: Register,
       meta: {
         title: '注册'
+      }
+    },
+    {
+      path: '/index',
+      component: index,
+      meta: {
+        title: '酒店介绍'
       }
     }
   ]

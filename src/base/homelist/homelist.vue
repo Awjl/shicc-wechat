@@ -1,5 +1,6 @@
 <template>
   <div class="homelist">
+    <div class="he20"></div>
     <div class="homelist-title">
       上海国际会议中心
     </div>
@@ -49,6 +50,7 @@ export default {
       item: [
         { img: './static/img/listItem-1.png', name: '滨江厅' },
         { img: './static/img/listItem-2.png', name: '华夏厅' },
+        { img: './static/img/listItem-3.png', name: '国际厅' },
         { img: './static/img/listItem-3.png', name: '国际厅' }
       ]
     }

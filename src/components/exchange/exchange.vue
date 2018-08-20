@@ -119,7 +119,7 @@ img {
   display: block;
   height: 83px;
   line-height: 83px;
-  width: 120px;
+  width: 150px;
   text-align: center;
   font-size: 28px;
   color: #4a4a4a;
