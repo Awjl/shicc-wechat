@@ -23,7 +23,7 @@ import MyPassword from '@/components/my/mypassword' // 修改密码
 import Login from '@/components/login' // 登录页面
 import Register from '@/components/register' // 注册页面
 
-import index from '@/base/homelist/homelist'
+import index from '@/base/homelist/homelist' // 酒店介绍页面
 
 Vue.use(Router)
 

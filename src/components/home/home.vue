@@ -35,27 +35,51 @@ import Hall from 'base/hall/hall'
 import Food from 'base/food/food'
 import HomeList from 'base/homelist/homelist'
 
+import { getTopBanner, getOneStageBanner, getCornerMealBanner } from 'api/homeapi'
+import { ERR_OK } from 'api/config'
+
 export default {
   data () {
     return {
       img: './static/icon/service-icon.png',
-      listImg: [
-        { img: './static/img/banner.png', id: 1 },
-        { img: './static/img/banner.png', id: 1 },
-        { img: './static/img/banner.png', id: 1 },
-        { img: './static/img/banner.png', id: 1 }
-      ],
-      hallList: [
-        { img: './static/img/listone-1.png', text: '大堂吧' },
-        { img: './static/img/listone-2.png', text: '咖啡吧' }
-      ],
-      footList: [
-        { img: './static/img/listtwo-1.png', text: '上海风味餐厅 名厨料理', Price: 600 },
-        { img: './static/img/listtwo-2.png', text: '豪华江景房 专享服务', Price: 700 }
-      ]
+      listImg: [],
+      hallList: [],
+      footList: []
     }
   },
+  created () {
+    this._getTopBanner()
+    this._getOneStageBanner()
+    this._getCornerMealBanner()
+  },
   methods: {
+    _getTopBanner () {
+      getTopBanner().then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`顶部banner=====`)
+          console.log(res.data)
+          this.listImg = res.data
+        }
+      })
+    },
+    _getOneStageBanner () {
+      getOneStageBanner().then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`一期一会banner=====`)
+          console.log(res.data)
+          this.hallList = res.data
+        }
+      })
+    },
+    _getCornerMealBanner () {
+      getCornerMealBanner().then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`一隅一食banner=====`)
+          console.log(res.data)
+          this.footList = res.data
+        }
+      })
+    },
     goReserve () {
       this.$router.push({
         path: `/Reserve`
@@ -102,7 +126,7 @@ export default {
   line-height: 60px;
   margin: 0 auto;
   text-align: center;
-  border: 2px solid #59C2FA;
+  border: 2px solid #59c2fa;
   border-radius: 100px;
   font-size: 24px;
   color: #59c2fa;

@@ -6,16 +6,18 @@
         <img :src="logo" alt="">
       </div>
       <div class="inp">
-        <img :src="iconOne" alt=""><input type="text" placeholder="请输入手机号">
+        <img :src="iconOne" alt=""><input type="text" placeholder="请输入手机号" v-model="user.iphone" @blur="OnBlur()">
+        <span>{{nameErr}}</span>
       </div>
       <div class="line"></div>
       <div class="inp">
-        <img :src="iconThree" alt=""><input type="password" placeholder="请输入验证码">
-        <span>获取验证码</span>
+        <img :src="iconThree" alt=""><input type="password" placeholder="请输入验证码" v-model="user.code">
+        <span class="yan" @click="yanzheng()">{{content}}</span>
       </div>
       <div class="line"></div>
       <div class="inp">
-        <img :src="iconTwo" alt=""><input type="password" placeholder="请输入密码">
+        <img :src="iconTwo" alt=""><input type="password" placeholder="请输入8-15位，中英文混合密码" v-model="user.password" @blur="OnPassWord()">
+        <span>{{passwordeErr}}</span>
       </div>
       <div class="line"></div>
       <div class="loginbtn" @click="register">
@@ -55,6 +57,8 @@
   </div>
 </template>
 <script>
+let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
+
 export default {
   data () {
     return {
@@ -65,16 +69,72 @@ export default {
       iconTwo: './static/loginimg/password.png',
       iconThree: './static/loginimg/ma.png',
       items: [{ new: 50, name: '每满500减50元券', time: '2018.07.03-2019.07.03', state: 1 }, { new: 50, name: '停车场专用券', time: '2018.07.03-2019.07.03', state: 1 }, { new: 50, name: '停车场专用券', time: '2018.07.03-2019.07.03', state: 1 }],
-      show: false
+      show: false,
+      user: {
+        iphone: '',
+        code: '',
+        password: ''
+      },
+      nameErr: '',
+      passwordeErr: '',
+      content: '获取验证码',
+      totalTime: 60,
+      canClick: true
     }
   },
   methods: {
+    yanzheng () {
+      if (this.user.iphone) {
+        if (!phoneReg.test(this.user.iphone)) {
+          return
+        }
+        if (!this.canClick) return // 改动的是这两行代码
+        this.canClick = false
+        this.content = this.totalTime + 's后重新发送'
+        let clock = window.setInterval(() => {
+          this.totalTime--
+          this.content = this.totalTime + 's后重新发送'
+          if (this.totalTime < 0) {
+            window.clearInterval(clock)
+            this.content = '重新发送'
+            this.totalTime = 10
+            this.canClick = true // 这里重新开启
+          }
+        }, 1000)
+      } else {
+        this.nameErr = '请输入手机号'
+      }
+    },
+    OnBlur () {
+      if (this.user.iphone) {
+        if (phoneReg.test(this.user.iphone)) {
+          this.nameErr = ''
+        } else {
+          this.nameErr = '格式不正确'
+        }
+      } else {
+        this.nameErr = '请输入手机号'
+      }
+    },
+    OnPassWord () {
+      let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/
+      if (this.user.password) {
+        if (password.test(this.user.password)) {
+          this.passwordeErr = ''
+        } else {
+          this.passwordeErr = '格式不正确'
+        }
+      } else {
+        this.passwordeErr = '请输入密码'
+      }
+    },
     gologin () {
       this.$router.push({
         path: '/Login'
       })
     },
     tohome () {
+      this.show = false
       this.$router.push({
         path: '/My'
       })
@@ -87,7 +147,7 @@ export default {
 </script>
 
 <style>
-.he20{
+.he20 {
   height: 50px;
 }
 img {
@@ -113,15 +173,11 @@ img {
   height: 100%;
   padding: 0 60px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 .logoimg {
-  margin-top: 172px;
-  margin-bottom: 150px;
   width: 300px;
   height: 136px;
+  margin: 172px auto 150px;
 }
 .inp {
   width: 100%;
@@ -135,9 +191,12 @@ img {
   height: 50px;
   text-align: center;
   line-height: 50px;
+  font-size: 20px;
+  color: red;
+}
+.inp span.yan {
   background: #59c2fa;
   border-radius: 4px;
-  font-size: 20px;
   color: #ffffff;
   letter-spacing: 1.21px;
 }
@@ -168,15 +227,15 @@ img {
   font-size: 24px;
   color: #59c2fa;
   letter-spacing: 1.45px;
-  margin-top: 192px;
+  margin: 192px auto 0;
 }
 .btnlogin {
   width: 120px;
   text-align: center;
-  margin-top: 40px;
   font-size: 20px;
   color: #4a4a4a;
   letter-spacing: 1.21px;
+  margin: 40px auto 0;
 }
 .box {
   position: absolute;
@@ -190,16 +249,16 @@ img {
   align-items: center;
   flex-direction: column;
 }
-.box>p:nth-child(1){
+.box > p:nth-child(1) {
   font-size: 36px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 2px;
   height: 50px;
   line-height: 50px;
 }
-.box>p:nth-child(2){
+.box > p:nth-child(2) {
   font-size: 28px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 1.7px;
   height: 50px;
   line-height: 50px;

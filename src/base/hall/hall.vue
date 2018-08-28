@@ -1,9 +1,9 @@
 <template>
   <div class="hallList">
     <div class="hallItem" v-for="(str, index) in hallList" :key="index" @click="goDetails(index)">
-      <img :src="str.img" alt="">
+      <img :src="str.pictureUrl" alt="">
       <div class="hallItem-text">
-        {{str.text}}
+        {{str.title}}
       </div>
     </div>
   </div>

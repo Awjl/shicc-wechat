@@ -19,7 +19,7 @@
       <div class="he20"></div>
       <div class="from-item">
         <label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</label>
-        <textarea></textarea>
+        <textarea placeholder="请输入您的留言"></textarea>
       </div>
     </div>
     <div class="ture-box" @click="show">
@@ -119,10 +119,16 @@ img {
   padding: 0px 10px;
   margin: 0;
   border-radius: 10px;
+  border: 2px solid #979797;
   resize: none;
   outline: none;
   box-sizing: border-box;
   color: #979797;
+  box-shadow:0px 0px 0px rgba(0,0,0,0);
+  -webkit-appearance:none;
+}
+ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
+   font-size: 20px;
 }
 .from-item label {
   padding-top: 10px;
@@ -130,11 +136,10 @@ img {
   color: #9b9b9b;
 }
 .from-item input {
-  height: 40px;
-  border: 2px solid #979797;
+  height: 50px;
 }
 .from-item textarea {
-  padding:10px 20px;
+  padding:10px;
   height: 200px;
 }
 .ture-box {
