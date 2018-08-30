@@ -3,7 +3,7 @@
     <div class="my-bg">
       <img :src="imgbg" alt="">
       <div class="my-name">
-        <div class="my-title" v-if="myinfo">
+        <div class="my-title" v-if="UserID">
           <div class="my-tou">
             <img :src="imgTou" alt="">
           </div>
@@ -76,21 +76,29 @@
 
 <script>
 import NotLogged from 'base/notlogin/notlogin'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
     return {
       imgbg: './static/myimg/my-bg.png',
       imgTou: './static/myimg/my-tou.png',
-      myinfo: false,
       notShow: false,
-      userId: '',
       userState: false
     }
   },
+  created () {
+    console.log('这里是个人中心=====')
+    console.log(this.UserID)
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
     notShowbox () {
-      if (!this.userId) {
+      if (!this.UserID) {
         this.notShow = true
         var vm = this
         setTimeout(function () {
@@ -103,7 +111,7 @@ export default {
     },
     gowish () {
       this.notShowbox()
-      if (this.userState) {
+      if (this.UserID) {
         this.$router.push({
           path: '/MyWish'
         })
@@ -111,7 +119,7 @@ export default {
     },
     gocoupon () {
       this.notShowbox()
-      if (this.userState) {
+      if (this.UserID) {
         this.$router.push({
           path: '/MyCoupon'
         })
@@ -119,7 +127,7 @@ export default {
     },
     goOrder () {
       this.notShowbox()
-      if (this.userState) {
+      if (this.UserID) {
         this.$router.push({
           path: '/MyOrder'
         })
@@ -127,7 +135,7 @@ export default {
     },
     gomodify () {
       this.notShowbox()
-      if (this.userState) {
+      if (this.UserID) {
         this.$router.push({
           path: '/MyModify'
         })
@@ -135,7 +143,7 @@ export default {
     },
     goaddres () {
       this.notShowbox()
-      if (this.userState) {
+      if (this.UserID) {
         this.$router.push({
           path: '/MyAddres'
         })
@@ -143,7 +151,7 @@ export default {
     },
     gointegral () {
       this.notShowbox()
-      if (this.userState) {
+      if (this.UserID) {
         this.$router.push({
           path: '/MyIntegral'
         })
@@ -151,7 +159,7 @@ export default {
     },
     gopassword () {
       this.notShowbox()
-      if (this.userState) {
+      if (this.UserID) {
         this.$router.push({
           path: '/MyPassword'
         })

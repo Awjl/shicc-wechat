@@ -1,27 +1,30 @@
 <template>
-    <ul class="stack">
-      <li class="stack-item" v-for="(item, index) in pages" :style="[transformIndex(index),transform(index)]" @touchmove.stop="touchmove" @touchstart.stop="touchstart" @touchend.stop="touchend" @touchcancel.stop="touchend"
-      @mousedown.stop.capture.prevent="touchstart" @mouseup.stop.capture.prevent="touchend" @mousemove.stop.capture.prevent="touchmove" @mouseout.stop.capture.prevent="touchend" @webkit-transition-end="onTransitionEnd(index)" @transitionend="onTransitionEnd(index)" :key="index">
-        <div v-html="item.html" class = "stackimg"></div>
-        <div class="stacktext">
-          <div class="stackleft">
-            <div class="stackTitle">下午茶双人套餐</div>
-            <p>美式*2</p>
-            <p>牛油果沙拉*1</p>
-            <p>草莓芝士拿破仑*1</p>
-          </div>
-          <div class="stackRight"  @click.stop="addwish(index)">
-            <img src="./xin-icon.png" alt="" v-if="item.state == 1">
-            <p v-if="item.state == 1">加入心愿单</p>
-            <img src="./xinactive-icon.png" alt="" v-if="item.state == 2">
-            <p v-if="item.state == 2">已加入心愿单</p>
-          </div>
+  <ul class="stack">
+    <li class="stack-item" v-for="(item, index) in pages" :style="[transformIndex(index),transform(index)]" @touchmove.stop="touchmove" @touchstart.stop="touchstart" @touchend.stop="touchend" @touchcancel.stop="touchend" @mousedown.stop.capture.prevent="touchstart" @mouseup.stop.capture.prevent="touchend" @mousemove.stop.capture.prevent="touchmove" @mouseout.stop.capture.prevent="touchend" @webkit-transition-end="onTransitionEnd(index)" @transitionend="onTransitionEnd(index)" :key="index">
+      <div class="stackimg">
+        <img :src="item.pictureUrl" alt="">
+      </div>
+      <div class="stacktext">
+        <div class="stackleft">
+          <div class="stackTitle">{{item.name}}</div>
+          <p v-for="(listItem, index) in JSON.parse(item.summary)" :key="index">{{listItem.info}}</p>
         </div>
-      </li>
-    </ul>
+        <div class="stackRight" @click.stop="addwish(item.goodsId, index)">
+          <img src="./xin-icon.png" alt="" v-if="item.isLove == null ">
+          <p v-if="item.isLove == null ">加入心愿单</p>
+          <img src="./xinactive-icon.png" alt="" v-if="item.isLove == 1">
+          <p v-if="item.isLove == 1">已加入心愿单</p>
+        </div>
+      </div>
+    </li>
+  </ul>
 </template>
 <script>
 import detectPrefixes from './detect-prefixes.js'
+import { inLove, outLove } from 'api/homeapi'
+import { ERR_OK } from 'api/config'
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
     stackinit: {
@@ -30,11 +33,17 @@ export default {
     },
     pages: {
       type: Array,
-      default: () => {}
+      default: () => []
+    }
+  },
+  created () {
+    if (this.UserID) {
+      this.user = this.UserID
     }
   },
   data () {
     return {
+      user: 0,
       basicdata: {
         start: {},
         end: {},
@@ -63,6 +72,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'UserID'
+    ]),
     // 划出面积比例
     offsetRatio () {
       let width = this.$el.offsetWidth
@@ -93,13 +105,22 @@ export default {
     })
   },
   methods: {
-    addwish (ind) {
-      if (this.pages[ind].state === 1) {
-        this.pages[ind].state = 2
+    addwish (id, ind) {
+      if (this.pages[ind].isLove === 1) {
+        this.pages[ind].isLove = null
+        outLove(this.user, id).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log('取消成功')
+          }
+        })
       } else {
-        this.pages[ind].state = 1
+        this.pages[ind].isLove = 1
+        inLove(this.user, id).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log('保存成功')
+          }
+        })
       }
-      console.log(ind)
     },
     touchstart (e) {
       if (this.temporaryData.tracking) {
@@ -333,8 +354,8 @@ export default {
   user-select: none;
   pointer-events: auto;
 }
-.stack-item .stackimg{
-  width:550px;
+.stack-item .stackimg {
+  width: 550px;
   height: 550px;
 }
 .stack-item img {
@@ -342,7 +363,7 @@ export default {
   display: block;
   pointer-events: none;
 }
-.stacktext{
+.stacktext {
   padding: 30px;
   width: 100%;
   height: 250px;
@@ -350,9 +371,9 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.stackTitle{
+.stackTitle {
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   letter-spacing: 1.45px;
   margin-bottom: 10px;
 }
@@ -360,22 +381,22 @@ export default {
   text-align: left;
   line-height: 35px;
   font-size: 18px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   letter-spacing: 1.09px;
 }
-.stackRight{
-  width:120px;
+.stackRight {
+  width: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.stackRight img{
+.stackRight img {
   width: 40px;
   height: 40px;
 }
-.stackRight p{
+.stackRight p {
   font-size: 14px;
-  color: #ED6969;
+  color: #ed6969;
   letter-spacing: 0.85px;
 }
 .stack-container li.move-back {

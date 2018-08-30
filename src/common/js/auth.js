@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie'
 
-const UserId = ''
+const UserId = 'userId'
 
-export function getUserID (id) {
-  return Cookies.get(UserId, id)
+export function getUserID () {
+  return Cookies.get(UserId)
 }
 
 export function setUserID (id) {

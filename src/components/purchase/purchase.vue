@@ -1,9 +1,9 @@
 <template>
   <div class="purchase">
     <div class="purchase-banner">
-      <img :src="bannerImg" alt="">
+      <img :src="dataList.picture.url" alt="">
       <div class="banner-text">
-        餐厅包间预定
+        {{dataList.picture.title}}
       </div>
     </div>
     <div class="purchase-nav">
@@ -11,54 +11,135 @@
       <span :class="{active: !show}" @click="tabTwo()">一 食</span>
     </div>
     <div class="purchase-list">
-      <div class="purchase-item" v-for="(item, index) in item" :key="index" @click="goDetalis">
+      <div class="purchase-item" v-for="(item, index) in dataArr" :key="index" @click="goDetalis(item.goodsId)">
         <div class="purchase-img">
-          <img :src="item.img" alt="">
+          <img :src="item.pictureUrl" alt="">
           <div class="purchase-name">
-            {{item.name}}
+            {{item.title}}
           </div>
         </div>
         <div class="purchase-title">
           <div class="titleItem">
-            <span >
-              <img :src="hotIcon" alt="" v-if="item.hot == 1">
+            <span>
+              <img :src="hotIcon" alt="" v-if="item.isCommend == 1">
             </span>
             <div class="title-name">
-              {{item.title}}
+              {{item.name}}
             </div>
           </div>
           <div class="Price">
-            <span class="PriceNew">￥{{item.new}}</span>
-            <span class="PriceOld">￥{{item.old}}</span>
+            <span class="PriceNew">￥{{item.newPrice}}</span>
+            <span class="PriceOld">￥{{item.oldPrice}}</span>
           </div>
         </div>
       </div>
     </div>
+    <div class="bottom" v-if="!showover">- 到底了 -</div>
+    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom" >
+      - 加载中 -
+    </mugen-scroll>
   </div>
 </template>
 
 <script>
+import MugenScroll from 'vue-mugen-scroll'
+import { getCornerGoods, getMealGoods } from 'api/shopping'
+import { ERR_OK } from 'api/config'
+
 export default {
   data () {
     return {
-      bannerImg: './static/showImg/shopping-bg.png',
+      dataList: {
+        picture: {
+          url: '',
+          title: ''
+        }
+      },
       hotIcon: './static/icon/hot-icon.png',
       show: true,
-      item: [{ img: './static/showImg/item1.png', name: '轻薄自然的上身触感', title: '商务房1000元代金券', hot: 1, new: 693, old: 1000 }, { img: './static/showImg/item2.png', name: '轻薄自然的上身触感', title: '商务房1000元代金券', hot: 0, new: 693, old: 1000 }, { img: './static/showImg/item1.png', name: '轻薄自然的上身触感', title: '商务房1000元代金券', hot: 0, new: 693, old: 1000 }, { img: './static/showImg/item2.png', name: '轻薄自然的上身触感', title: '商务房1000元代金券', hot: 1, new: 693, old: 1000314 }]
+      loading: false,
+      pn: 1,
+      pg: 4,
+      dataArr: [],
+      showover: true
     }
   },
+  created () {
+    this._getCornerGoods(this.pn, this.pg)
+  },
   methods: {
+    _getCornerGoods (pn, pg) {
+      getCornerGoods(pn, pg).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`商品列表banner=====`)
+          console.log(res.data)
+          this.dataList = res.data
+          let vm = this
+          if (res.data.goodsOuts.length === 0) {
+            this.showover = false
+          } else {
+            res.data.goodsOuts.forEach(function (value, index, array) {
+              vm.dataArr.push(value)
+            })
+            this.loading = false
+          }
+        }
+      })
+    },
+    _getMealGoods (pn, pg) {
+      getMealGoods(pn, pg).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`商品列表banner=====`)
+          console.log(res.data)
+          this.dataList = res.data
+          let vm = this
+          if (res.data.goodsOuts.length === 0) {
+            this.showover = false
+          } else {
+            res.data.goodsOuts.forEach(function (value, index, array) {
+              vm.dataArr.push(value)
+            })
+            this.loading = false
+          }
+        }
+      })
+    },
+    fetchData () {
+      this.loading = true
+      this.pn++
+      if (this.show) {
+        this._getCornerGoods(this.pn, this.pg)
+      } else {
+        this._getMealGoods(this.pn, this.pg)
+      }
+    },
+    onRefresh (done) {
+      this._getCornerGoods()
+      // done() // call done
+    },
+    onInfinite (done) {
+      this._getCornerGoods()
+    },
     tabOne () {
       this.show = true
+      this.pn = 1
+      this.dataArr = []
+      this._getCornerGoods(this.pn, this.pg)
     },
     tabTwo () {
       this.show = false
+      this.pn = 1
+      this.dataArr = []
+      this._getMealGoods(this.pn, this.pg)
     },
-    goDetalis () {
+    goDetalis (id) {
       this.$router.push({
-        path: `/PurchaseDetalis`
+        path: `/PurchaseDetalis/${id}`
       })
     }
+  },
+  components: {
+    MugenScroll
   }
 }
 </script>
@@ -108,7 +189,7 @@ img {
   box-sizing: border-box;
 }
 .purchase-list {
-  padding: 30px;
+  padding: 30px 30px 0;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -168,21 +249,26 @@ img {
 }
 .Price .PriceOld {
   font-size: 18px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   letter-spacing: 0.97px;
-  position:relative;
+  position: relative;
   overflow: hidden;
 }
-.Price .PriceOld::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:45%;
-  width:100%;
-  height:1px;
-  box-sizing:border-box;
-  background:#9B9B9B;
-  transform-origin:bottom center;
-  transform: rotate(9deg)
+.Price .PriceOld::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 45%;
+  width: 100%;
+  height: 1px;
+  box-sizing: border-box;
+  background: #9b9b9b;
+  transform-origin: bottom center;
+  transform: rotate(9deg);
+}
+.bottom {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
 }
 </style>

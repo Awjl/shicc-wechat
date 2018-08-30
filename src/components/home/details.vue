@@ -4,12 +4,17 @@
       <stack ref="stack" :pages="someList" :stackinit="stackinit"></stack>
     </div>
     <div class="OverBox-img" @click="goBack">
-        <img :src="overImg" alt="">
-      </div>
+      <img :src="overImg" alt="">
+    </div>
   </div>
 </template>
 <script>
 import stack from 'base/stack/stack'
+
+import { getBar } from 'api/homeapi'
+import { ERR_OK } from 'api/config'
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -17,48 +22,35 @@ export default {
       someList: [],
       stackinit: {
         visible: 3
-      }
+      },
+      user: 0,
+      dataList: []
     }
   },
-  mounted () {
-    let that = this
-    setTimeout(function () {
-      that.someList = [
-        {
-          html: '<img src="static/imgone/1.png" alt="01">',
-          state: 1
-        },
-        {
-          html: '<img src="static/imgone/2.png" alt="02">',
-          state: 2
-        },
-        {
-          html: '<img src="static/imgone/3.png" alt="03">',
-          state: 2
-        },
-        {
-          html: '<img src="static/imgone/4.png" alt="04">',
-          state: 1
-        },
-        {
-          html: '<img src="static/imgone/5.png" alt="05">',
-          state: 1
-        },
-        {
-          html: '<img src="static/imgone/6.png" alt="06">',
-          state: 2
-        },
-        {
-          html: '<img src="static/imgone/7.png" alt="07">',
-          state: 1
-        }
-      ]
-    }, 1000)
+  created () {
+    if (this.UserID) {
+      this.user = this.UserID
+      this._getBar(this.user)
+    }
   },
   components: {
     stack
   },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _getBar (user) {
+      getBar(user, this.$route.params.barid).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`吧详情banner=====`)
+          console.log(res.data)
+          this.someList = res.data
+        }
+      })
+    },
     goBack () {
       this.$router.back(-1)
     }
@@ -82,7 +74,7 @@ export default {
   left: 0;
   top: 132px;
   right: 0;
-  margin:0 auto;
+  margin: 0 auto;
   position: absolute;
   z-index: 1000;
   width: 550px;

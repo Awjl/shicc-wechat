@@ -11,7 +11,7 @@
       </div>
       <div class="line"></div>
       <div class="inp">
-        <img :src="iconThree" alt=""><input type="password" placeholder="请输入验证码" v-model="user.code">
+        <img :src="iconThree" alt=""><input type="text" placeholder="请输入验证码" v-model="user.code">
         <span class="yan" @click="yanzheng()">{{content}}</span>
       </div>
       <div class="line"></div>
@@ -57,6 +57,11 @@
   </div>
 </template>
 <script>
+import { Register, sendSMS } from 'api/login'
+import { setUserID } from 'common/js/auth'
+
+import { ERR_OK } from 'api/config'
+
 let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
 
 export default {
@@ -83,6 +88,20 @@ export default {
     }
   },
   methods: {
+    _Register () {
+      Register(this.user).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(res.data)
+          if (res.data.code === ERR_OK) {
+            this.$store.commit('SET_USERID', res.data.msg)
+            setUserID(res.data.msg)
+            this.show = true
+          } else {
+            alert(res.data.msg)
+          }
+        }
+      })
+    },
     yanzheng () {
       if (this.user.iphone) {
         if (!phoneReg.test(this.user.iphone)) {
@@ -101,6 +120,9 @@ export default {
             this.canClick = true // 这里重新开启
           }
         }, 1000)
+        sendSMS(this.user.iphone).then((res) => {
+          console.log(res.data)
+        })
       } else {
         this.nameErr = '请输入手机号'
       }
@@ -140,7 +162,8 @@ export default {
       })
     },
     register () {
-      this.show = true
+      console.log('注册')
+      this._Register()
     }
   }
 }

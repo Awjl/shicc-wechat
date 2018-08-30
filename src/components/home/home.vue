@@ -49,8 +49,6 @@ export default {
   },
   created () {
     this._getTopBanner()
-    this._getOneStageBanner()
-    this._getCornerMealBanner()
   },
   methods: {
     _getTopBanner () {
@@ -59,6 +57,7 @@ export default {
           console.log(`顶部banner=====`)
           console.log(res.data)
           this.listImg = res.data
+          this._getOneStageBanner()
         }
       })
     },
@@ -68,6 +67,7 @@ export default {
           console.log(`一期一会banner=====`)
           console.log(res.data)
           this.hallList = res.data
+          this._getCornerMealBanner()
         }
       })
     },

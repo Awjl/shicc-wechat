@@ -35,3 +35,57 @@ export function getCornerMealBanner () {
     return Promise.resolve(res.data)
   })
 }
+// 获取吧的详细内容
+export function getBar (id, barid) {
+  const url = `${api}/sicc/goods/getBar`
+  return axios.get(url, {
+    params: {
+      userId: id,
+      barId: barid
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 添加心愿单
+export function inLove (userid, id) {
+  const url = `${api}/sicc/goods/inLove`
+  return axios.post(url, {
+    goodsId: id,
+    userId: userid
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 取消心愿单
+export function outLove (userid, id) {
+  const url = `${api}/sicc/goods/outLove`
+  return axios.post(url, {
+    goodsId: id,
+    userId: userid
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取热门问题  22
+export function getAllHotIssues () {
+  const url = `${api}/sicc/service/getAllHotIssues`
+  return axios.get(url).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 会议预定  22 有疑问
+export function bookMeeting (data) {
+  const url = `${api}/sicc/book/bookMeeting`
+  return axios.post(url, {
+    mobile: data.mobile,
+    name: data.name,
+    note: data.note,
+    userId: data.userId
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

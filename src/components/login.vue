@@ -26,6 +26,10 @@
   </div>
 </template>
 <script>
+import { login } from 'api/login'
+import { ERR_OK } from 'api/config'
+import { setUserID, getUserID } from 'common/js/auth'
+
 export default {
   data () {
     return {
@@ -42,6 +46,24 @@ export default {
     }
   },
   methods: {
+    _login () {
+      login(this.user).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(res.data)
+          if (res.data.code === ERR_OK) {
+            this.$store.commit('SET_USERID', res.data.msg)
+            setUserID(res.data.msg)
+            console.log(getUserID())
+            this.show = true
+            this.$router.push({
+              path: '/My'
+            })
+          } else {
+            alert(res.data.msg)
+          }
+        }
+      })
+    },
     OnBlur () {
       let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
       if (this.user.name) {
@@ -72,13 +94,8 @@ export default {
       })
     },
     goLoing () {
-      console.log(this.user)
-      // console.log(this.$store)
-      // this.$store.dispatch('Login', this.user).then(() => {
-      //   console.log('测试')
-      // }).catch(() => {
-      //   this.loading = false
-      // })
+      console.log('登录')
+      this._login()
     }
   }
 }

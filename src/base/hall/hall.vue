@@ -1,6 +1,6 @@
 <template>
   <div class="hallList">
-    <div class="hallItem" v-for="(str, index) in hallList" :key="index" @click="goDetails(index)">
+    <div class="hallItem" v-for="(str, index) in hallList" :key="index" @click="goDetails(str.goodsId)">
       <img :src="str.pictureUrl" alt="">
       <div class="hallItem-text">
         {{str.title}}
@@ -13,9 +13,10 @@
 export default {
   props: ['hallList'],
   methods: {
-    goDetails (index) {
+    goDetails (id) {
+      console.log(id)
       this.$router.push({
-        path: `/Details`
+        path: `/Details/${id}`
       })
     }
   }

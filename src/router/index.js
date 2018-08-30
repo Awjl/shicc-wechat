@@ -79,7 +79,7 @@ export default new Router({
       }
     },
     {
-      path: '/PurchaseDetalis',
+      path: '/PurchaseDetalis/:id',
       component: PurchaseDetalis,
       meta: {
         title: '商品详情'
@@ -163,7 +163,7 @@ export default new Router({
       }
     },
     {
-      path: '/Details',
+      path: '/Details/:barid',
       component: Details,
       meta: {
         title: '商品详情'

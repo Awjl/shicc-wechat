@@ -82,6 +82,9 @@
 
 <script>
 import Swiper from 'base/swiper/swiper'
+import { getGoodsDetail } from 'api/shopping'
+import { ERR_OK } from 'api/config'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -95,10 +98,30 @@ export default {
         { img: './static/showImg/banner.png', id: 1 },
         { img: './static/showImg/banner.png', id: 1 },
         { img: './static/showImg/banner.png', id: 1 }
-      ]
+      ],
+      user: 0
     }
   },
+  created () {
+    if (this.UserID) {
+      this.user = this.UserID
+      this._getGoodsDetail(this.user)
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _getGoodsDetail (user) {
+      getGoodsDetail(user, this.$route.params.id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`商品详情=====`)
+          console.log(res.data)
+        }
+      })
+    },
     collection () {
       this.show = !this.show
     },
