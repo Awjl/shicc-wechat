@@ -38,6 +38,7 @@
     <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom" >
       - 加载中 -
     </mugen-scroll>
+    <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
@@ -45,6 +46,8 @@
 import MugenScroll from 'vue-mugen-scroll'
 import { getCornerGoods, getMealGoods } from 'api/shopping'
 import { ERR_OK } from 'api/config'
+import NotLogged from 'base/notlogin/notlogin'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -61,11 +64,17 @@ export default {
       pn: 1,
       pg: 4,
       dataArr: [],
-      showover: true
+      showover: true,
+      notShow: false
     }
   },
   created () {
     this._getCornerGoods(this.pn, this.pg)
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
   },
   methods: {
     _getCornerGoods (pn, pg) {
@@ -104,6 +113,18 @@ export default {
         }
       })
     },
+    notShowbox () {
+      if (!this.UserID) {
+        this.notShow = true
+        var vm = this
+        setTimeout(function () {
+          vm.notShow = false
+        }, 1000)
+        this.userState = false
+      } else {
+        this.userState = true
+      }
+    },
     fetchData () {
       this.loading = true
       this.pn++
@@ -113,39 +134,67 @@ export default {
         this._getMealGoods(this.pn, this.pg)
       }
     },
-    onRefresh (done) {
-      this._getCornerGoods()
-      // done() // call done
-    },
-    onInfinite (done) {
-      this._getCornerGoods()
-    },
     tabOne () {
+      this.showover = true
       this.show = true
       this.pn = 1
       this.dataArr = []
+      this.dataList = {
+        picture: {
+          url: '',
+          title: ''
+        }
+      }
       this._getCornerGoods(this.pn, this.pg)
     },
     tabTwo () {
+      this.showover = true
       this.show = false
       this.pn = 1
       this.dataArr = []
+      this.dataList = {
+        picture: {
+          url: '',
+          title: ''
+        }
+      }
       this._getMealGoods(this.pn, this.pg)
     },
     goDetalis (id) {
-      this.$router.push({
-        path: `/PurchaseDetalis/${id}`
-      })
+      this.notShowbox()
+      if (this.UserID) {
+        this.$router.push({
+          path: `/PurchaseDetalis/${id}`
+        })
+      }
     }
   },
   components: {
-    MugenScroll
+    MugenScroll,
+    NotLogged
   }
 }
 </script>
 <style scoped>
 img {
   width: 100%;
+}
+.swiper-container {
+  width: 100%;
+}
+.swiper-wrapper {
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
 }
 .purchase-banner {
   width: 100%;

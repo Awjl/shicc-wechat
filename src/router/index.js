@@ -93,7 +93,7 @@ export default new Router({
       }
     },
     {
-      path: '/ExchangeDetalis',
+      path: '/ExchangeDetalis/:id/:type',
       component: ExchangeDetalis,
       meta: {
         title: '积分兑换'

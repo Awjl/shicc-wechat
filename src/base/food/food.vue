@@ -6,16 +6,50 @@
        <span>{{str.title}}</span> <span><span style="font-size:10px;">惠后价：</span>￥{{str.newPrice}}</span>
       </div>
     </div>
+    <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
 <script>
+import NotLogged from 'base/notlogin/notlogin'
+import { mapGetters } from 'vuex'
 export default {
   props: ['footList'],
-  methods: {
-    goDetails (index) {
-      console.log('去详情' + index)
+  data () {
+    return {
+      notShow: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
+  methods: {
+    notShowbox () {
+      if (!this.UserID) {
+        this.notShow = true
+        var vm = this
+        setTimeout(function () {
+          vm.notShow = false
+        }, 1000)
+        this.userState = false
+      } else {
+        this.userState = true
+      }
+    },
+    goDetails (id) {
+      this.notShowbox()
+      if (this.UserID) {
+        console.log(id)
+        this.$router.push({
+          path: `/PurchaseDetalis/${id}`
+        })
+      }
+    }
+  },
+  components: {
+    NotLogged
   }
 }
 </script>

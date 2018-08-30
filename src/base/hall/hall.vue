@@ -6,19 +6,50 @@
         {{str.title}}
       </div>
     </div>
+    <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
 <script>
+import NotLogged from 'base/notlogin/notlogin'
+import { mapGetters } from 'vuex'
+
 export default {
   props: ['hallList'],
-  methods: {
-    goDetails (id) {
-      console.log(id)
-      this.$router.push({
-        path: `/Details/${id}`
-      })
+  data () {
+    return {
+      notShow: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
+  methods: {
+    notShowbox () {
+      if (!this.UserID) {
+        this.notShow = true
+        var vm = this
+        setTimeout(function () {
+          vm.notShow = false
+        }, 1000)
+        this.userState = false
+      } else {
+        this.userState = true
+      }
+    },
+    goDetails (id) {
+      this.notShowbox()
+      if (this.UserID) {
+        this.$router.push({
+          path: `/Details/${id}`
+        })
+      }
+    }
+  },
+  components: {
+    NotLogged
   }
 }
 </script>

@@ -10,16 +10,16 @@
     <div class="he20"></div>
     <div class="reserve-from">
       <div class="from-item">
-        <label>您的姓名</label><input type="text" placeholder="请输入您的姓名">
+        <label>您的姓名</label><input type="text" placeholder="请输入您的姓名" v-model="data.name">
       </div>
       <div class="he20"></div>
       <div class="from-item">
-        <label>手机号码</label><input type="text" placeholder="请输入您的手机号">
+        <label>手机号码</label><input type="text" placeholder="请输入您的手机号" v-model="data.mobile">
       </div>
       <div class="he20"></div>
       <div class="from-item">
         <label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</label>
-        <textarea placeholder="请输入您的留言"></textarea>
+        <textarea placeholder="请输入您的留言" v-model="data.note"></textarea>
       </div>
     </div>
     <div class="ture-box" @click="show">
@@ -53,18 +53,43 @@
 </template>
 
 <script>
+import { bookMeeting } from 'api/homeapi'
+import { ERR_OK } from 'api/config'
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
       listImgtwo: './static/img/listthree2.png',
       overImg: './static/icon/done.png',
       TrueImg: './static/icon/true-iocn.png',
-      showTrue: false
+      showTrue: false,
+      data: {
+        mobile: null,
+        name: '',
+        note: '',
+        userId: ''
+      }
     }
   },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _bookMeeting (data) {
+      bookMeeting(data).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('预定成功')
+          this.showTrue = true
+        }
+      })
+    },
     show () {
-      this.showTrue = true
+      this.data.userId = this.UserID
+      console.log(this.data)
+      this._bookMeeting(this.data)
     },
     hide () {
       this.showTrue = false

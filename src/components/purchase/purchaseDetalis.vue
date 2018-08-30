@@ -1,16 +1,24 @@
 <template>
   <div class="purchaseDetalis">
-    <Swiper :listImg="listImg"></Swiper>
+    <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" v-for="(str, index) in dataList.bannerUrls" :key="index">
+        <!-- <img :src="`http://${str.pictureUrl}?x-oss-process=image/format,png`" @click="goDetails(str.id)" /> -->
+        <img :src="str" @click="goDetails(str.id)" />
+      </div>
+    </div>
+    <div class="swiper-pagination swiper-pagination-white"></div>
+  </div>
     <div class="Detalis-title">
       <div class="title-left">
-        <p class="leftName">餐厅包间代金券</p>
+        <p class="leftName">{{dataList.name}}</p>
         <p class="leftjiage">代金券：
-          <span>¥300</span>
+          <span>¥{{dataList.oldPrice}}</span>
         </p>
       </div>
       <div class="title-right">
-        <div class="right-img" @click="collection">
-          <img :src="xinIcon" alt="" v-if='show'>
+        <div class="right-img" @click="collection(dataList.goodsId)">
+          <img :src="xinIcon" alt="" v-if='dataList.isLove != 1'>
           <img :src="xinactiveIcon" alt="" v-else>
         </div>
         <p>加入心愿单</p>
@@ -32,25 +40,21 @@
         有效期：
       </div>
       <div class="DetalisItem">
-        2018.07.01至2019.07.01 （周末、法定节假日通用）
+        {{dataList.termOfValidity}}
       </div>
       <div class="he10"></div>
       <div class="Detalislist">
         使用时间：
       </div>
       <div class="DetalisItem">
-        10:00-22:00
+        {{dataList.useTime}}
       </div>
       <div class="he10"></div>
       <div class="Detalislist">
         使用规则：
       </div>
       <div class="DetalisItem">
-        <p>*需要提前预约 </p>
-        <p>*不可叠加使用</p>
-        <p>不兑现不找零</p>
-        <p>*提供免费Wifi </p>
-        <p>停车位收费标准：详情到店或者电话咨询</p>
+        <p v-for="(item, index) in dataList.useRule" :key="index">{{item}} </p>
       </div>
       <div class="he30"></div>
       <div class="notes">
@@ -60,18 +64,18 @@
       </div>
     </div>
     <div class="text-title">
-      特色餐厅
+      {{dataList.name}}
     </div>
     <div class="text-center">
-      精选地道的意大利北部佳肴款待各方宾客。传承意大利北部最传统的烹调手法, 融和厨师的创意灵感，各式菜品都弥散着普罗奇尼蘑菇的芳香气味。餐厅赋予现代设计亦不失华贵，以深红色的樱桃木为架构，位于餐厅入口处的“Bottega”酒廊陈列200多款精选自意大利的陈年佳酿，将最大程度的满足美酒爱好者的需求；吊顶悬挂3,000枚特制镀银蘑菇造型与餐厅主题相得益彰；精致的蓝色水杯，特制镀银餐具及各种瓷器用品均出自意大利名家之手。正面墙布采用拉丁仿古设计，红色的孟买风格窗帘以及名贵的水晶灯造就与众不同的就餐氛围； 此外，餐厅另设有一个10人包间以“牛肝菌”命名。
+      {{dataList.introduce}}
     </div>
     <div class="text-img">
-      <img :src="detalisImg" alt="">
+      <img :src="str" alt="" v-for="(str, index) in dataList.introduceUrls" :key="index">
     </div>
     <div class="footer">
       <div class="footer-left">
-        <span class="new">¥<span>188</span></span>
-        <span class="old">¥300</span>
+        <span class="new">¥<span>{{dataList.newPrice}}</span></span>
+        <span class="old">¥{{dataList.oldPrice}}</span>
       </div>
       <div class="footer-over" @click="goSubmission()">
         立即购买
@@ -81,8 +85,10 @@
 </template>
 
 <script>
-import Swiper from 'base/swiper/swiper'
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
 import { getGoodsDetail } from 'api/shopping'
+import { inLove, outLove } from 'api/homeapi'
 import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 
@@ -93,14 +99,28 @@ export default {
       xinactiveIcon: './static/icon/xinactive-icon.png',
       detalisImg: './static/showImg/detalis.png',
       show: true,
-      listImg: [
-        { img: './static/showImg/banner.png', id: 1 },
-        { img: './static/showImg/banner.png', id: 1 },
-        { img: './static/showImg/banner.png', id: 1 },
-        { img: './static/showImg/banner.png', id: 1 }
-      ],
-      user: 0
+      user: 0,
+      dataList: {}
     }
+  },
+  updated () {
+    var swiper = new Swiper('.swiper-container', {
+      observer: true,
+      observeParents: true,
+      pagination: {
+        el: '.swiper-pagination'
+      },
+      paginationClickable: true,
+      loop: true,
+      speed: 600,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+      onTouchEnd: function () {
+        swiper.startAutoplay()
+      }
+    })
   },
   created () {
     if (this.UserID) {
@@ -115,15 +135,33 @@ export default {
   },
   methods: {
     _getGoodsDetail (user) {
+      console.log('商品详情===================')
       getGoodsDetail(user, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
           console.log(`商品详情=====`)
           console.log(res.data)
+          this.dataList = res.data
+          this.dataList.useRule = this.dataList.useRule.split(',')
+          console.log(this.dataList.useRule)
         }
       })
     },
-    collection () {
-      this.show = !this.show
+    collection (id) {
+      if (this.dataList.isLove === 1) {
+        this.dataList.isLove = null
+        outLove(this.user, id).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log('取消成功')
+          }
+        })
+      } else {
+        this.dataList.isLove = 1
+        inLove(this.user, id).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log('保存成功')
+          }
+        })
+      }
     },
     goSubmission () {
       this.$router.push({

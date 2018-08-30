@@ -1,14 +1,15 @@
 <template>
   <div class="exchangeDetalis">
-    <Swiper :listImg="listImg"></Swiper>
+    <Swiper :listImg="listImg.banner"></Swiper>
     <div class="title">
       <div class="name">
-        荣耀运动蓝牙耳机
-        <p>像音乐一样自由</p>
+        {{listImg.pointGoods.name}}
+        <p> {{listImg.pointGoods.summary}}</p>
       </div>
       <div class="title-jiage">
-        <span class="new">260积分</span>
-        <span class="old">260积分</span>
+        <span class="new" v-if="type === '1'">{{listImg.pointGoods.v1NewPoint}}积分</span>
+        <span class="new" v-else>{{listImg.pointGoods.v2NewPoint}}积分</span>
+        <span class="old">{{listImg.pointGoods.oldPoint}}积分</span>
       </div>
     </div>
     <div class="line"></div>
@@ -41,21 +42,43 @@
 
 <script>
 import Swiper from 'base/swiper/swiper'
+import { getPointGoodsDetailById } from 'api/shopping'
+import { ERR_OK } from 'api/config'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
     return {
       imgRight: './static/icon/ic_back.png',
-      listImg: [
-        { img: './static/showImg/banner.png', id: 1 },
-        { img: './static/showImg/banner.png', id: 1 },
-        { img: './static/showImg/banner.png', id: 1 },
-        { img: './static/showImg/banner.png', id: 1 }
-      ],
-      imgItem: [{img: './static/showImg/details3.png'}, {img: './static/showImg/details1.png'}, {img: './static/showImg/details2.png'}]
+      listImg: {
+        pointGoods: {
+          name: '',
+          summary: ''
+        }
+      },
+      imgItem: [{img: './static/showImg/details3.png'}, {img: './static/showImg/details1.png'}, {img: './static/showImg/details2.png'}],
+      type: ''
     }
   },
+  created () {
+    this._getPointGoodsDetailById()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _getPointGoodsDetailById () {
+      getPointGoodsDetailById(this.$route.params.id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('积分详情=============')
+          console.log(res.data)
+          this.type = this.$route.params.type
+          this.listImg = res.data
+        }
+      })
+    },
     goTrue () {
       this.$router.push({
         path: `/TrueExchange`

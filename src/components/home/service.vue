@@ -15,10 +15,10 @@
       <div class="hot-line"></div>
     </div>
     <div class="he10"></div>
-    <div class="hot-list" @click="detile($event)" style="height:16px;">
+    <div class="hot-list" @click="detile($event)" style="height:16px;" v-for="(item, index) in dataList" :key="index">
       <div class="hot-name">
         <div class="hot-span">
-          <span>&#8226;</span>酒店Wi-Fi密码是多少？
+          <span>&#8226;</span>{{item.question}}
         </div>
         <div class="hot-right">
           <img :src="rightimg" alt="">
@@ -26,54 +26,37 @@
       </div>
       <div class="he10"></div>
       <div class="hot-text">
-        关注公众号点击一键连接即可使用
-      </div>
-    </div>
-    <div class="he10"></div>
-    <div class="hot-list" @click="detile($event)" style="height:16px;">
-      <div class="hot-name">
-        <div class="hot-span">
-          <span>&#8226;</span>酒店停车收费方式？
-        </div>
-        <div class="hot-right">
-          <img :src="rightimg" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="he10"></div>
-    <div class="hot-list" @click="detile($event)" style="height:16px;">
-      <div class="hot-name">
-        <div class="hot-span">
-          <span>&#8226;</span>酒店入住时间？
-        </div>
-        <div class="hot-right">
-          <img :src="rightimg" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="he10"></div>
-    <div class="hot-list" @click="detile($event)" style="height:16px;">
-      <div class="hot-name">
-        <div class="hot-span">
-          <span>&#8226;</span>酒店地址？
-        </div>
-        <div class="hot-right">
-          <img :src="rightimg" alt="">
-        </div>
+        {{item.answer}}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getAllHotIssues } from 'api/homeapi'
+import { ERR_OK } from 'api/config'
+
 export default {
   data () {
     return {
       service: './static/img/service.png',
-      rightimg: './static/icon/ic_back.png'
+      rightimg: './static/icon/ic_back.png',
+      dataList: []
     }
   },
+  created () {
+    this._getAllHotIssues()
+  },
   methods: {
+    _getAllHotIssues () {
+      getAllHotIssues().then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('热门问题=======')
+          console.log(res.data)
+          this.dataList = res.data
+        }
+      })
+    },
     detile (e) {
       if (e.currentTarget.style.height) {
         e.currentTarget.style.height = ''
@@ -154,6 +137,7 @@ img {
   overflow: hidden;
   padding: 0 37px;
   box-sizing: border-box;
+  margin-bottom: 20px;
 }
 .hot-name {
   height: 32px;
@@ -170,7 +154,7 @@ img {
   box-sizing: border-box;
   font-size: 20px;
   color: #9B9B9B;
-  margin-bottom: 54px;
+  margin-bottom: 30px;
 }
 .hot-name span {
   font-size: 30px;

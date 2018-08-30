@@ -69,7 +69,7 @@ export function outLove (userid, id) {
   })
 }
 
-// 获取热门问题  22
+//  获取热门问题
 export function getAllHotIssues () {
   const url = `${api}/sicc/service/getAllHotIssues`
   return axios.get(url).then((res) => {
@@ -77,7 +77,7 @@ export function getAllHotIssues () {
   })
 }
 
-// 会议预定  22 有疑问
+// 会议预定
 export function bookMeeting (data) {
   const url = `${api}/sicc/book/bookMeeting`
   return axios.post(url, {

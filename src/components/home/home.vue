@@ -26,6 +26,7 @@
     <div class="homebtn" @click="goSrver">
       <img :src="img" alt="">
     </div>
+    <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
@@ -37,6 +38,8 @@ import HomeList from 'base/homelist/homelist'
 
 import { getTopBanner, getOneStageBanner, getCornerMealBanner } from 'api/homeapi'
 import { ERR_OK } from 'api/config'
+import NotLogged from 'base/notlogin/notlogin'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -44,11 +47,17 @@ export default {
       img: './static/icon/service-icon.png',
       listImg: [],
       hallList: [],
-      footList: []
+      footList: [],
+      notShow: false
     }
   },
   created () {
     this._getTopBanner()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
   },
   methods: {
     _getTopBanner () {
@@ -80,10 +89,25 @@ export default {
         }
       })
     },
+    notShowbox () {
+      if (!this.UserID) {
+        this.notShow = true
+        var vm = this
+        setTimeout(function () {
+          vm.notShow = false
+        }, 1000)
+        this.userState = false
+      } else {
+        this.userState = true
+      }
+    },
     goReserve () {
-      this.$router.push({
-        path: `/Reserve`
-      })
+      this.notShowbox()
+      if (this.UserID) {
+        this.$router.push({
+          path: `/Reserve`
+        })
+      }
     },
     goSrver () {
       this.$router.push({
@@ -95,7 +119,8 @@ export default {
     Swiper,
     Hall,
     Food,
-    HomeList
+    HomeList,
+    NotLogged
   }
 }
 </script>

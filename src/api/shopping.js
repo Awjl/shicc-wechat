@@ -24,7 +24,7 @@ export function getMealGoods (pn, pg) {
     return Promise.resolve(res.data)
   })
 }
-// 获取详情 22
+// 获取详情
 export function getGoodsDetail (userid, id) {
   const url = `${api}/sicc/goods/getGoodsDetail`
   return axios.get(url, {
@@ -37,7 +37,7 @@ export function getGoodsDetail (userid, id) {
   })
 }
 
-// 获取v1商品 22
+// 获取v1商品
 export function getV1PointGoods (pn, pg) {
   const url = `${api}/sicc/pointGoods/getV1PointGoods`
   return axios.get(url, {
@@ -50,7 +50,7 @@ export function getV1PointGoods (pn, pg) {
   })
 }
 
-// 获取v2商品 22
+// 获取v2商品
 export function getV2PointGoods (pn, pg) {
   const url = `${api}/sicc/pointGoods/getV2PointGoods`
   return axios.get(url, {
@@ -63,7 +63,7 @@ export function getV2PointGoods (pn, pg) {
   })
 }
 
-// 积分商品详情 22
+// 积分商品详情
 export function getPointGoodsDetailById (id) {
   const url = `${api}/sicc/pointGoods/getPointGoodsDetailById`
   return axios.get(url, {

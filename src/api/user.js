@@ -64,7 +64,7 @@ export function getUserLevel (userid) {
   })
 }
 
-// 获取全部心愿单 22 
+// 获取全部心愿单 22
 export function getWishList (userid) {
   const url = `${api}/sicc/user/getWishList`
   return axios.get(url, {
@@ -139,7 +139,7 @@ export function getAddressById (addressId) {
   })
 }
 
-// 获取所有收货地址 22
+// 获取所有收货地址22
 export function getAllAddress (userid) {
   const url = `${api}/sicc/address/getAllAddress`
   return axios.get(url, {
@@ -151,7 +151,7 @@ export function getAllAddress (userid) {
   })
 }
 
-// 获取所有商品订单 22 
+// 获取所有商品订单 22
 export function getAllGoodsOrder (userid, type) {
   const url = `${api}/sicc/order/getAllGoodsOrder`
   return axios.get(url, {
@@ -164,7 +164,7 @@ export function getAllGoodsOrder (userid, type) {
   })
 }
 
-// 获取所有积分订单列表 22 
+// 获取所有积分订单列表 22
 export function getAllPointGoodsOrder (userid) {
   const url = `${api}/sicc/order/getAllPointGoodsOrder`
   return axios.get(url, {

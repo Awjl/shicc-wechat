@@ -2,14 +2,20 @@
   <div class="exchange">
     <div class="exchange-bg">
       <img :src="bg" alt="">
-      <div class="exchange-title">
+      <div class="exchange-title" v-if="showLevel">
         您现有积分
       </div>
-      <div class="exchange-num">
-        1288
+      <div class="exchange-num" v-if='showLevel'>
+        {{Levelnum.points}}
       </div>
-      <div class="lvavel">
+      <div class="exchange-btn" v-if='!showLevel'>
+        去登陆
+      </div>
+      <div class="lvavel" v-if='showLevel && Levelnum.level == 1'>
         V1会员
+      </div>
+      <div class="lvavel" v-if='showLevel && Levelnum.level == 2'>
+        V2会员
       </div>
     </div>
     <div class="purchase-nav">
@@ -17,40 +23,156 @@
       <span :class="{active: !show}" @click="tabTwo()">V2尊享区</span>
     </div>
     <div class="exchangelist">
-      <div class="item" v-for="(item, index) in items" :key="index" @click="goDetalis">
-        <img :src="item.img" alt="">
+      <div class="item" v-for="(item, index) in items" :key="index" @click="goDetalis(item.id, type)">
+        <img :src="item.pictureUrl" alt="">
         <div class="item-title">
           <p>{{item.name}}</p>
           <div class="item-jiage">
-            <span class="new">{{item.new}}积分</span>
-            <span class="old">{{item.old}}积分</span>
+            <span class="new" v-if="show">{{item.v1NewPoint}}积分</span>
+            <span class="new" v-else>{{item.v2NewPoint}}积分</span>
+            <span class="old">{{item.oldPoint}}积分</span>
           </div>
         </div>
       </div>
     </div>
+    <div class="bottom" v-if="!showover">- 到底了 -</div>
+    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom" >
+      - 加载中 -
+    </mugen-scroll>
+    <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
 <script>
+import NotLogged from 'base/notlogin/notlogin'
+import MugenScroll from 'vue-mugen-scroll'
+import { ERR_OK } from 'api/config'
+import { getUserLevel } from 'api/user'
+import { getV1PointGoods, getV2PointGoods } from 'api/shopping'
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
       bg: './static/exchangeImg/bg.png',
       show: true,
-      items: [{ img: './static/exchangeImg/item1.png', name: '荣耀运动蓝牙耳机', new: 260, old: 260 }, { img: './static/exchangeImg/item2.png', name: '荣耀运动蓝牙耳机', new: 260, old: 260 }, { img: './static/exchangeImg/item3.png', name: '荣耀运动蓝牙耳机', new: 260, old: 260 }, { img: './static/exchangeImg/item4.png', name: '荣耀运动蓝牙耳机', new: 260, old: 260 }, { img: './static/exchangeImg/item5.png', name: '荣耀运动蓝牙耳机', new: 260, old: 260 }, { img: './static/exchangeImg/item6.png', name: '荣耀运动蓝牙耳机', new: 260, old: 260 }]
+      notShow: false,
+      showLevel: true,
+      showover: true,
+      Levelnum: {},
+      pn: 1,
+      pg: 4,
+      items: [],
+      loading: false,
+      type: 1
     }
   },
+  created () {
+    if (this.UserID) {
+      this._getUserLevel(this.UserID)
+    } else {
+      this.showLevel = false
+    }
+    this._getV1PointGoods(this.pn, this.pg)
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
+  components: {
+    NotLogged,
+    MugenScroll
+  },
   methods: {
+    _getUserLevel (id) {
+      getUserLevel(id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('会员积分=============')
+          console.log(res.data)
+          this.showLevel = true
+          this.Levelnum = res.data
+        }
+      })
+    },
+    _getV1PointGoods (pn, pg) {
+      getV1PointGoods(pn, pg).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('获取V1积分列表==================')
+          console.log(res.data)
+          let vm = this
+          if (res.data.length === 0) {
+            this.showover = false
+          } else {
+            res.data.forEach(function (value, index, array) {
+              vm.items.push(value)
+            })
+            this.loading = false
+          }
+        }
+      })
+    },
+    _getV2PointGoods (pn, pg) {
+      getV2PointGoods(pn, pg).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('获取V2积分列表==================')
+          console.log(res.data)
+          let vm = this
+          if (res.data.length === 0) {
+            this.showover = false
+          } else {
+            res.data.forEach(function (value, index, array) {
+              vm.items.push(value)
+            })
+            this.loading = false
+          }
+        }
+      })
+    },
+    fetchData () {
+      this.loading = true
+      this.pn++
+      if (this.show) {
+        this._getV1PointGoods(this.pn, this.pg)
+      } else {
+        this._getV2PointGoods(this.pn, this.pg)
+      }
+    },
+    notShowbox () {
+      if (!this.UserID) {
+        this.notShow = true
+        var vm = this
+        setTimeout(function () {
+          vm.notShow = false
+        }, 1000)
+        this.userState = false
+      } else {
+        this.userState = true
+      }
+    },
     tabOne () {
+      this.showover = true
       this.show = true
+      this.pn = 1
+      this.items = []
+      this.type = 1
+      this._getV1PointGoods(this.pn, this.pg)
     },
     tabTwo () {
+      this.showover = true
       this.show = false
+      this.pn = 1
+      this.items = []
+      this.type = 2
+      this._getV2PointGoods(this.pn, this.pg)
     },
-    goDetalis () {
-      this.$router.push({
-        path: `/ExchangeDetalis`
-      })
+    goDetalis (id, type) {
+      this.notShowbox()
+      if (this.UserID) {
+        this.$router.push({
+          path: `/ExchangeDetalis/${id}/${type}`
+        })
+      }
     }
   }
 }
@@ -91,6 +213,22 @@ img {
   margin: auto;
   font-size: 80px;
   color: #59c2fa;
+}
+.exchange-btn {
+  width: 130px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 26px;
+  color: #fff;
+  background: #59c2fa;
+  border-radius: 10px;
 }
 .lvavel {
   width: 80px;
@@ -174,5 +312,10 @@ img {
   background: #9b9b9b;
   transform-origin: bottom center;
   transform: rotate(9deg);
+}
+.bottom {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
 }
 </style>
