@@ -8,7 +8,7 @@
         <div class="submission-name">
           <div class="submission-time">
             <p>{{shoping.name}}</p>
-            <p>周一至周日 | 需预约</p>
+            <p>{{shoping.termOfValidity}} | <span v-if="shoping.isBespeak === 1">需预约</span><span v-else>不需预约</span></p>
           </div>
           <div class="new">
             ¥{{shoping.newPrice}}
@@ -37,6 +37,16 @@
           {{sum}}
         </div>
       </div>
+      <div class="line">
+      </div>
+      <div class="num" @click='showboxtrue'>
+        <div class="num-title">
+          优惠券：
+        </div>
+        <div class="num-jiage">
+          {{numquan}}
+        </div>
+      </div>
     </div>
     <div class="submission-iph">
       <div class="iph-title">
@@ -49,11 +59,37 @@
     <div class="submission-btn" @click="sumBtn">
       提交订单
     </div>
+    <div class="box" v-if='showbox'>
+      <div class="box-item">
+        <div class="box-title">
+          <span @click='quxiao'>取消</span> 选择优惠券
+          <span class="box-true" @click='trueover'>确定</span>
+        </div>
+        <div class="line"></div>
+         <div class="couponlist">
+          <div class="couponitem" v-for="(item, index) in items" :key="index" @click="activetrue(item, index)" :class="{couponitemactive: index == typeindex }">
+            <div class="couponitem-title" :class="{activebg: item.limitPrice >= sum }">
+              <div class="couponitem-new">
+                <span>{{item.price}}</span>元
+              </div>
+              <div class="couponitem-name">
+                <p>{{item.name}}</p>
+                <p> {{new Date(item.startTime).getFullYear()}}/{{new Date(item.startTime).getMonth() + 1}}/{{new Date(item.startTime).getDate()}} - {{new Date(item.endTime).getFullYear()}}/{{new Date(item.endTime).getMonth() + 1}}/{{new Date(item.endTime).getDate()}}</p>
+              </div>
+            </div>
+            <div class="couponitem-footer">
+              {{item.title}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { getGoodsOrderDetail, changeAddressById } from 'api/shopping'
+import { getAllCoupon } from 'api/user'
 import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 
@@ -62,6 +98,8 @@ export default {
     return {
       num: 1,
       sum: 1,
+      typeindex: null,
+      numquan: '暂无可用',
       img: './static/showImg/submission.png',
       addIcon: './static/icon/add-icon.png',
       subIcon: './static/icon/sub-icon.png',
@@ -71,8 +109,11 @@ export default {
         mobile: '',
         num: 1,
         total: 1,
-        userId: ''
-      }
+        userId: '',
+        couponId: ''
+      },
+      items: [],
+      showbox: false
     }
   },
   created () {
@@ -94,6 +135,20 @@ export default {
           this.shoping.num = 1
           this.shoping.total = this.shoping.num * this.shoping.newPrice
           this.sum = this.shoping.newPrice
+          this._getAllCoupon()
+        }
+      })
+    },
+    _getAllCoupon () {
+      getAllCoupon(this.UserID, 1, this.shoping.type).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('查询')
+          console.log(res.data)
+          if (res.data.length > 0) {
+            this.numquan = res.data.length + '个优惠券'
+            this.items = res.data
+            console.log(this.items[1].limitPrice <= this.sum)
+          }
         }
       })
     },
@@ -106,8 +161,20 @@ export default {
         }
       })
     },
+    showboxtrue () {
+      this.showbox = true
+      this.typeindex = null
+    },
+    quxiao () {
+      this.showbox = false
+      this.shoping.couponId = ''
+      this.numquan = this.items.length + '个优惠券'
+    },
     sumBtn () {
       this._changeAddressById()
+    },
+    trueover () {
+      this.showbox = false
     },
     subclick () {
       if (this.shoping.num === 1) {
@@ -119,11 +186,20 @@ export default {
       this.sum = this.shoping.total
     },
     addclick () {
-      console.log('ce')
       this.shoping.num = this.shoping.num + 1
       this.shoping.total = this.shoping.newPrice * this.shoping.num
       this.num = this.shoping.num
       this.sum = this.shoping.total
+    },
+    activetrue (item, index) {
+      console.log(item.limitPrice <= this.sum)
+      if (item.limitPrice <= this.sum) {
+        this.typeindex = index
+        this.shoping.couponId = item.id
+        this.numquan = item.name
+        this.shoping.total = this.shoping.total - item.limitPrice
+        this.sum = this.shoping.total
+      }
     }
   }
 }
@@ -246,5 +322,116 @@ img {
   height: 19px;
   transform: rotate(180deg);
   margin-left: 10px;
+}
+.box {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(000, 000, 000, 0.5)
+}
+.box-item {
+  width: 100%;
+  height: 70%;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+}
+.box-title {
+  width: 90%;
+  margin: 0 auto;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30px;
+}
+.box-title span {
+  display: block;
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 40px;
+  border: 2px solid #59c2fa;
+  color: #59c2fa;
+  border-radius: 10px;
+}
+.box-title span.box-true{
+  background: #59c2fa;
+  color: #fff;
+}
+.couponlist {
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+.couponitem {
+  width: 690px;
+  height: 200px;
+  border-radius: 10px;
+  margin-bottom: 22px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+.couponitemactive {
+  box-shadow: 0 0 10px 10px #fff5f5;
+}
+.couponitem-title {
+  width: 100%;
+  height: 150px;
+  background: -webkit-linear-gradient(#ff7d7d, #ed6969); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#ff7d7d, #ed6969); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#ff7d7d, #ed6969); /* Firefox 3.6 - 15 */
+  background: linear-gradient(#ff7d7d, #ed6969); /* 标准的语法 */
+  display: flex;
+}
+.activebg {
+  background: #9b9b9b;
+}
+.couponitem-new {
+  width: 109px;
+  height: 98px;
+  text-align: center;
+  line-height: 98px;
+  margin: 30px 50px;
+  font-size: 24px;
+  color: #ffffff;
+}
+.couponitem-new span {
+  font-size: 70px;
+}
+.couponitem-name {
+  width: 250px;
+  margin-top: 30px;
+  color: #fff;
+  line-height: 35px;
+}
+.couponitem-name p:nth-child(1) {
+  font-size: 24px;
+}
+.couponitem-name p:nth-child(2) {
+  font-size: 18px;
+}
+.couponitem-btn {
+  width: 130px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: #ffffff;
+  font-size: 18px;
+  color: #ee6a6a;
+  border-radius: 100px;
+  margin-top: 63px;
+  margin-left: 70px;
+}
+.couponitem-footer {
+  padding-left: 40px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  color: #9b9b9b;
+  box-sizing: border-box;
 }
 </style>

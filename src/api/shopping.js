@@ -97,7 +97,8 @@ export function changeAddressById (data) {
     mobile: data.mobile,
     num: data.num,
     total: data.total,
-    userId: data.userId
+    userId: data.userId,
+    couponId: data.couponId
   }).then((res) => {
     return Promise.resolve(res.data)
   })

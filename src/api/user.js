@@ -28,12 +28,13 @@ export function getUserInfo (userid) {
 }
 
 // 获取优惠券
-export function getAllCoupon (userid, state) {
+export function getAllCoupon (userid, state, type) {
   const url = `${api}/sicc/user/getAllCoupon`
   return axios.get(url, {
     params: {
       userId: userid,
-      state: state
+      state: state,
+      type: type
     }
   }).then((res) => {
     return Promise.resolve(res.data)

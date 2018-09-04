@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="couponitem-footer">
-          购买国际会议中心客房代金券专享
+          {{item.title}}
         </div>
       </div>
     </div>
@@ -42,6 +42,7 @@ export default {
   data () {
     return {
       index: 1,
+      type: 0,
       items: []
     }
   },
@@ -55,7 +56,7 @@ export default {
   },
   methods: {
     _getAllCoupon () {
-      getAllCoupon(this.UserID, this.index).then((res) => {
+      getAllCoupon(this.UserID, this.index, this.type).then((res) => {
         if (res.code === ERR_OK) {
           console.log('获取优惠券列表========================')
           console.log(res.data)
