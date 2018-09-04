@@ -2,10 +2,13 @@
   <div class="password">
     <div class="yanzheng" v-if="show">
       <p>请完成以下认证</p>
-      <p>请输入176****1234收到的短信验证码</p>
+       <div class="yanzhengcode yanzhengcode-ipn">
+        <input type="text" placeholder="请输入手机号" v-model="userdata.mobile">
+        <span class="iph-err">{{nameErr}}</span>
+      </div>
       <div class="yanzhengcode">
-        <input type="text">
-        <span class="codebtn">获取验证码</span>
+        <input type="text" placeholder="请输入验证码" v-model="userdata.code">
+        <span class="codebtn" @click="yanzheng()">{{content}}</span>
       </div>
       <div class="next-btn" @click="nextPass">
         下一步
@@ -13,8 +16,9 @@
     </div>
     <div class="yanzheng" v-if="nextshow">
       <p>设置新的登录密码</p>
-      <div class="newpassword">
-        <input type="text">
+      <div class="yanzhengcode yanzhengcode-ipn">
+        <input type="text" placeholder="请输入密码" v-model="userdata.password">
+        <span class="iph-err">{{nameErr}}</span>
       </div>
       <div class="next-btn" @click="overTrue">
         确认修改
@@ -32,25 +36,55 @@
   </div>
 </template>
 <script>
+import { matchCode, changePwd } from 'api/user'
+import { sendSMS } from 'api/login'
+import { ERR_OK } from 'api/config'
+
+let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
+
 export default {
   data () {
     return {
       show: true,
       nextshow: false,
       over: false,
-      overimg: './static/icon/true-iocn.png'
+      overimg: './static/icon/true-iocn.png',
+      content: '获取验证码',
+      totalTime: 60,
+      canClick: true,
+      userdata: {
+        mobile: '',
+        code: '',
+        password: ''
+      },
+      nameErr: ''
     }
   },
   methods: {
     nextPass () {
-      this.show = false
-      this.nextshow = true
-      this.over = false
+      console.log(this.userdata)
+      matchCode(this.userdata).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(res.data)
+          if (res.data) {
+            this.show = false
+            this.nextshow = true
+            this.over = false
+          } else {
+            alert('验证码错误')
+          }
+        }
+      })
     },
     overTrue () {
-      this.show = false
-      this.nextshow = false
-      this.over = true
+      console.log(this.userdata)
+      changePwd(this.userdata).then((res) => {
+        if (res.code === ERR_OK) {
+          this.show = false
+          this.nextshow = false
+          this.over = true
+        }
+      })
     },
     gomy () {
       this.show = true
@@ -59,6 +93,31 @@ export default {
       this.$router.push({
         path: '/My'
       })
+    },
+    yanzheng () {
+      if (this.userdata.mobile) {
+        if (!phoneReg.test(this.userdata.mobile)) {
+          return
+        }
+        if (!this.canClick) return // 改动的是这两行代码
+        this.canClick = false
+        this.content = this.totalTime + 's后重新发送'
+        let clock = window.setInterval(() => {
+          this.totalTime--
+          this.content = this.totalTime + 's后重新发送'
+          if (this.totalTime < 0) {
+            window.clearInterval(clock)
+            this.content = '重新发送'
+            this.totalTime = 10
+            this.canClick = true // 这里重新开启
+          }
+        }, 1000)
+        sendSMS(this.userdata.mobile).then((res) => {
+          console.log(res.data)
+        })
+      } else {
+        this.nameErr = '请输入手机号'
+      }
     }
   }
 }
@@ -85,19 +144,32 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+.iph-err {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  color: red;
+  height: 80px;
+  line-height: 80px;
 }
 .yanzhengcode input {
   width: 400px;
-  height: 50px;
+  height: 80px;
   border: 2px solid #979797;
   border-radius: 10px;
   outline: none;
   padding: 0 20px;
 }
+.yanzhengcode-ipn input{
+  width: 100%;
+}
 .codebtn {
   width: 180px;
-  height: 50px;
-  line-height: 50px;
+  height: 80px;
+  line-height: 80px;
   text-align: center;
   display: block;
   background: #59c2fa;

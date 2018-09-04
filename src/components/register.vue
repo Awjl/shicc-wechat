@@ -29,23 +29,25 @@
     </div>
     <div class="box" v-if="show">
       <p>新人专享礼包</p>
-      <p>200元现金已放入您的账户</p>
+      <p>现金礼包已放入您的账户</p>
       <div class="logincouponlist">
         <div class="couponitem" v-for="(item, index) in items" :key="index">
           <div class="couponitem-title" :class="{activebg: item.state == 2 || item.state == 3}">
             <div class="couponitem-new">
-              <span>{{item.new}}</span>元
+              <span>{{item.price}}</span>元
             </div>
             <div class="couponitem-name">
               <p>{{item.name}}</p>
-              <p>{{item.time}}</p>
+              <p>
+                {{new Date(item.startTime).getFullYear()}}/{{new Date(item.startTime).getMonth() + 1}}/{{new Date(item.startTime).getDate()}} - {{new Date(item.endTime).getFullYear()}}/{{new Date(item.endTime).getMonth() + 1}}/{{new Date(item.endTime).getDate()}}
+              </p>
             </div>
             <div class="couponitem-btn" v-if="item.state == 1">
               立即使用
             </div>
           </div>
           <div class="couponitem-footer">
-            购买国际会议中心客房代金券专享
+            {{item.title}}
           </div>
           <div class="he20"></div>
         </div>
@@ -57,7 +59,7 @@
   </div>
 </template>
 <script>
-import { Register, sendSMS } from 'api/login'
+import { Register, sendSMS, getNewbeeCoupon } from 'api/login'
 import { setUserID } from 'common/js/auth'
 
 import { ERR_OK } from 'api/config'
@@ -95,10 +97,20 @@ export default {
           if (res.data.code === ERR_OK) {
             this.$store.commit('SET_USERID', res.data.msg)
             setUserID(res.data.msg)
-            this.show = true
+            this._getNewbeeCoupon(res.data.msg)
           } else {
             alert(res.data.msg)
           }
+        }
+      })
+    },
+    _getNewbeeCoupon (id) {
+      getNewbeeCoupon(id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('新手优惠券================================')
+          console.log(res.data)
+          this.show = true
+          this.items = res.data
         }
       })
     },
@@ -294,7 +306,6 @@ img {
 .couponitem {
   width: 690px;
   height: 200px;
-  box-shadow: 0 0 4px 4px #fff5f5;
   border-radius: 10px;
   margin-bottom: 22px;
   overflow: hidden;

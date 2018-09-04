@@ -27,7 +27,7 @@ export function getUserInfo (userid) {
   })
 }
 
-// 获取优惠券 22
+// 获取优惠券
 export function getAllCoupon (userid, state) {
   const url = `${api}/sicc/user/getAllCoupon`
   return axios.get(url, {
@@ -76,12 +76,25 @@ export function getWishList (userid) {
   })
 }
 
-// 修改密码 22 有疑问
+// 修改密码
 export function changePwd (data) {
   const url = `${api}/sicc/user/changePwd`
   return axios.post(url, {
     mobile: data.mobile,
     password: data.password
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 验证手机号
+export function matchCode (data) {
+  const url = `${api}/sicc/user/matchCode`
+  return axios.get(url, {
+    params: {
+      mobile: data.mobile,
+      code: data.code
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -155,7 +168,7 @@ export function getAllAddress (userid) {
   })
 }
 
-// 获取所有商品订单 22
+// 获取所有商品订单
 export function getAllGoodsOrder (userid, type) {
   const url = `${api}/sicc/order/getAllGoodsOrder`
   return axios.get(url, {
@@ -168,12 +181,49 @@ export function getAllGoodsOrder (userid, type) {
   })
 }
 
-// 获取所有积分订单列表 22
+// 获取所有积分订单列表
 export function getAllPointGoodsOrder (userid) {
   const url = `${api}/sicc/order/getAllPointGoodsOrder`
   return axios.get(url, {
     params: {
       userId: userid
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取代金券列表
+export function getALLVoucher (userid, type) {
+  const url = `${api}/sicc/voucher/getALLVoucher`
+  return axios.get(url, {
+    params: {
+      userId: userid,
+      type: type
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 转赠接口
+export function givenToOne (data) {
+  const url = `${api}/sicc/voucher/givenToOne`
+  return axios.post(url, {
+    mobile: data.mobile,
+    deliverer: data.deliverer,
+    couponId: data.couponId
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 验证手机号
+export function checkMobile (mobile) {
+  const url = `${api}/sicc/voucher/checkMobile`
+  return axios.get(url, {
+    params: {
+      mobile: mobile
     }
   }).then((res) => {
     return Promise.resolve(res.data)

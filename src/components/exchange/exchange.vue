@@ -292,11 +292,11 @@ img {
 .item-jiage {
   padding-left: 20px;
 }
-.item-jiage>.new {
+.item-title>.item-jiage>.new {
   font-size: 24px;
   color: #ed6969;
 }
-.item-jiage>.old {
+.item-title>.item-jiage>.old {
   font-size: 18px;
   color: #9b9b9b;
   letter-spacing: 0.97px;

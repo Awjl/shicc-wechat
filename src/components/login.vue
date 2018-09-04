@@ -17,7 +17,7 @@
       <div class="line"></div>
       <div class="register">
         <span @click="goRegister">没有账号？去注册</span>
-        <span>忘记密码</span>
+        <span @click="gowant">忘记密码</span>
       </div>
       <div class="loginbtn" @click="goLoing">
         登录
@@ -91,6 +91,11 @@ export default {
     goRegister () {
       this.$router.push({
         path: '/Register'
+      })
+    },
+    gowant () {
+      this.$router.push({
+        path: '/MyPassword'
       })
     },
     goLoing () {

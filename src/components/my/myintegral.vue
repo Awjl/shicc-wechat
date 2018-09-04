@@ -6,10 +6,13 @@
         您现有积分
       </div>
       <div class="exchange-num">
-        1288
+        {{Levelnum.points}}
       </div>
-      <div class="lvavel">
+      <div class="lvavel" v-if='Levelnum.level == 1'>
         V1会员
+      </div>
+      <div class="lvavel" v-if='Levelnum.level == 2'>
+        V2会员
       </div>
     </div>
     <div class="title">
@@ -18,26 +21,29 @@
     <div class="integralList" v-for="(item, index) in listData" :key="index">
       <div class="integralItem">
         <div class="integralTitle">
-          {{item.tiem}}
+          {{new Date(item.createDate).getFullYear()}}-{{new Date(item.createDate).getMonth() + 1}}-{{new Date(item.createDate).getDate()}}
         </div>
         <div class="line"></div>
         <div class="integral-conter">
           <div class="integral-img">
-            <img :src="item.img" alt="">
+            <img :src="item.url" alt="">
           </div>
           <div class="integral-name">
             <div class="integralnum">
-              <span>{{item.name}}</span>
+              <span>{{item.name}} {{item.goodsKind}}</span>
               <span>x{{item.num}}</span>
             </div>
             <div class="subintegral">
-              -{{item.jifen}}积分
+              -{{item.total}}积分
             </div>
           </div>
         </div>
         <div class="line"></div>
-        <div class="kuaidi">
-          {{item.kuaidiname}} {{item.kuaidiId}}
+        <div class="kuaidi" v-if="item.courierNumber !== null">
+          快递单号 {{item.courierNumber}}
+        </div>
+        <div class="kuaidi" v-else>
+          暂无信息
         </div>
       </div>
     </div>
@@ -45,11 +51,45 @@
 </template>
 
 <script>
+import { ERR_OK } from 'api/config'
+import { getUserLevel, getAllPointGoodsOrder } from 'api/user'
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
       bg: './static/exchangeImg/bg.png',
-      listData: [{ img: './static/showImg/address.png', name: '蓝牙耳机', num: 1, jifen: 260, kuaidiname: '圆通', kuaidiId: '1234 5678 9999', tiem: '2018/06/06 12:30' }, { img: './static/showImg/address.png', name: '蓝牙耳机', num: 1, jifen: 260, kuaidiname: '暂无信息', kuaidiId: '', tiem: '2018/06/06 12:30' }, { img: './static/showImg/address.png', name: '蓝牙耳机', num: 1, jifen: 260, kuaidiname: '暂无信息', kuaidiId: '', tiem: '2018/06/06 12:30' }]
+      Levelnum: {},
+      listData: []
+    }
+  },
+  created () {
+    this._getUserLevel(this.UserID)
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
+  methods: {
+    _getUserLevel (id) {
+      getUserLevel(id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('会员积分=============================')
+          console.log(res.data)
+          this.Levelnum = res.data
+          this._getAllPointGoodsOrder()
+        }
+      })
+    },
+    _getAllPointGoodsOrder () {
+      getAllPointGoodsOrder(this.UserID).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('积分兑换列表=============')
+          console.log(res.data)
+          this.listData = res.data
+        }
+      })
     }
   }
 }
@@ -57,15 +97,15 @@ export default {
 
 <style>
 .integral {
-  background: #f2f2f2
+  background: #f2f2f2;
 }
 img {
   width: 100%;
 }
-.line{
+.line {
   width: 100%;
   height: 2px;
-  background: #DCDCDC;
+  background: #dcdcdc;
 }
 .exchange-bg {
   width: 100%;
@@ -135,9 +175,9 @@ img {
   height: 83px;
   line-height: 83px;
   font-size: 24px;
-  color: #9B9B9B;
+  color: #9b9b9b;
 }
-.integral-conter{
+.integral-conter {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -167,6 +207,6 @@ img {
   height: 83px;
   line-height: 83px;
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
 }
 </style>

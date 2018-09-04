@@ -15,11 +15,11 @@
       <div class="couponitem" v-for="(item, index) in items" :key="index">
         <div class="couponitem-title" :class="{activebg: item.state == 2 || item.state == 3}">
           <div class="couponitem-new">
-            <span>{{item.new}}</span>元
+            <span>{{item.price}}</span>元
           </div>
           <div class="couponitem-name">
             <p>{{item.name}}</p>
-            <p>{{item.time}}</p>
+            <p> {{new Date(item.startTime).getFullYear()}}/{{new Date(item.startTime).getMonth() + 1}}/{{new Date(item.startTime).getDate()}} - {{new Date(item.endTime).getFullYear()}}/{{new Date(item.endTime).getMonth() + 1}}/{{new Date(item.endTime).getDate()}}</p>
           </div>
           <div class="couponitem-btn" v-if="item.state == 1">
             立即使用
@@ -34,25 +34,49 @@
 </template>
 
 <script>
+import { ERR_OK } from 'api/config'
+import { getAllCoupon } from 'api/user'
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
       index: 1,
-      items: [{ new: 50, name: '每满500减50元券', time: '2018.07.03-2019.07.03', state: 1 }, { new: 50, name: '停车场专用券', time: '2018.07.03-2019.07.03', state: 1 }]
+      items: []
     }
   },
+  created () {
+    this._getAllCoupon()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _getAllCoupon () {
+      getAllCoupon(this.UserID, this.index).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('获取优惠券列表========================')
+          console.log(res.data)
+          this.items = res.data
+        }
+      })
+    },
     notused () {
       this.index = 1
-      this.items = [{ new: 50, name: '每满500减50元券', time: '2018.07.03-2019.07.03', state: 1 }, { new: 50, name: '停车场专用券', time: '2018.07.03-2019.07.03', state: 1 }]
+      this.items = []
+      this._getAllCoupon()
     },
     alreadyused () {
       this.index = 2
-      this.items = [{ new: 50, name: '每满500减50元券', time: '2018.04.27  19:33  已使用', state: 2 }, { new: 50, name: '每满500减50元券', time: '2018.04.27  19:33  已使用', state: 2 }]
+      this.items = []
+      this._getAllCoupon()
     },
     expired () {
       this.index = 3
-      this.items = [{ new: 50, name: '每满500减50元券', time: '2018.04.27  已过期', state: 3 }, { new: 50, name: '每满500减50元券', time: '2018.04.27  已过期', state: 3 }]
+      this.items = []
+      this._getAllCoupon()
     }
   }
 }

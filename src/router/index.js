@@ -16,6 +16,7 @@ import MyAddres from '@/components/my/myAddres' // 收货地址列表
 import AddAddres from '@/components/my/addAddres' // 新增收货
 import MyWish from '@/components/my/mywish' // 心愿单
 import MyCoupon from '@/components/my/myCoupon' // 优惠券
+import MyTransfer from '@/components/my/myTransfer' // 我的代金券
 import MyOrder from '@/components/my/myOrder' // 我的订单
 import MyModify from '@/components/my/mymodify' // 个人资料修改
 import MyIntegral from '@/components/my/myintegral' // 积分中心
@@ -125,6 +126,13 @@ export default new Router({
       component: MyWish,
       meta: {
         title: '心愿单'
+      }
+    },
+    {
+      path: '/MyTransfer',
+      component: MyTransfer,
+      meta: {
+        title: '代金券'
       }
     },
     {

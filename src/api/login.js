@@ -33,10 +33,14 @@ export function sendSMS (iph) {
   })
 }
 
-// 获取新手优惠券 22 等待完善
-export function getNewbeeCoupon (iph) {
-  const url = `${api}/sicc/service/getNewbeeCoupon`
-  return axios.get(url).then((res) => {
+// 获取新手优惠券
+export function getNewbeeCoupon (userId) {
+  const url = `${api}/sicc/coupon/getNewbeeCoupon`
+  return axios.get(url, {
+    params: {
+      userId: userId
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }

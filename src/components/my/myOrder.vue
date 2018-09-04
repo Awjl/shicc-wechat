@@ -2,10 +2,10 @@
   <div class="order">
     <div class="order-nav">
       <div class="nav-item " :class="{active: index == 1}" @click="notused">
-        未使用
+        进行中
       </div>
       <div class="nav-item" :class="{active: index == 2}" @click="alreadyused">
-        已使用
+        已完成
       </div>
     </div>
     <div class="orderList">
@@ -13,32 +13,31 @@
         <div class="orderitem">
           <div class="orderitem-id">
             <div class="idnum">
-              订单号：{{item.id}}
+              订单号：{{item.code}}
             </div>
             <div class="state">
               <span v-if="item.state == 1">待付款</span>
-              <span v-if="item.state == 2">待使用</span>
-              <span v-if="item.state == 3">已完成</span>
+              <span v-if="item.state == 2">已完成</span>
             </div>
           </div>
           <div class="line">
           </div>
           <div class="orderitem-conter">
             <div class="orderitem-img">
-              <img :src="item.img" alt="">
+              <img :src="item.url" alt="">
             </div>
             <div class="orderitem-name">
               <div class="name">
                 {{item.name}}
               </div>
               <div class="new">
-                ￥{{item.new}}
+                ￥{{item.newPrice}}
               </div>
               <div class="num">
                 x {{item.num}}
               </div>
               <div class="sum">
-                总计：￥{{item.sum}}
+                总计：￥{{item.total}}
               </div>
             </div>
           </div>
@@ -46,8 +45,7 @@
           </div>
           <div class="btn">
             <span class="true-btn" v-if="item.state == 1">立即付款</span>
-            <span class="over-btn" v-if="item.state == 2" @click="show">立即使用</span>
-            <span class="over-btn" v-if="item.state == 3">再来一单</span>
+            <span class="over-btn" v-if="item.state == 2">再来一单</span>
           </div>
         </div>
         <div class="line5">
@@ -55,69 +53,54 @@
         </div>
       </div>
     </div>
-    <div class="OverBox" v-if="showTrue">
-      <div class="Box-one">
-        <div class="box-title">
-          卡券兑换码
-        </div>
-        <div class="box-erwei">
-
-        </div>
-        <div class="box-name">
-          有效期：
-        </div>
-        <div class="box-text">
-          2018.07.01至2019.07.01 （周末、法定节假日通用）
-        </div>
-        <div class="box-name">
-          使用时间：
-        </div>
-        <div class="box-text">
-          10:00-22:00
-        </div>
-        <div class="box-name">
-          使用规则：
-        </div>
-        <div class="box-text">
-          <p>*需要提前预约</p>
-          <p>*不可叠加使用</p>
-          <p>不兑现、不找零</p>
-          <p>*提供免费Wifi</p>
-          <p>停车位收费标准：详情到店或者电话咨询</p>
-        </div>
-      </div>
-      <div class="OverBox-img" @click="hide">
-        <img :src="overImg" alt="">
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { getAllGoodsOrder } from 'api/user'
+import { ERR_OK } from 'api/config'
+
 export default {
   data () {
     return {
       index: 1,
       TrueImg: './static/icon/true-iocn.png',
       overImg: './static/icon/done.png',
+      type: 1,
       showTrue: false,
-      dataList: [{ id: 20180606123, state: 1, img: './static/myimg/shop.png', name: '舒适商务套间', new: 693, num: 2, sum: 1286 }, { id: 20180606123, state: 2, img: './static/myimg/shop.png', name: '舒适商务套间', new: 693, num: 2, sum: 1286 }]
+      dataList: []
     }
   },
+  created () {
+    this._getAllGoodsOrder()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _getAllGoodsOrder () {
+      getAllGoodsOrder(this.UserID, this.type).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('这是订单中心=============================')
+          console.log(res.data)
+          this.dataList = res.data
+        }
+      })
+    },
     notused () {
       this.index = 1
-      this.dataList = [{ id: 20180606123, state: 1, img: './static/myimg/shop.png', name: '舒适商务套间', new: 693, num: 2, sum: 1286 }, { id: 20180606123, state: 2, img: './static/myimg/shop.png', name: '舒适商务套间', new: 693, num: 2, sum: 1286 }]
+      this.type = 1
+      this.dataList = []
+      this._getAllGoodsOrder()
     },
     alreadyused () {
       this.index = 2
-      this.dataList = [{ id: 20180606123, state: 3, img: './static/myimg/shop.png', name: '舒适商务套间', new: 693, num: 2, sum: 1286 }, { id: 20180606123, state: 3, img: './static/myimg/shop.png', name: '舒适商务套间', new: 693, num: 2, sum: 1286 }]
-    },
-    hide () {
-      this.showTrue = false
-    },
-    show () {
-      this.showTrue = true
+      this.type = 2
+      this.dataList = []
+      this._getAllGoodsOrder()
     }
   }
 }
@@ -134,7 +117,7 @@ img {
 }
 .line5 {
   width: 100%;
-  height: 5px;
+  height: 2px;
   background: #dcdcdc;
 }
 .order-nav {
@@ -207,7 +190,7 @@ img {
   font-size: 24px;
   color: #161616;
 }
-.orderitem-name .new,
+.orderitem-name>.new,
 .orderitem-name .num,
 .orderitem-name .sum {
   width: 100%;

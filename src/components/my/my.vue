@@ -59,6 +59,11 @@
         <img src="./myicon/myitem5.png" alt=""> 我的优惠券
       </div>
     </div>
+    <div class="myall" @click="gotransfer">
+      <div class="my-item">
+        <img src="./myicon/myitem8.png" alt=""> 我的代金券
+      </div>
+    </div>
     <div class="he10"></div>
     <div class="myall" @click="goaddres(2)">
       <div class="my-item">
@@ -150,6 +155,14 @@ export default {
       if (this.UserID) {
         this.$router.push({
           path: '/MyOrder'
+        })
+      }
+    },
+    gotransfer () {
+      this.notShowbox()
+      if (this.UserID) {
+        this.$router.push({
+          path: '/MyTransfer'
         })
       }
     },
