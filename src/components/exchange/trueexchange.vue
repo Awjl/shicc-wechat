@@ -1,33 +1,34 @@
 <template>
   <div class="trueexchange">
-    <div class="addres addresactive" @click="goAddres" v-if="show">
+    <div class="he30"></div>
+    <div class="addres addresactive" @click="goAddres(1)" v-if="show">
       + 添加收货信息
     </div>
-    <div class="addres" v-else>
+    <div class="addres" v-else @click="goAddres(1)">
       <div class="list-content">
         <div class="list-left">
           <div class="title">
-            <span>西瓜</span>
-            <span>15000000000</span>
+            <span>{{addres.name}}</span>
+            <span>{{addres.mobile}}</span>
           </div>
-          <p>上海市黄浦区制造局路833弄23号C座</p>
+          <p>{{addres.city}}{{addres.address}}</p>
         </div>
-        <div class="list-right">
+        <!-- <div class="list-right">
           修改<img :src="rightImg" alt="">
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="line"></div>
     <div class="list">
       <div class="list-img">
-        <img :src="img" alt="">
+        <img :src="data.pictureUrl" alt="">
       </div>
       <div class="list-name">
-        <p>荣耀运动蓝牙耳机</p>
-        <p>颜色2，12*20mm</p>
+        <p>{{data.name}}</p>
+        <p>{{data.kind}}</p>
         <div class="list-jiage">
           <div class="new">
-            300积分
+            {{data.point}}积分
           </div>
           <div class="num">
             <span>X{{num}}</span>
@@ -37,9 +38,9 @@
     </div>
     <div class="footer">
       <div class="footer-left">
-        兑换积分：260
+        兑换积分：{{data.point}}
       </div>
-      <div class="footer-right">
+      <div class="footer-right" @click="trueorder">
         确定兑换
       </div>
     </div>
@@ -47,27 +48,102 @@
 </template>
 
 <script>
+import { getPointGoodsOrderDetail, createPointOrder } from 'api/shopping'
+import { getAddressById } from 'api/user'
+import { ERR_OK } from 'api/config'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
       rightImg: './static/icon/addres.png',
       img: './static/showImg/address.png',
       num: 1,
-      show: true
+      show: true,
+      data: {
+        userId: '',
+        goodsId: '',
+        kind: '',
+        point: '',
+        pictureUrl: '',
+        mobile: '',
+        num: 1,
+        total: '',
+        addressId: '',
+        goodsKind: ''
+      },
+      addres: {}
     }
   },
+  created () {
+    this._getPointGoodsOrderDetail()
+    this._getAddressById()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID',
+      'AddresId'
+    ])
+  },
   methods: {
-    goAddres () {
-      this.show = !this.show
-      this.$router.push({
-        path: '/MyAddres'
+    _getAddressById () {
+      if (this.AddresId) {
+        getAddressById(this.AddresId).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log('获取地址ID===================================================')
+            this.show = false
+            console.log(res.data)
+            this.addres = res.data
+          }
+        })
+      } else {
+        this.show = true
+      }
+    },
+    _getPointGoodsOrderDetail () {
+      this.data.userId = this.UserID
+      this.data.goodsId = this.$route.params.id
+      this.data.kind = this.$route.params.kind
+      this.data.point = this.$route.params.point
+      getPointGoodsOrderDetail(this.data).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('查询=============================')
+          console.log(res.data)
+          this.data = res.data
+        }
       })
+    },
+    _createPointOrder (data) {
+      createPointOrder(data).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('提交订单==========================')
+          alert('订单提交成功')
+          console.log(res.data)
+        }
+      })
+    },
+    goAddres (tyep) {
+      this.$router.push({
+        path: `/MyAddres/${tyep}`
+      })
+    },
+    trueorder () {
+      this.data.addressId = this.AddresId
+      this.data.goodsKind = this.data.kind
+      this.data.total = this.data.point
+      this.data.userId = this.UserID
+      this.data.goodsId = this.$route.params.id
+      this.data.num = 1
+      console.log(this.data)
+      this._createPointOrder(this.data)
     }
   }
 }
 </script>
 
 <style scoped>
+.he30{
+  height: 30px;
+}
 img {
   width: 100%;
 }
@@ -101,11 +177,11 @@ img {
   justify-content: space-between;
   overflow: hidden;
 }
-.list-content span{
+.list-content span {
   display: block;
   color: #333;
   font-size: 28px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   letter-spacing: 1px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -118,9 +194,10 @@ img {
 .list-left p {
   margin-top: 20px;
   font-size: 24px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   letter-spacing: 1px;
   white-space: nowrap;
+  text-align: left;
 }
 .list-right {
   width: 150px;
@@ -128,7 +205,7 @@ img {
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   letter-spacing: 0.67px;
 }
 .list-right img {

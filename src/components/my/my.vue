@@ -5,11 +5,11 @@
       <div class="my-name">
         <div class="my-title" v-if="UserID">
           <div class="my-tou">
-            <img :src="imgTou" alt="">
+            <img :src="usermun.url" alt="">
           </div>
           <div class="title-name">
-            <p>西瓜</p>
-            <p>每天进步一点点！</p>
+            <p>{{usermun.user.nickname}}</p>
+            <p>{{usermun.user.sign}}</p>
           </div>
         </div>
         <div class="my-title" v-else>
@@ -18,15 +18,15 @@
         <div class="my-list">
           <div>
             <p>心愿单</p>
-            <p>10</p>
+            <p>{{usermun.loveNum}}</p>
           </div>
           <div>
             <p>优惠券</p>
-            <p>20</p>
+            <p>{{usermun.couponNum}}</p>
           </div>
           <div>
             <p>积分</p>
-            <p>2.8k</p>
+            <p>{{usermun.user.points}}</p>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="he10"></div>
-    <div class="myall" @click="goaddres">
+    <div class="myall" @click="goaddres(2)">
       <div class="my-item">
         <img src="./myicon/myitem6.png" alt=""> 收货地址
       </div>
@@ -77,6 +77,8 @@
 <script>
 import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
+import { getUserInfo } from 'api/user'
+import { ERR_OK } from 'api/config'
 
 export default {
   data () {
@@ -84,12 +86,20 @@ export default {
       imgbg: './static/myimg/my-bg.png',
       imgTou: './static/myimg/my-tou.png',
       notShow: false,
-      userState: false
+      userState: false,
+      usermun: {
+        couponNum: 0,
+        loveNum: 0,
+        user: {
+          points: 0
+        }
+      }
     }
   },
   created () {
     console.log('这里是个人中心=====')
     console.log(this.UserID)
+    this._getUserInfo()
   },
   computed: {
     ...mapGetters([
@@ -97,6 +107,16 @@ export default {
     ])
   },
   methods: {
+    _getUserInfo () {
+      getUserInfo(this.UserID).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('获取全部信息==============')
+          console.log(res.data)
+          this.usermun = res.data
+          console.log(this.usermun)
+        }
+      })
+    },
     notShowbox () {
       if (!this.UserID) {
         this.notShow = true
@@ -141,11 +161,11 @@ export default {
         })
       }
     },
-    goaddres () {
+    goaddres (type) {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
-          path: '/MyAddres'
+          path: `/MyAddres/${type}`
         })
       }
     },

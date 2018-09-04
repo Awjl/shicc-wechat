@@ -285,9 +285,10 @@ export default {
       }
       if (this.inStack(index, currentPage)) {
         let perIndex = index - currentPage > 0 ? index - currentPage : index - currentPage + length
-        style['opacity'] = '1'
-        style['transform'] = 'translate3D(0,0,' + -1 * 70 * (perIndex - this.offsetRatio) + 'px' + ')'
+        style['opacity'] = '0.7'
+        style['transform'] = 'translate3D(0,0,' + -1 * 50 * (perIndex - this.offsetRatio) + 'px' + ')'
         style['zIndex'] = visible - perIndex
+        // style['box-shadow'] = '0px 5px 0px #fff'
         if (!this.temporaryData.tracking) {
           style[this.temporaryData.prefixes.transition + 'TimingFunction'] = 'ease'
           style[this.temporaryData.prefixes.transition + 'Duration'] = 300 + 'ms'

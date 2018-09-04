@@ -86,35 +86,35 @@ export default new Router({
       }
     },
     {
-      path: '/Submission',
+      path: '/Submission/:id',
       component: Submission,
       meta: {
         title: '提交订单'
       }
     },
     {
-      path: '/ExchangeDetalis/:id/:type',
+      path: '/ExchangeDetalis/:id/:type/:level',
       component: ExchangeDetalis,
       meta: {
         title: '积分兑换'
       }
     },
     {
-      path: '/TrueExchange',
+      path: '/TrueExchange/:id/:kind/:point',
       component: TrueExchange,
       meta: {
         title: '兑换'
       }
     },
     {
-      path: '/MyAddres',
+      path: '/MyAddres/:type',
       component: MyAddres,
       meta: {
         title: '收货地址'
       }
     },
     {
-      path: '/AddAddres',
+      path: '/AddAddres/:id',
       component: AddAddres,
       meta: {
         title: '添加收货地址'

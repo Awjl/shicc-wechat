@@ -14,9 +14,9 @@
     </div>
     <div class="line"></div>
     <div class="detalis">
-      <div class="submission-iph">
+      <div class="submission-iph" @click="showbox()">
         <div class="iph-title">
-          已选择：蓝色 X1
+          已选择：{{listImg.pointGoods.kind[trueind]}}
         </div>
         <div class="iph-jiage">
           <img :src="imgRight" alt="">
@@ -25,24 +25,44 @@
       <div class="detalisLine"></div>
       <div class="detailsTitle">商品参数：</div>
       <div class="detailsItem">
-        <p>商品产地<span>中国大陆</span></p>
-        <p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌<span>华为</span></p>
-        <p>线&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长<span>1200mm</span></p>
+        <p v-for="(item, index) in listImg.pointGoods.param" :key="index">{{item.key}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.name}}</p>
       </div>
       <div class="detailsTitle">商品详情图：</div>
     </div>
     <div class="detalisImg">
-      <img :src="item.img" alt="" v-for="(item, index) in imgItem" :key="index">
+      <img :src="item.url" alt="" v-for="(item, index) in listImg.introduce" :key="index">
     </div>
-    <div class="footer" @click="goTrue">
-      立即兑换
+    <div v-if="level >= type">
+      <div class="footer" @click="goTrue" v-if='showtreu'>
+        立即兑换
+      </div>
+      <div class="footer-active" v-else>
+        积分不足
+      </div>
+    </div>
+    <div class="footer-active" v-else>
+      您的级别不够
+    </div>
+    <div class="box" v-if="show">
+      <div class="box-width">
+        <div class="box-title">
+          <span @click="boxquxiao">取消</span> 选择规格
+          <span @click="boxtrue">确定</span>
+        </div>
+        <ul>
+          <li v-for="(item, index) in listImg.pointGoods.kind" :key="index" :class="{ active: ind == index }" @click="tabsort(index)">{{item}}</li>
+        </ul>
+        <div class="box-btn">
+
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Swiper from 'base/swiper/swiper'
-import { getPointGoodsDetailById } from 'api/shopping'
+import { getPointGoodsDetailById, isEnoughPoint } from 'api/shopping'
 import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 
@@ -53,11 +73,18 @@ export default {
       listImg: {
         pointGoods: {
           name: '',
-          summary: ''
+          summary: '',
+          param: {},
+          kind: []
         }
       },
-      imgItem: [{img: './static/showImg/details3.png'}, {img: './static/showImg/details1.png'}, {img: './static/showImg/details2.png'}],
-      type: ''
+      imgItem: [{ img: './static/showImg/details3.png' }, { img: './static/showImg/details1.png' }, { img: './static/showImg/details2.png' }],
+      type: '',
+      level: '',
+      ind: 0,
+      trueind: 0,
+      show: false,
+      showtreu: false
     }
   },
   created () {
@@ -69,20 +96,65 @@ export default {
     ])
   },
   methods: {
+    _isEnoughPoint () {
+      if (this.type === '1') {
+        isEnoughPoint(this.UserID, this.listImg.pointGoods.v1NewPoint).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log('判断积分是否做够===========')
+            console.log(res.data)
+            this.showtreu = res.data
+          }
+        })
+      } else {
+        isEnoughPoint(this.UserID, this.listImg.pointGoods.v2NewPoint).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log('判断积分是否做够===========')
+            console.log(res.data)
+            this.showtreu = res.data
+          }
+        })
+      }
+    },
     _getPointGoodsDetailById () {
       getPointGoodsDetailById(this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('积分详情=============')
-          console.log(res.data)
-          this.type = this.$route.params.type
-          this.listImg = res.data
+          if (res.code === ERR_OK) {
+            console.log('积分详情=============')
+            console.log(res.data)
+            this.type = this.$route.params.type
+            this.level = this.$route.params.level
+            console.log(this.type === '1')
+            this.listImg = res.data
+            this.listImg.pointGoods.param = JSON.parse(this.listImg.pointGoods.param)
+            this.listImg.pointGoods.kind = this.listImg.pointGoods.kind.split(',')
+            this._isEnoughPoint()
+          }
         }
       })
     },
+    boxtrue () {
+      this.trueind = this.ind
+      this.show = false
+    },
+    boxquxiao () {
+      this.show = false
+    },
+    showbox () {
+      this.show = true
+    },
     goTrue () {
-      this.$router.push({
-        path: `/TrueExchange`
-      })
+      if (this.type === '1') {
+        this.$router.push({
+          path: `/TrueExchange/${this.listImg.pointGoods.id}/${this.listImg.pointGoods.kind[this.trueind]}/${this.listImg.pointGoods.v1NewPoint}`
+        })
+      } else {
+        this.$router.push({
+          path: `/TrueExchange/${this.listImg.pointGoods.id}/${this.listImg.pointGoods.kind[this.trueind]}/${this.listImg.pointGoods.v2NewPoint}`
+        })
+      }
+    },
+    tabsort (index) {
+      this.ind = index
     }
   },
   components: {
@@ -92,7 +164,63 @@ export default {
 </script>
 
 <style scoped>
-img{
+.box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(000, 000, 000, 0.5);
+  z-index: 9999;
+}
+.box-width {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 50vh;
+  background: #fff;
+}
+.box-width ul {
+  width: 86%;
+  margin: 30px auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.box-width ul li {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border: 2px solid #59c2fa;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+.box-width ul li.active {
+  background: #59c2fa;
+  color: #fff;
+}
+.box-title {
+  width: 95%;
+  height: 100px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 30px;
+  color: #4a4a4a;
+  border-bottom: 1px solid #dddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box-title span {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border: 2px solid #ddd;
+  font-size: 26px;
+  border-radius: 20px;
+}
+img {
   width: 100%;
 }
 .line {
@@ -144,7 +272,7 @@ img{
   transform-origin: bottom center;
   transform: rotate(9deg);
 }
-.detalis{
+.detalis {
   width: 100%;
   padding: 40px 30px 0;
   box-sizing: border-box;
@@ -158,19 +286,19 @@ img{
   align-items: center;
   background: #fff;
 }
-.iph-title{
+.iph-title {
   font-size: 24px;
   color: #222222;
 }
 .detalisLine {
   width: 100%;
   height: 2px;
-  background:  #DCDCDC;
+  background: #dcdcdc;
   margin-top: 20px;
 }
 .detailsTitle {
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   margin: 30px 0;
 }
 .iph-jiage img {
@@ -179,13 +307,13 @@ img{
   transform: rotate(180deg);
   margin-left: 10px;
 }
-.detailsItem p{
+.detailsItem p {
   font-size: 24px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   height: 40px;
   line-height: 40px;
 }
-.detailsItem p span{
+.detailsItem p span {
   margin-left: 30px;
 }
 .footer {
@@ -196,8 +324,20 @@ img{
   height: 88px;
   text-align: center;
   line-height: 88px;
-  background: #59C2FA;
+  background: #59c2fa;
   font-size: 28px;
-  color: #FFFFFF;
+  color: #ffffff;
+}
+.footer-active {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 88px;
+  text-align: center;
+  line-height: 88px;
+  background: #ddd;
+  font-size: 28px;
+  color: #fff;
 }
 </style>

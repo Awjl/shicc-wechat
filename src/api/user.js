@@ -1,21 +1,21 @@
 import { api } from './config'
 import axios from 'axios'
 
-// 修改个人资料  22
+// 修改个人资料
 export function editUserInfoDetail (data) {
   const url = `${api}/sicc/user/editUserInfoDetail`
   return axios.post(url, {
-    birthday: data.birthday,
+    birthDate: data.birthDate,
     nickname: data.nickname,
     sex: data.sex,
     sign: data.sign,
-    userId: data.userId
+    id: data.userId
   }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 
-// 获取用户全部信息 22
+// 获取用户全部信息
 export function getUserInfo (userid) {
   const url = `${api}/sicc/user/getUserInfo`
   return axios.get(url, {
@@ -40,7 +40,7 @@ export function getAllCoupon (userid, state) {
   })
 }
 
-// 获取用户个人资料 22
+// 获取用户个人资料
 export function getUserInfoDetail (userid) {
   const url = `${api}/sicc/user/getUserInfoDetail`
   return axios.get(url, {
@@ -52,7 +52,7 @@ export function getUserInfoDetail (userid) {
   })
 }
 
-// 查询个人积分以及会员等级 22
+// 查询个人积分以及会员等级
 export function getUserLevel (userid) {
   const url = `${api}/sicc/user/getUserLevel`
   return axios.get(url, {
@@ -64,7 +64,7 @@ export function getUserLevel (userid) {
   })
 }
 
-// 获取全部心愿单 22
+// 获取全部心愿单
 export function getWishList (userid) {
   const url = `${api}/sicc/user/getWishList`
   return axios.get(url, {
@@ -87,21 +87,23 @@ export function changePwd (data) {
   })
 }
 
-// 添加收货地址 22
+// 添加收货地址
 export function addAddress (data) {
   const url = `${api}/sicc/address/addAddress`
+  console.log(data.city)
   return axios.post(url, {
     address: data.address,
     mobile: data.mobile,
     name: data.name,
     userId: data.userId,
-    zipCode: data.zipCode
+    zipCode: data.zipCode,
+    city: data.city
   }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 
-// 修改收货地址 22
+// 修改收货地址
 export function changeAddressById (data) {
   const url = `${api}/sicc/address/changeAddressById`
   return axios.post(url, {
@@ -109,13 +111,15 @@ export function changeAddressById (data) {
     mobile: data.mobile,
     name: data.name,
     userId: data.userId,
-    zipCode: data.zipCode
+    id: data.id,
+    zipCode: data.zipCode,
+    city: data.city
   }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 
-// 根据ID删除收货地址 22
+// 根据ID删除收货地址
 export function deleteAddressById (addressId) {
   const url = `${api}/sicc/address/deleteAddressById`
   return axios.get(url, {
@@ -127,7 +131,7 @@ export function deleteAddressById (addressId) {
   })
 }
 
-// 根据ID查询收货地址 22
+// 根据ID查询收货地址
 export function getAddressById (addressId) {
   const url = `${api}/sicc/address/getAddressById`
   return axios.get(url, {
@@ -139,7 +143,7 @@ export function getAddressById (addressId) {
   })
 }
 
-// 获取所有收货地址22
+// 获取所有收货地
 export function getAllAddress (userid) {
   const url = `${api}/sicc/address/getAllAddress`
   return axios.get(url, {

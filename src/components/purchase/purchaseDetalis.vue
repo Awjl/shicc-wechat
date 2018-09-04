@@ -77,7 +77,7 @@
         <span class="new">¥<span>{{dataList.newPrice}}</span></span>
         <span class="old">¥{{dataList.oldPrice}}</span>
       </div>
-      <div class="footer-over" @click="goSubmission()">
+      <div class="footer-over" @click="goSubmission(dataList.goodsId)">
         立即购买
       </div>
     </div>
@@ -93,6 +93,7 @@ import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
+  inject: ['reload'],
   data () {
     return {
       xinIcon: './static/icon/xin-icon.png',
@@ -123,6 +124,7 @@ export default {
     })
   },
   created () {
+    this.reload()
     if (this.UserID) {
       this.user = this.UserID
       this._getGoodsDetail(this.user)
@@ -163,9 +165,9 @@ export default {
         })
       }
     },
-    goSubmission () {
+    goSubmission (id) {
       this.$router.push({
-        path: `/Submission`
+        path: `/Submission/${id}`
       })
     }
   },

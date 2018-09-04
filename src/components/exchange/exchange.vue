@@ -23,7 +23,7 @@
       <span :class="{active: !show}" @click="tabTwo()">V2尊享区</span>
     </div>
     <div class="exchangelist">
-      <div class="item" v-for="(item, index) in items" :key="index" @click="goDetalis(item.id, type)">
+      <div class="item" v-for="(item, index) in items" :key="index" @click="goDetalis(item.id, type, Levelnum.level)">
         <img :src="item.pictureUrl" alt="">
         <div class="item-title">
           <p>{{item.name}}</p>
@@ -166,11 +166,12 @@ export default {
       this.type = 2
       this._getV2PointGoods(this.pn, this.pg)
     },
-    goDetalis (id, type) {
+    goDetalis (id, type, level) {
       this.notShowbox()
+      console.log(type)
       if (this.UserID) {
         this.$router.push({
-          path: `/ExchangeDetalis/${id}/${type}`
+          path: `/ExchangeDetalis/${id}/${type}/${level}`
         })
       }
     }
@@ -291,11 +292,11 @@ img {
 .item-jiage {
   padding-left: 20px;
 }
-.item-jiage .new {
+.item-jiage>.new {
   font-size: 24px;
   color: #ed6969;
 }
-.item-jiage .old {
+.item-jiage>.old {
   font-size: 18px;
   color: #9b9b9b;
   letter-spacing: 0.97px;

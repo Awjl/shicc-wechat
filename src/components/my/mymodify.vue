@@ -2,58 +2,106 @@
   <div class="modify">
     <div class="modify-tou">
       <div class="tou">
-        <img :src="imgTou" alt="">
+        <img :src="user.url" alt="">
       </div>
       <div class="tou-btn">点击修改头像</div>
     </div>
     <div class="modifyList">
       <div class="modifyItem">
-        <span>用户ID&nbsp;&nbsp;&nbsp;：</span> 20180724558
+        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span> <input type="text" placeholder="请输入昵称" v-model="user.nickname">
       </div>
       <div class="line"></div>
       <div class="modifyItem">
-        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span> <input type="text" placeholder="请输入昵称">
-      </div>
-      <div class="line"></div>
-      <div class="modifyItem">
-        <span>个性签名：</span><input type="text" placeholder="请输入个性签名">
+        <span>个性签名：</span><input type="text" placeholder="请输入个性签名" v-model="user.sign">
       </div>
       <div class="line"></div>
       <div class="modifyItem">
         <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
         <div class="sex">
-          <span @click="sexgentlemen"><img :src="trueiocn"  v-if="sexMen"> <img :src="weiiocn"  v-else>男</span>
+          <span @click="sexgentlemen"><img :src="trueiocn"  v-if="user.sex == 1"> <img :src="weiiocn"  v-else>男</span>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span @click="sexLadies"><img :src="trueiocn"  v-if="!sexMen"> <img :src="weiiocn"  v-else>女</span>
+          <span @click="sexLadies"><img :src="trueiocn"  v-if="user.sex == 2"> <img :src="weiiocn"  v-else>女</span>
         </div>
       </div>
       <div class="line"></div>
-      <div class="modifyItem">
+      <div class="modifyItem" @click="setDate()">
         <span>出生日期：</span>
+        <span v-if=" user.birthday !== null">{{new Date(user.birthday).getFullYear()}}/{{new Date(user.birthday).getMonth() + 1}}/{{new Date(user.birthday).getDate()}}</span>
       </div>
     </div>
-    <div class="submission-btn">
+    <div class="submission-btn" @click="_editUserInfoDetail">
       保存
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { getUserInfoDetail, editUserInfoDetail } from 'api/user'
+import { ERR_OK } from 'api/config'
 export default {
   data () {
     return {
       imgTou: './static/myimg/my-tou.png',
       weiiocn: './static/myimg/wei.png',
       trueiocn: './static/myimg/true.png',
-      sexMen: true
+      sexMen: true,
+      date: '',
+      user: {
+        birthday: null,
+        nickname: '',
+        sex: '',
+        sign: '',
+        url: '',
+        userId: '',
+        birthDate: ''
+      }
     }
   },
+  created () {
+    this._getUserInfoDetail()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _getUserInfoDetail () {
+      console.log('ddddddddd')
+      getUserInfoDetail(this.UserID).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('查找个人信息============')
+          console.log(res.data)
+          this.user = res.data
+        }
+      })
+    },
+    _editUserInfoDetail () {
+      this.user.userId = this.UserID
+      this.user.birthDate = this.user.birthday
+      console.log(this.user)
+      editUserInfoDetail(this.user).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('修改个人资料============')
+          console.log(res.data)
+          alert('修改完成')
+        }
+      })
+    },
+    setDate () {
+      this.$picker.show({
+        type: 'datePicker',
+        onOk: date => {
+          this.user.birthday = date.replace(new RegExp(/-/gm), '/')
+        }
+      })
+    },
     sexgentlemen () {
-      this.sexMen = true
+      this.user.sex = 1
     },
     sexLadies () {
-      this.sexMen = false
+      this.user.sex = 2
     }
   }
 }

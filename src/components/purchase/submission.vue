@@ -3,15 +3,15 @@
     <div class="submission-list">
       <div class="submission-title">
         <div class="submission-img">
-          <img :src="img" alt="">
+          <img :src="shoping.pictureUrl" alt="">
         </div>
         <div class="submission-name">
           <div class="submission-time">
-            <p>上海国际会议中心餐厅代金券</p>
+            <p>{{shoping.name}}</p>
             <p>周一至周日 | 需预约</p>
           </div>
           <div class="new">
-            ¥300
+            ¥{{shoping.newPrice}}
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
           小计：
         </div>
         <div class="num-jiage">
-          188元
+          {{sum}}
         </div>
       </div>
     </div>
@@ -43,36 +43,87 @@
         手机号:
       </div>
       <div class="iph-jiage">
-        135****1111 <img :src="imgRight" alt="">
+        {{shoping.mobile}}
       </div>
     </div>
-    <div class="submission-btn">
+    <div class="submission-btn" @click="sumBtn">
       提交订单
     </div>
   </div>
 </template>
 
 <script>
+import { getGoodsOrderDetail, changeAddressById } from 'api/shopping'
+import { ERR_OK } from 'api/config'
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'HelloWorld',
   data () {
     return {
       num: 1,
+      sum: 1,
       img: './static/showImg/submission.png',
       addIcon: './static/icon/add-icon.png',
       subIcon: './static/icon/sub-icon.png',
-      imgRight: './static/icon/ic_back.png'
+      imgRight: './static/icon/ic_back.png',
+      shoping: {
+        goodsId: '',
+        mobile: '',
+        num: 1,
+        total: 1,
+        userId: ''
+      }
     }
   },
+  created () {
+    this._getGoodsOrderDetail()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID'
+    ])
+  },
   methods: {
+    _getGoodsOrderDetail () {
+      console.log(this.UserID, this.$route.params.id)
+      getGoodsOrderDetail(this.UserID, this.$route.params.id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(`提交订单=====`)
+          console.log(res.data)
+          this.shoping = res.data
+          this.shoping.num = 1
+          this.shoping.total = this.shoping.num * this.shoping.newPrice
+          this.sum = this.shoping.newPrice
+        }
+      })
+    },
+    _changeAddressById () {
+      console.log(this.shoping)
+      this.shoping.userId = this.UserID
+      changeAddressById(this.shoping).then((res) => {
+        if (res.code === ERR_OK) {
+          alert('提交成功')
+        }
+      })
+    },
+    sumBtn () {
+      this._changeAddressById()
+    },
     subclick () {
-      if (this.num === 1) {
+      if (this.shoping.num === 1) {
         return
       }
-      this.num = this.num - 1
+      this.shoping.num = this.shoping.num - 1
+      this.shoping.total = this.shoping.newPrice * this.shoping.num
+      this.num = this.shoping.num
+      this.sum = this.shoping.total
     },
     addclick () {
-      this.num = this.num + 1
+      console.log('ce')
+      this.shoping.num = this.shoping.num + 1
+      this.shoping.total = this.shoping.newPrice * this.shoping.num
+      this.num = this.shoping.num
+      this.sum = this.shoping.total
     }
   }
 }

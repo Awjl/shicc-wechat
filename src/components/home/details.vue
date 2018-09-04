@@ -87,7 +87,7 @@ export default {
   width: 60px;
   height: 60px;
   position: fixed;
-  bottom: 80px;
+  bottom: 5vh;
   left: 0;
   right: 0;
   margin: 0 auto;

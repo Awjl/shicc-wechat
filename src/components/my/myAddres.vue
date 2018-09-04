@@ -2,24 +2,24 @@
   <div class="address">
     <ul>
       <li class="list-item " v-for="(item,index) in list " data-type="0" :key="index">
-        <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
+        <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip(item.id)">
           <div class="list-content">
             <div class="list-left">
               <div class="title">
                 <span>{{item.name}}</span>
-                <span>{{item.iph}}</span>
+                <span>{{item.mobile}}</span>
               </div>
-              <p>{{item.addres}}</p>
+              <p>{{item.city}}{{item.address}}</p>
             </div>
-            <div class="list-right">
+            <div class="list-right"  @click.stop="addAddres(item.id)">
               修改<img :src="rightImg" alt="">
             </div>
           </div>
         </div>
-        <div class="delete" @click="deleteItem" :data-index="index">删除</div>
+        <div class="delete" @click="deleteItem(index, item.id)" :data-index="index">删除</div>
       </li>
     </ul>
-    <div class="addAddres" @click="addAddres">
+    <div class="addAddres" @click="addAddres(null)">
       +添加收货信息
     </div>
     <div class="line"></div>
@@ -29,43 +29,67 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+import { getAllAddress, deleteAddressById } from 'api/user'
+import { setAdd } from 'common/js/auth'
+import { ERR_OK } from 'api/config'
+
 export default {
   data () {
     return {
       rightImg: './static/icon/addres.png',
-      list: [
-        {
-          name: '西瓜', iph: '15300000000', addres: '上海市你猜猜菜菜擦擦擦'
-        },
-        {
-          name: '西瓜', iph: '15300000000', addres: '上海市你猜猜菜菜擦擦擦'
-        },
-        {
-          name: '西瓜', iph: '15300000000', addres: '上海市你猜猜菜菜擦擦擦'
-        },
-        {
-          name: '西瓜', iph: '15300000000', addres: '上海市你猜猜菜菜擦擦擦'
-        },
-        {
-          name: '西瓜', iph: '15300000000', addres: '上海市你猜猜菜菜擦擦擦'
-        }
-      ],
+      list: [],
       startX: 0,
       endX: 0
     }
   },
+  created () {
+    this._getAllAddress()
+  },
+  computed: {
+    ...mapGetters([
+      'UserID',
+      'AddresId'
+    ])
+  },
   methods: {
-    addAddres () {
+    ...mapMutations({
+      setAddres: 'SET_ADDRES'
+    }),
+    _getAllAddress () {
+      getAllAddress(this.UserID).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('查询所有地址信息=============')
+          console.log(res.data)
+          this.list = res.data
+        }
+      })
+    },
+    _deleteAddressById (id) {
+      deleteAddressById(id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('删除地址信息=============')
+          console.log(res.data)
+        }
+      })
+    },
+    addAddres (id) {
       this.$router.push({
-        path: '/AddAddres'
+        path: `/AddAddres/${id}`
       })
     },
     // 跳转
-    skip () {
+    skip (id) {
+      console.log('ceshi')
       if (this.checkSlide()) {
         this.restSlide()
       } else {
-        alert('You click the slide!')
+        if (this.$route.params.type === '1') {
+          console.log('ceshi')
+          setAdd(id)
+          console.log(this.AddresId)
+          this.$router.back(-1)
+        }
       }
     },
     // 滑动开始
@@ -111,13 +135,13 @@ export default {
       }
     },
     // 删除
-    deleteItem (e) {
+    deleteItem (index, id) {
       // 当前索引
-      let index = e.currentTarget.dataset.index
       // 复位
       this.restSlide()
       // 删除
       this.list.splice(index, 1)
+      this._deleteAddressById(id)
     }
   }
 }

@@ -18,6 +18,14 @@
       </div>
       <div class="he20"></div>
       <div class="from-item">
+        <label>会议主题</label><input type="text" placeholder="请输入会议主题" v-model="data.topic">
+      </div>
+      <div class="he20"></div>
+      <div class="from-item">
+        <label>人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数</label><input type="text" placeholder="请输入人数" v-model="data.num">
+      </div>
+      <div class="he20"></div>
+      <div class="from-item">
         <label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注</label>
         <textarea placeholder="请输入您的留言" v-model="data.note"></textarea>
       </div>
@@ -68,7 +76,9 @@ export default {
         mobile: null,
         name: '',
         note: '',
-        userId: ''
+        userId: '',
+        topic: '',
+        num: ''
       }
     }
   },
@@ -144,7 +154,7 @@ img {
   padding: 0px 10px;
   margin: 0;
   border-radius: 10px;
-  border: 2px solid #979797;
+  border: 2px solid #ddd;
   resize: none;
   outline: none;
   box-sizing: border-box;
@@ -197,6 +207,7 @@ img {
 .Box-one {
   width: 550px;
   height: 700px;
+  box-shadow: 0px 10px 10px #fff;
   background: #fff;
   border-radius: 10px;
   position: relative;

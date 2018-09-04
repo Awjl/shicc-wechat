@@ -16,7 +16,7 @@
       </div>
       <div class="line"></div>
       <div class="register">
-        <span @click="goRegister">没有账号？</span>
+        <span @click="goRegister">没有账号？去注册</span>
         <span>忘记密码</span>
       </div>
       <div class="loginbtn" @click="goLoing">
