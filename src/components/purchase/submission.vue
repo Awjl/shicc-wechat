@@ -8,7 +8,10 @@
         <div class="submission-name">
           <div class="submission-time">
             <p>{{shoping.name}}</p>
-            <p>{{shoping.termOfValidity}} | <span v-if="shoping.isBespeak === 1">需预约</span><span v-else>不需预约</span></p>
+            <p>{{shoping.termOfValidity}} |
+              <span v-if="shoping.isBespeak === 1">需预约</span>
+              <span v-else>不需预约</span>
+            </p>
           </div>
           <div class="new">
             ¥{{shoping.newPrice}}
@@ -66,7 +69,7 @@
           <span class="box-true" @click='trueover'>确定</span>
         </div>
         <div class="line"></div>
-         <div class="couponlist">
+        <div class="couponlist">
           <div class="couponitem" v-for="(item, index) in items" :key="index" @click="activetrue(item, index)" :class="{couponitemactive: index == typeindex }">
             <div class="couponitem-title" :class="{activebg: item.limitPrice >= sum }">
               <div class="couponitem-new">
@@ -147,7 +150,6 @@ export default {
           if (res.data.length > 0) {
             this.numquan = res.data.length + '个优惠券'
             this.items = res.data
-            console.log(this.items[1].limitPrice <= this.sum)
           }
         }
       })
@@ -163,12 +165,19 @@ export default {
     },
     showboxtrue () {
       this.showbox = true
-      this.typeindex = null
+      this.shoping.couponId = ''
+      this.numquan = this.items.length + '个优惠券'
+      this.shoping.total = this.shoping.newPrice * this.shoping.num
+      this.num = this.shoping.num
+      this.sum = this.shoping.total
     },
     quxiao () {
       this.showbox = false
       this.shoping.couponId = ''
       this.numquan = this.items.length + '个优惠券'
+      this.shoping.total = this.shoping.newPrice * this.shoping.num
+      this.num = this.shoping.num
+      this.sum = this.shoping.total
     },
     sumBtn () {
       this._changeAddressById()
@@ -184,21 +193,67 @@ export default {
       this.shoping.total = this.shoping.newPrice * this.shoping.num
       this.num = this.shoping.num
       this.sum = this.shoping.total
+      this.shoping.couponId = ''
+      this.numquan = this.items.length + '个优惠券'
+      this.shoping.total = this.shoping.newPrice * this.shoping.num
+      this.num = this.shoping.num
+      this.sum = this.shoping.total
     },
     addclick () {
       this.shoping.num = this.shoping.num + 1
       this.shoping.total = this.shoping.newPrice * this.shoping.num
       this.num = this.shoping.num
       this.sum = this.shoping.total
+      this.shoping.couponId = ''
+      this.numquan = this.items.length + '个优惠券'
+      this.shoping.total = this.shoping.newPrice * this.shoping.num
+      this.num = this.shoping.num
+      this.sum = this.shoping.total
     },
     activetrue (item, index) {
       console.log(item.limitPrice <= this.sum)
-      if (item.limitPrice <= this.sum) {
-        this.typeindex = index
-        this.shoping.couponId = item.id
-        this.numquan = item.name
-        this.shoping.total = this.shoping.total - item.limitPrice
+      if (this.typeindex === null) {
+        if (item.saleType === 1) {
+          if (item.limitPrice <= this.sum) {
+            this.typeindex = index
+            this.shoping.couponId = item.id
+            this.numquan = item.name
+            this.shoping.total = this.shoping.total - item.price
+            this.sum = this.shoping.total
+          }
+        } else {
+          if (item.limitPrice <= this.sum) {
+            this.typeindex = index
+            this.shoping.couponId = item.id
+            this.numquan = item.name
+            this.shoping.total = this.shoping.total - item.limitPrice
+            this.sum = this.shoping.total
+          }
+        }
+      } else {
+        this.shoping.couponId = ''
+        this.num = this.shoping.num
+        this.shoping.total = this.shoping.newPrice * this.shoping.num
         this.sum = this.shoping.total
+        console.log(this.num)
+        console.log(this.sum)
+        if (item.saleType === 1) {
+          if (item.limitPrice <= this.sum) {
+            this.typeindex = index
+            this.shoping.couponId = item.id
+            this.numquan = item.name
+            this.shoping.total = this.shoping.total - item.price
+            this.sum = this.shoping.total
+          }
+        } else {
+          if (item.limitPrice <= this.sum) {
+            this.typeindex = index
+            this.shoping.couponId = item.id
+            this.numquan = item.name
+            this.shoping.total = this.shoping.total - item.limitPrice
+            this.sum = this.shoping.total
+          }
+        }
       }
     }
   }
@@ -272,7 +327,7 @@ img {
   color: #59c2fa;
   letter-spacing: 1.45px;
 }
-.num-title{
+.num-title {
   font-size: 24px;
   color: #4a4a4a;
 }
@@ -329,7 +384,7 @@ img {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(000, 000, 000, 0.5)
+  background: rgba(000, 000, 000, 0.5);
 }
 .box-item {
   width: 100%;
@@ -358,7 +413,7 @@ img {
   color: #59c2fa;
   border-radius: 10px;
 }
-.box-title span.box-true{
+.box-title span.box-true {
   background: #59c2fa;
   color: #fff;
 }

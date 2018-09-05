@@ -75,7 +75,7 @@ export default {
       iconOne: './static/loginimg/phone.png',
       iconTwo: './static/loginimg/password.png',
       iconThree: './static/loginimg/ma.png',
-      items: [{ new: 50, name: '每满500减50元券', time: '2018.07.03-2019.07.03', state: 1 }, { new: 50, name: '停车场专用券', time: '2018.07.03-2019.07.03', state: 1 }, { new: 50, name: '停车场专用券', time: '2018.07.03-2019.07.03', state: 1 }],
+      items: [],
       show: false,
       user: {
         iphone: '',
@@ -170,13 +170,19 @@ export default {
     tohome () {
       this.show = false
       this.$router.push({
-        path: '/My'
+        path: '/Home'
       })
     },
     register () {
       console.log('注册')
-      this._Register()
+      if (this.nameErr != '' && this.user.code != '' && this.passwordeErr !=  '') {
+        this._Register()
+      }
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    to.meta.keepAlive = false
+    next()
   }
 }
 </script>

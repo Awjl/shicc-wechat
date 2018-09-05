@@ -46,6 +46,7 @@
           <div class="btn">
             <span class="true-btn" v-if="item.state == 1">立即付款</span>
             <span class="over-btn" v-if="item.state == 2">再来一单</span>
+            <span class="del-btn" @click="delorder(item.id, index)">删除订单</span>
           </div>
         </div>
         <div class="line5">
@@ -58,7 +59,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getAllGoodsOrder } from 'api/user'
+import { getAllGoodsOrder, deleteOrder } from 'api/user'
 import { ERR_OK } from 'api/config'
 
 export default {
@@ -90,6 +91,14 @@ export default {
         }
       })
     },
+    _deleteOrder (id) {
+      deleteOrder(id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('删除订单=================================')
+          alert('删除成功')
+        }
+      })
+    },
     notused () {
       this.index = 1
       this.type = 1
@@ -101,6 +110,11 @@ export default {
       this.type = 2
       this.dataList = []
       this._getAllGoodsOrder()
+    },
+    delorder (id, index) {
+      console.log(id, index)
+      this._deleteOrder(id)
+      this.dataList.splice(index, 1)
     }
   }
 }
@@ -217,6 +231,11 @@ img {
 .btn span.true-btn {
   background: #59c2fa;
   color: #ffffff;
+}
+.btn span.del-btn{
+  background: #ff4949;
+  color: #ffffff;
+  margin-right: 10px;
 }
 .over-btn {
   border: 2px solid #59c2fa;

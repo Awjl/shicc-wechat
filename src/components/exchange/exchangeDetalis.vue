@@ -159,6 +159,15 @@ export default {
   },
   components: {
     Swiper
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'Exchange') {
+      to.meta.keepAlive = true
+      next()
+    } else {
+      to.meta.keepAlive = false
+      next()
+    }
   }
 }
 </script>

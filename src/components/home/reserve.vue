@@ -105,6 +105,10 @@ export default {
       this.showTrue = false
       this.$router.back(-1)
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    to.meta.keepAlive = false
+    next()
   }
 }
 </script>

@@ -53,7 +53,7 @@
           </div>
           <div class="line">
           </div>
-          <div class="btn">
+          <div class="orderitembtn">
             <div v-if="item.deliverer || item.consignee">
               <p v-if="item.deliverer && item.consignee == null">来自{{item.deliverer}}转赠</p>
               <p v-if="item.consignee">已转赠给：{{item.consignee}}</p>
@@ -324,7 +324,7 @@ img {
   font-size: 24px;
   color: #9b9b9b;
 }
-.btn {
+.orderitem>.orderitembtn {
   width: 100%;
   height: 103px;
   display: flex;
@@ -335,7 +335,7 @@ img {
 .btn-btn {
   display: flex;
 }
-.btn span {
+.orderitembtn span {
   display: block;
   width: 180px;
   height: 50px;
@@ -345,7 +345,7 @@ img {
   font-size: 24px;
   margin-left: 20px;
 }
-.btn span.true-btn {
+.orderitembtn span.true-btn {
   background: #59c2fa;
   color: #ffffff;
 }

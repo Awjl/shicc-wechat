@@ -91,7 +91,6 @@ export function exchangeGoods (userId, point) {
 // 生成商品订单
 export function changeAddressById (data) {
   const url = `${api}/sicc/order/createOrder`
-  console.log(data.total)
   return axios.post(url, {
     goodsId: data.goodsId,
     mobile: data.mobile,
@@ -103,6 +102,7 @@ export function changeAddressById (data) {
     return Promise.resolve(res.data)
   })
 }
+
 // 查询商品
 export function getGoodsOrderDetail (userId, goodsId) {
   const url = `${api}/sicc/order/getGoodsOrderDetail`

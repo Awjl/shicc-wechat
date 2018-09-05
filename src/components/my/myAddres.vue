@@ -1,17 +1,17 @@
 <template>
-  <div class="address">
+  <div class="myadd">
     <ul>
-      <li class="list-item " v-for="(item,index) in list " data-type="0" :key="index">
-        <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip(item.id)">
-          <div class="list-content">
-            <div class="list-left">
-              <div class="title">
+      <li class="myadd-item " v-for="(item,index) in list " data-type="0" :key="index">
+        <div class="myadd-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip(item.id)">
+          <div class="myadd-content">
+            <div class="myadd-left">
+              <div class="myaddtitle">
                 <span>{{item.name}}</span>
                 <span>{{item.mobile}}</span>
               </div>
               <p>{{item.city}}{{item.address}}</p>
             </div>
-            <div class="list-right"  @click.stop="addAddres(item.id)">
+            <div class="myadd-right"  @click.stop="addAddres(item.id)">
               修改<img :src="rightImg" alt="">
             </div>
           </div>
@@ -22,7 +22,7 @@
     <div class="addAddres" @click="addAddres(null)">
       +添加收货信息
     </div>
-    <div class="line"></div>
+    <div class="myaddline"></div>
     <div class="footer">
     </div>
   </div>
@@ -31,7 +31,6 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { getAllAddress, deleteAddressById } from 'api/user'
-import { setAdd } from 'common/js/auth'
 import { ERR_OK } from 'api/config'
 
 export default {
@@ -74,19 +73,18 @@ export default {
       })
     },
     addAddres (id) {
+      console.log(id)
       this.$router.push({
         path: `/AddAddres/${id}`
       })
     },
     // 跳转
     skip (id) {
-      console.log('ceshi')
       if (this.checkSlide()) {
         this.restSlide()
       } else {
         if (this.$route.params.type === '1') {
-          console.log('ceshi')
-          setAdd(id)
+          this.$store.commit('SET_ADDRES', id)
           console.log(this.AddresId)
           this.$router.back(-1)
         }
@@ -143,6 +141,23 @@ export default {
       this.list.splice(index, 1)
       this._deleteAddressById(id)
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'TrueExchange') {
+      console.log('执行')
+      to.meta.keepAlive = false
+      next()
+    }
+    if (to.name === 'AddAddres') {
+      console.log('执行')
+      to.meta.keepAlive = false
+      next()
+    }
+    if (to.name === 'My') {
+      console.log('执行')
+      to.meta.keepAlive = true
+      next()
+    }
   }
 }
 </script>
@@ -153,26 +168,26 @@ ul {
   overflow: hidden;
   background: #F2F2F2;
 }
-.line{
+.myaddline{
   width: 100%;
   height: 10px;
   background: #F2F2F2;
 }
-.list-item {
+.myadd-item {
   position: relative;
   height: 136px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
   margin-bottom: 10px;
 }
-.list-item[data-type='0'] {
+.myadd-item[data-type='0'] {
   transform: translate3d(0, 0, 0);
 }
-.list-item[data-type='1'] {
+.myadd-item[data-type='1'] {
   transform: translate3d(-100px, 0, 0);
 }
 
-.list-box {
+.myadd-box {
   background: #fff;
   display: flex;
   align-items: center;
@@ -186,7 +201,7 @@ ul {
   left: 0;
   font-size: 0;
 }
-.list-content {
+.myadd-content {
   padding: 0 50px;
   position: relative;
   display: flex;
@@ -195,7 +210,7 @@ ul {
   justify-content: space-between;
   overflow: hidden;
 }
-.list-item span{
+.myadd-item span{
   display: block;
   color: #333;
   overflow: hidden;
@@ -205,12 +220,12 @@ ul {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.title {
+.myaddtitle {
   width: 400px;
   display: flex;
   justify-content: space-between;
 }
-.list-left p {
+.myadd-left p {
   margin-top: 20px;
   font-size: 24px;
   color: #9B9B9B;
@@ -218,7 +233,7 @@ ul {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.list-right {
+.myadd-right {
   width: 150px;
   display: flex;
   align-items: center;
@@ -228,12 +243,12 @@ ul {
   color: #4A4A4A;
   letter-spacing: 0.67px;
 }
-.list-right img {
+.myadd-right img {
   width: 28px;
   height: 28px;
   margin-left: 12px;
 }
-.list-item .delete {
+.myadd-item .delete {
   width: 100px;
   height: 136px;
   line-height: 136px;

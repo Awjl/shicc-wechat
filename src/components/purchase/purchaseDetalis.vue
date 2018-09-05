@@ -173,6 +173,15 @@ export default {
   },
   components: {
     Swiper
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'Purchase') {
+      to.meta.keepAlive = true
+      next()
+    } else {
+      to.meta.keepAlive = false
+      next()
+    }
   }
 }
 </script>
@@ -299,16 +308,16 @@ img {
   line-height: 88px;
   text-align: center;
 }
-.footer-left .new{
+.footer-left>.new{
   font-size: 24px;
   color: #ED6969;
   letter-spacing: 2.59px;
   margin-right: 10px;
 }
-.footer-left .new span{
+.footer-left>.new span{
   font-size: 48px;
 }
-.footer-left .old {
+.footer-left>.old {
   font-size: 22px;
   color: #9B9B9B;
   letter-spacing: 0.97px;

@@ -182,6 +182,18 @@ export function getAllGoodsOrder (userid, type) {
   })
 }
 
+// 删除商品订单
+export function deleteOrder (data) {
+  const url = `${api}/sicc/order/deleteOrder`
+  return axios.get(url, {
+    params: {
+      orderId: data
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
 // 获取所有积分订单列表
 export function getAllPointGoodsOrder (userid) {
   const url = `${api}/sicc/order/getAllPointGoodsOrder`
