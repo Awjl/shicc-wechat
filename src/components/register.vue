@@ -175,7 +175,7 @@ export default {
     },
     register () {
       console.log('注册')
-      if (this.nameErr != '' && this.user.code != '' && this.passwordeErr !=  '') {
+      if (this.nameErr == '' && this.user.code != '' && this.passwordeErr ==  '' && this.user.password != '') {
         this._Register()
       }
     }

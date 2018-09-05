@@ -56,7 +56,7 @@ export default {
             console.log(getUserID())
             this.show = true
             this.$router.push({
-              path: '/My'
+              path: '/Home'
             })
           } else {
             alert(res.data.msg)
@@ -100,8 +100,14 @@ export default {
     },
     goLoing () {
       console.log('登录')
-      this._login()
+      if (this.nameErr == '' && this.passwordeErr == '' && this.user.name != '' && this.user.password != '') {
+        this._login()
+      }
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    to.meta.keepAlive = false
+    next()
   }
 }
 </script>

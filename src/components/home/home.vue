@@ -91,14 +91,9 @@ export default {
     },
     notShowbox () {
       if (!this.UserID) {
-        this.notShow = true
-        var vm = this
-        setTimeout(function () {
-          vm.notShow = false
-        }, 1000)
-        this.userState = false
-      } else {
-        this.userState = true
+        this.$router.push({
+          path: '/Login'
+        })
       }
     },
     goReserve () {

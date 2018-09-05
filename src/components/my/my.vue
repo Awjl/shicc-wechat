@@ -91,7 +91,6 @@ export default {
       imgbg: './static/myimg/my-bg.png',
       imgTou: './static/myimg/my-tou.png',
       notShow: false,
-      userState: false,
       usermun: {
         couponNum: 0,
         loveNum: 0,
@@ -124,14 +123,9 @@ export default {
     },
     notShowbox () {
       if (!this.UserID) {
-        this.notShow = true
-        var vm = this
-        setTimeout(function () {
-          vm.notShow = false
-        }, 1000)
-        this.userState = false
-      } else {
-        this.userState = true
+        this.$router.push({
+          path: '/Login'
+        })
       }
     },
     gowish () {

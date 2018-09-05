@@ -3,7 +3,7 @@
     <div class="yanzheng" v-if="show">
       <p>请完成以下认证</p>
        <div class="yanzhengcode yanzhengcode-ipn">
-        <input type="text" placeholder="请输入手机号" v-model="userdata.mobile">
+        <input type="text" placeholder="请输入手机号" v-model="userdata.mobile" @blur="OnBlur()">
         <span class="iph-err">{{nameErr}}</span>
       </div>
       <div class="yanzhengcode">
@@ -17,8 +17,8 @@
     <div class="yanzheng" v-if="nextshow">
       <p>设置新的登录密码</p>
       <div class="yanzhengcode yanzhengcode-ipn">
-        <input type="text" placeholder="请输入密码" v-model="userdata.password">
-        <span class="iph-err">{{nameErr}}</span>
+        <input type="text" placeholder="请输入8-15位，中英文混合密码" v-model="userdata.password" @blur="OnPassWord()">
+        <span class="iph-err">{{passwordeErr}}</span>
       </div>
       <div class="next-btn" @click="overTrue">
         确认修改
@@ -30,7 +30,7 @@
         <div>修改成功</div>
       </div>
       <div class="next-btn" @click="gomy">
-        返回个人中心
+        返回首页
       </div>
     </div>
   </div>
@@ -57,42 +57,70 @@ export default {
         code: '',
         password: ''
       },
-      nameErr: ''
+      nameErr: '',
+      passwordeErr: ''
     }
   },
   methods: {
     nextPass () {
       console.log(this.userdata)
-      matchCode(this.userdata).then((res) => {
-        if (res.code === ERR_OK) {
-          console.log(res.data)
-          if (res.data) {
-            this.show = false
-            this.nextshow = true
-            this.over = false
-          } else {
-            alert('验证码错误')
+      if (this.nameErr == '' && this.userdata.code != '') {
+        matchCode(this.userdata).then((res) => {
+          if (res.code === ERR_OK) {
+            console.log(res.data)
+            if (res.data) {
+              this.show = false
+              this.nextshow = true
+              this.over = false
+            } else {
+              alert('验证码错误')
+            }
           }
-        }
-      })
+        })
+      }
     },
     overTrue () {
       console.log(this.userdata)
-      changePwd(this.userdata).then((res) => {
-        if (res.code === ERR_OK) {
-          this.show = false
-          this.nextshow = false
-          this.over = true
-        }
-      })
+      if (this.userdata.password != '' && this.passwordeErr == '') {
+        changePwd(this.userdata).then((res) => {
+          if (res.code === ERR_OK) {
+            this.show = false
+            this.nextshow = false
+            this.over = true
+          }
+        })
+      }
     },
     gomy () {
       this.show = true
       this.nextshow = false
       this.over = false
       this.$router.push({
-        path: '/My'
+        path: '/Home'
       })
+    },
+    OnPassWord () {
+      let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/
+      if (this.userdata.password) {
+        if (password.test(this.userdata.password)) {
+          this.passwordeErr = ''
+        } else {
+          this.passwordeErr = '格式不正确'
+        }
+      } else {
+        this.passwordeErr = '请输入密码'
+      }
+    },
+    OnBlur () {
+      if (this.userdata.mobile) {
+        if (phoneReg.test(this.userdata.mobile)) {
+          this.nameErr = ''
+        } else {
+          this.nameErr = '格式不正确'
+        }
+      } else {
+        this.nameErr = '请输入手机号'
+      }
     },
     yanzheng () {
       if (this.userdata.mobile) {
@@ -119,6 +147,10 @@ export default {
         this.nameErr = '请输入手机号'
       }
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    to.meta.keepAlive = false
+    next()
   }
 }
 </script>

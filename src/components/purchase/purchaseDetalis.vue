@@ -323,7 +323,7 @@ img {
   letter-spacing: 0.97px;
   position:relative;
 }
-.footer-left .old::before{
+/* .footer-left .old::before{
   content:"";
   position:absolute;
   left:0;
@@ -334,7 +334,7 @@ img {
   background:#9B9B9B;
   transform-origin:bottom center;
   transform: rotate(9deg)
-}
+} */
 .footer-over{
   background: #59C2FA;
   font-size: 28px;

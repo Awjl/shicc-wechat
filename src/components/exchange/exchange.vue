@@ -8,7 +8,7 @@
       <div class="exchange-num" v-if='showLevel'>
         {{Levelnum.points}}
       </div>
-      <div class="exchange-btn" v-if='!showLevel'>
+      <div class="exchange-btn" v-if='!showLevel' @click="gologin">
         去登陆
       </div>
       <div class="lvavel" v-if='showLevel && Levelnum.level == 1'>
@@ -129,6 +129,11 @@ export default {
         }
       })
     },
+    gologin () {
+      this.$router.push({
+        path: '/Login'
+      })
+    },
     fetchData () {
       this.loading = true
       this.pn++
@@ -140,14 +145,9 @@ export default {
     },
     notShowbox () {
       if (!this.UserID) {
-        this.notShow = true
-        var vm = this
-        setTimeout(function () {
-          vm.notShow = false
-        }, 1000)
-        this.userState = false
-      } else {
-        this.userState = true
+        this.$router.push({
+          path: '/Login'
+        })
       }
     },
     tabOne () {
@@ -302,7 +302,7 @@ img {
   letter-spacing: 0.97px;
   position: relative;
 }
-.item-jiage .old::before {
+/* .item-jiage .old::before {
   content: '';
   position: absolute;
   left: 0;
@@ -313,7 +313,7 @@ img {
   background: #9b9b9b;
   transform-origin: bottom center;
   transform: rotate(9deg);
-}
+} */
 .bottom {
   text-align: center;
   height: 40px;

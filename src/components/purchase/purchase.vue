@@ -115,14 +115,9 @@ export default {
     },
     notShowbox () {
       if (!this.UserID) {
-        this.notShow = true
-        var vm = this
-        setTimeout(function () {
-          vm.notShow = false
-        }, 1000)
-        this.userState = false
-      } else {
-        this.userState = true
+        this.$router.push({
+          path: '/Login'
+        })
       }
     },
     fetchData () {
@@ -303,7 +298,7 @@ img {
   position: relative;
   overflow: hidden;
 }
-.Price .PriceOld::before {
+/* .Price .PriceOld::before {
   content: '';
   position: absolute;
   left: 0;
@@ -314,7 +309,7 @@ img {
   background: #9b9b9b;
   transform-origin: bottom center;
   transform: rotate(9deg);
-}
+} */
 .bottom {
   text-align: center;
   height: 40px;

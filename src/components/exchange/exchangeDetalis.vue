@@ -269,7 +269,7 @@ img {
   color: #9b9b9b;
   position: relative;
 }
-.old::before {
+/* .old::before {
   content: '';
   position: absolute;
   left: 0;
@@ -280,7 +280,7 @@ img {
   background: #9b9b9b;
   transform-origin: bottom center;
   transform: rotate(9deg);
-}
+} */
 .detalis {
   width: 100%;
   padding: 40px 30px 0;
