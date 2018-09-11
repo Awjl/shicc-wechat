@@ -32,16 +32,21 @@
     <div class="detalisImg">
       <img :src="item.url" alt="" v-for="(item, index) in listImg.introduce" :key="index">
     </div>
-    <div v-if="level >= type">
-      <div class="footer" @click="goTrue" v-if='showtreu'>
-        立即兑换
+    <div v-if="listImg.pointGoods.stock > 0">
+      <div v-if="level >= type">
+        <div class="footer" @click="goTrue" v-if='showtreu'>
+          立即兑换
+        </div>
+        <div class="footer-active" v-else>
+          积分不足
+        </div>
       </div>
       <div class="footer-active" v-else>
-        积分不足
+        您的级别不够
       </div>
     </div>
     <div class="footer-active" v-else>
-      您的级别不够
+      库存不足
     </div>
     <div class="box" v-if="show">
       <div class="box-width">
@@ -67,7 +72,7 @@ import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       imgRight: './static/icon/ic_back.png',
       listImg: {
@@ -87,7 +92,7 @@ export default {
       showtreu: false
     }
   },
-  created () {
+  created() {
     this._getPointGoodsDetailById()
   },
   computed: {
@@ -96,7 +101,7 @@ export default {
     ])
   },
   methods: {
-    _isEnoughPoint () {
+    _isEnoughPoint() {
       if (this.type === '1') {
         isEnoughPoint(this.UserID, this.listImg.pointGoods.v1NewPoint).then((res) => {
           if (res.code === ERR_OK) {
@@ -115,7 +120,7 @@ export default {
         })
       }
     },
-    _getPointGoodsDetailById () {
+    _getPointGoodsDetailById() {
       getPointGoodsDetailById(this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
           if (res.code === ERR_OK) {
@@ -132,17 +137,17 @@ export default {
         }
       })
     },
-    boxtrue () {
+    boxtrue() {
       this.trueind = this.ind
       this.show = false
     },
-    boxquxiao () {
+    boxquxiao() {
       this.show = false
     },
-    showbox () {
+    showbox() {
       this.show = true
     },
-    goTrue () {
+    goTrue() {
       if (this.type === '1') {
         this.$router.push({
           path: `/TrueExchange/${this.listImg.pointGoods.id}/${this.listImg.pointGoods.kind[this.trueind]}/${this.listImg.pointGoods.v1NewPoint}`
@@ -153,14 +158,14 @@ export default {
         })
       }
     },
-    tabsort (index) {
+    tabsort(index) {
       this.ind = index
     }
   },
   components: {
     Swiper
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (to.name === 'Exchange') {
       to.meta.keepAlive = true
       next()

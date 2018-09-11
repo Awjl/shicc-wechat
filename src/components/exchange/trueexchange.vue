@@ -115,9 +115,11 @@ export default {
     _createPointOrder (data) {
       createPointOrder(data).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('提交订单==========================')
-          alert('订单提交成功')
-          console.log(res.data)
+          if (res.data.code === 500206) {
+            alert('库存不足')
+          } else {
+            alert('订单提交成功')
+          }
         }
       })
     },
