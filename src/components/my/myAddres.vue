@@ -208,7 +208,6 @@ ul {
   flex: 1;
   align-items: center;
   justify-content: space-between;
-  overflow: hidden;
 }
 .myadd-item span{
   display: block;

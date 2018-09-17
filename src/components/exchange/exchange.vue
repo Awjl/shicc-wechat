@@ -1,7 +1,7 @@
 <template>
   <div class="exchange">
     <div class="exchange-bg">
-      <img :src="bg" alt="">
+      <img :src="bg" alt="" style="vertical-align:middle">
       <div class="exchange-title" v-if="showLevel">
         您现有积分
       </div>

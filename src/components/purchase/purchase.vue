@@ -1,7 +1,7 @@
 <template>
   <div class="purchase">
     <div class="purchase-banner">
-      <img :src="dataList.picture.url" alt="">
+      <img :src="dataList.picture.url" alt="" style="vertical-align:middle">
       <div class="banner-text">
         {{dataList.picture.title}}
       </div>
@@ -13,7 +13,7 @@
     <div class="purchase-list">
       <div class="purchase-item" v-for="(item, index) in dataArr" :key="index" @click="goDetalis(item.goodsId)">
         <div class="purchase-img">
-          <img :src="item.pictureUrl" alt="">
+          <img :src="item.pictureUrl" alt="" style="vertical-align:middle">
           <div class="purchase-name">
             {{item.title}}
           </div>
@@ -298,18 +298,18 @@ img {
   position: relative;
   overflow: hidden;
 }
-/* .Price .PriceOld::before {
+.Price .PriceOld::before {
   content: '';
   position: absolute;
   left: 0;
   top: 45%;
   width: 100%;
-  height: 1px;
+  height: 2px;
   box-sizing: border-box;
   background: #9b9b9b;
   transform-origin: bottom center;
   transform: rotate(9deg);
-} */
+}
 .bottom {
   text-align: center;
   height: 40px;

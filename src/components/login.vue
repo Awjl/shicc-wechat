@@ -56,7 +56,7 @@ export default {
             console.log(getUserID())
             this.show = true
             this.$router.push({
-              path: '/Home'
+              path: '/My'
             })
           } else {
             alert(res.data.msg)
@@ -104,10 +104,6 @@ export default {
         this._login()
       }
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    to.meta.keepAlive = false
-    next()
   }
 }
 </script>

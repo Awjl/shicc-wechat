@@ -25,7 +25,7 @@
       {{dataList.contentThird}}
     </div>
     <div class="he20"></div>
-    <div class="listItem-img">
+    <!-- <div class="listItem-img">
       <div class="Item-box">
         <div class="Item">
           <div class="item-img" v-for="(str, index) in item" :key="index">
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="food">
     <div class="foodItem" v-for="(str, index) in footList" :key="index" @click="goDetails(str.goodsId)">
-      <img :src="str.pictureUrl" alt="">
+      <img :src="str.pictureUrl" alt="" style="vertical-align:middle">
       <div class="foodItem-text">
        <span>{{str.title}}</span> <span><span style="font-size:10px;">惠后价：</span>￥{{str.newPrice}}</span>
       </div>
