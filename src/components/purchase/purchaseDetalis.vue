@@ -11,7 +11,7 @@
   </div>
     <div class="Detalis-title">
       <div class="title-left">
-        <p class="leftName">{{dataList.name}}</p>
+        <p class="leftName">{{dataList.name}}(<span v-if="dataList.isBespeak === 1 ">需要预约</span><span v-else>不需要预约</span>)</p>
         <p class="leftjiage">代金券：
           <span>¥{{dataList.oldPrice}}</span>
         </p>
@@ -323,18 +323,18 @@ img {
   letter-spacing: 0.97px;
   position:relative;
 }
-/* .footer-left .old::before{
+.footer-left .old::before{
   content:"";
   position:absolute;
   left:0;
   top:45%;
   width:100%;
-  height:1px;
+  height:2px;
   box-sizing:border-box;
   background:#9B9B9B;
   transform-origin:bottom center;
   transform: rotate(9deg)
-} */
+}
 .footer-over{
   background: #59C2FA;
   font-size: 28px;

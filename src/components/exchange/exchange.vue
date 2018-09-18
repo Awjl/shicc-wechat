@@ -159,6 +159,9 @@ export default {
       this._getV1PointGoods(this.pn, this.pg)
     },
     tabTwo () {
+      if (this.Levelnum.level === 1) {
+        alert('您现在还没达到购买资格')
+      }
       this.showover = true
       this.show = false
       this.pn = 1
@@ -302,7 +305,7 @@ img {
   letter-spacing: 0.97px;
   position: relative;
 }
-/* .item-jiage .old::before {
+.item-jiage .old::before {
   content: '';
   position: absolute;
   left: 0;
@@ -313,7 +316,7 @@ img {
   background: #9b9b9b;
   transform-origin: bottom center;
   transform: rotate(9deg);
-} */
+}
 .bottom {
   text-align: center;
   height: 40px;

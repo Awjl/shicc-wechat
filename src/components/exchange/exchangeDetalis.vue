@@ -32,8 +32,10 @@
     <div class="detalisImg">
       <img :src="item.url" alt="" v-for="(item, index) in listImg.introduce" :key="index">
     </div>
-    <div v-if="listImg.pointGoods.stock > 0">
-      <div v-if="level >= type">
+
+
+    <div  v-if="level>= type">
+      <div v-if="listImg.pointGoods.stock > 0">
         <div class="footer" @click="goTrue" v-if='showtreu'>
           立即兑换
         </div>
@@ -42,11 +44,11 @@
         </div>
       </div>
       <div class="footer-active" v-else>
-        您的级别不够
+       库存不足
       </div>
     </div>
     <div class="footer-active" v-else>
-      库存不足
+      您的级别不够
     </div>
     <div class="box" v-if="show">
       <div class="box-width">
@@ -274,7 +276,7 @@ img {
   color: #9b9b9b;
   position: relative;
 }
-/* .old::before {
+.old::before {
   content: '';
   position: absolute;
   left: 0;
@@ -285,7 +287,7 @@ img {
   background: #9b9b9b;
   transform-origin: bottom center;
   transform: rotate(9deg);
-} */
+}
 .detalis {
   width: 100%;
   padding: 40px 30px 0;

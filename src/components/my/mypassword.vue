@@ -194,9 +194,13 @@ export default {
   border-radius: 10px;
   outline: none;
   padding: 0 20px;
+  box-shadow:0px 0px 0px rgba(0,0,0,0);
+  -webkit-appearance:none;
 }
 .yanzhengcode-ipn input{
   width: 100%;
+  box-shadow:0px 0px 0px rgba(0,0,0,0);
+  -webkit-appearance:none;
 }
 .codebtn {
   width: 180px;

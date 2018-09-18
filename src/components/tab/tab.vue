@@ -2,8 +2,8 @@
   <div>
     <router-view></router-view>
     <div class="tab">
-      <div @click="oneItem(1)">
-        <router-link tag="div" class="tab-item" to="/Home" v-if="item != '1'" active-class="active">
+      <div>
+        <router-link tag="div" class="tab-item" to="/Home" v-if="$route.path.indexOf('Home') === -1">
           <img src="./tabIcon/home.png" alt="">
           <span class="tab-link">首页</span>
         </router-link>
@@ -12,8 +12,8 @@
           <span class="tab-link_active">首页</span>
         </router-link>
       </div>
-      <div @click="oneItem(2)">
-        <router-link tag="div" class="tab-item" to="/Purchase" v-if="item != '2'">
+      <div>
+        <router-link tag="div" class="tab-item" to="/Purchase" v-if="$route.path.indexOf('Purchase') === -1">
           <img src="./tabIcon/purchase.png" alt="">
           <span class="tab-link">荟购</span>
         </router-link>
@@ -22,8 +22,8 @@
           <span class="tab-link_active">荟购</span>
         </router-link>
       </div>
-      <div @click="oneItem(3)">
-        <router-link tag="div" class="tab-item" to="/Exchange" v-if="item != '3'">
+      <div>
+        <router-link tag="div" class="tab-item" to="/Exchange" v-if="$route.path.indexOf('Exchange') === -1">
           <img src="./tabIcon/exchange.png" alt="">
           <span class="tab-link">荟兑</span>
         </router-link>
@@ -32,8 +32,8 @@
           <span class="tab-link_active">荟兑</span>
         </router-link>
       </div>
-      <div @click="oneItem(4)">
-        <router-link tag="div" class="tab-item" to="/My" v-if="item != '4'">
+      <div>
+        <router-link tag="div" class="tab-item" to="/My" v-if="$route.path.indexOf('My') === -1">
           <img src="./tabIcon/my.png" alt="">
           <span class="tab-link">个人中心</span>
         </router-link>

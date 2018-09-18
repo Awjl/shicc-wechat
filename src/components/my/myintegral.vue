@@ -17,6 +17,7 @@
     </div>
     <div class="title">
       <div class="integral-text">兑换记录</div>
+      <div class="he20"></div>
     </div>
     <div class="integralList" v-for="(item, index) in listData" :key="index">
       <div class="integralItem">
@@ -47,6 +48,9 @@
         </div>
       </div>
     </div>
+    <div class="integralListbox" v-show='showover'>
+     - 暂无兑换记录 - 
+    </div>
   </div>
 </template>
 
@@ -60,7 +64,8 @@ export default {
     return {
       bg: './static/exchangeImg/bg.png',
       Levelnum: {},
-      listData: []
+      listData: [],
+      showover: true
     }
   },
   created () {
@@ -88,6 +93,10 @@ export default {
           console.log('积分兑换列表=============')
           console.log(res.data)
           this.listData = res.data
+          console.log(this.listData)
+          if (this.listData.length !== 0) {
+            this.showover = false
+          }
         }
       })
     }
@@ -101,6 +110,9 @@ export default {
 }
 img {
   width: 100%;
+}
+.he20{
+  height: 6px;
 }
 .line {
   width: 100%;
@@ -169,6 +181,15 @@ img {
   padding: 0 40px;
   box-sizing: border-box;
   margin-bottom: 20px;
+}
+.integralListbox {
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  height: 100px;
+  line-height: 100px;
+  color: #999;
+
 }
 .integralTitle {
   width: 100%;
