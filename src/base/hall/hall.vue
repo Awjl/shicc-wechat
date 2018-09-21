@@ -6,12 +6,12 @@
         {{str.title}}
       </div>
     </div>
-    <not-logged v-if="notShow"></not-logged>
+    <!-- <not-logged v-if="notShow"></not-logged> -->
   </div>
 </template>
 
 <script>
-import NotLogged from 'base/notlogin/notlogin'
+// import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -42,10 +42,10 @@ export default {
         })
       }
     }
-  },
-  components: {
-    NotLogged
   }
+  // components: {
+  //   NotLogged
+  // }
 }
 </script>
 

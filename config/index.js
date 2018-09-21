@@ -12,7 +12,6 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        // target: "http://wmore.wearewer.com",//设置你调用的接口域名和端口号 别忘了加http
         target: "http://10.1.20.63:8081",//设置你调用的接口域名和端口号 别忘了加http
         changeOrigin: true,
         pathRewrite: {

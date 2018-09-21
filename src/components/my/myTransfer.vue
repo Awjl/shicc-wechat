@@ -317,8 +317,8 @@ img {
   color: #161616;
 }
 .orderitem-name>.new,
-.orderitem-name .num,
-.orderitem-name .sum {
+.orderitem-name>.num,
+.orderitem-name>.sum {
   width: 100%;
   text-align: right;
   font-size: 24px;

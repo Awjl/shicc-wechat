@@ -246,7 +246,7 @@ img {
   justify-content: space-between;
   align-items: center;
 }
-.list-jiage .new {
+.list-jiage>.new {
   font-size: 28px;
   color: #ed6969;
   letter-spacing: 0.78px;

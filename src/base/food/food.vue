@@ -6,12 +6,12 @@
        <span>{{str.title}}</span> <span><span style="font-size:10px;">惠后价：</span>￥{{str.newPrice}}</span>
       </div>
     </div>
-    <not-logged v-if="notShow"></not-logged>
+    <!-- <not-logged v-if="notShow"></not-logged> -->
   </div>
 </template>
 
 <script>
-import NotLogged from 'base/notlogin/notlogin'
+// import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
 export default {
   props: ['footList'],
@@ -42,10 +42,10 @@ export default {
         })
       }
     }
-  },
-  components: {
-    NotLogged
   }
+  // components: {
+  //   NotLogged
+  // }
 }
 </script>
 

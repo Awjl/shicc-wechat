@@ -1,9 +1,9 @@
-import { api } from './config'
+// import { api } from './config'
 import axios from 'axios'
 
 // 修改个人资料
 export function editUserInfoDetail (data) {
-  const url = `${api}/sicc/user/editUserInfoDetail`
+  const url = `${process.env.API_HOST}/sicc/user/editUserInfoDetail`
   return axios.post(url, {
     birthDate: data.birthDate,
     nickname: data.nickname,
@@ -17,7 +17,7 @@ export function editUserInfoDetail (data) {
 
 // 获取用户全部信息
 export function getUserInfo (userid) {
-  const url = `${api}/sicc/user/getUserInfo`
+  const url = `${process.env.API_HOST}/sicc/user/getUserInfo`
   return axios.get(url, {
     params: {
       userId: userid
@@ -29,7 +29,7 @@ export function getUserInfo (userid) {
 
 // 获取优惠券
 export function getAllCoupon (userid, state, type) {
-  const url = `${api}/sicc/user/getAllCoupon`
+  const url = `${process.env.API_HOST}/sicc/user/getAllCoupon`
   return axios.get(url, {
     params: {
       userId: userid,
@@ -43,7 +43,7 @@ export function getAllCoupon (userid, state, type) {
 
 // 获取用户个人资料
 export function getUserInfoDetail (userid) {
-  const url = `${api}/sicc/user/getUserInfoDetail`
+  const url = `${process.env.API_HOST}/sicc/user/getUserInfoDetail`
   return axios.get(url, {
     params: {
       userId: userid
@@ -55,7 +55,7 @@ export function getUserInfoDetail (userid) {
 
 // 查询个人积分以及会员等级
 export function getUserLevel (userid) {
-  const url = `${api}/sicc/user/getUserLevel`
+  const url = `${process.env.API_HOST}/sicc/user/getUserLevel`
   return axios.get(url, {
     params: {
       userId: userid
@@ -67,7 +67,7 @@ export function getUserLevel (userid) {
 
 // 获取全部心愿单
 export function getWishList (userid) {
-  const url = `${api}/sicc/user/getWishList`
+  const url = `${process.env.API_HOST}/sicc/user/getWishList`
   return axios.get(url, {
     params: {
       userId: userid
@@ -79,7 +79,7 @@ export function getWishList (userid) {
 
 // 修改密码
 export function changePwd (data) {
-  const url = `${api}/sicc/user/changePwd`
+  const url = `${process.env.API_HOST}/sicc/user/changePwd`
   return axios.post(url, {
     mobile: data.mobile,
     password: data.password
@@ -90,7 +90,7 @@ export function changePwd (data) {
 
 // 验证手机号
 export function matchCode (data) {
-  const url = `${api}/sicc/user/matchCode`
+  const url = `${process.env.API_HOST}/sicc/user/matchCode`
   return axios.get(url, {
     params: {
       mobile: data.mobile,
@@ -103,7 +103,7 @@ export function matchCode (data) {
 
 // 添加收货地址
 export function addAddress (data) {
-  const url = `${api}/sicc/address/addAddress`
+  const url = `${process.env.API_HOST}/sicc/address/addAddress`
   console.log(data.city)
   return axios.post(url, {
     address: data.address,
@@ -119,7 +119,7 @@ export function addAddress (data) {
 
 // 修改收货地址
 export function changeAddressById (data) {
-  const url = `${api}/sicc/address/changeAddressById`
+  const url = `${process.env.API_HOST}/sicc/address/changeAddressById`
   return axios.post(url, {
     address: data.address,
     mobile: data.mobile,
@@ -135,7 +135,7 @@ export function changeAddressById (data) {
 
 // 根据ID删除收货地址
 export function deleteAddressById (addressId) {
-  const url = `${api}/sicc/address/deleteAddressById`
+  const url = `${process.env.API_HOST}/sicc/address/deleteAddressById`
   return axios.get(url, {
     params: {
       addressId: addressId
@@ -147,7 +147,7 @@ export function deleteAddressById (addressId) {
 
 // 根据ID查询收货地址
 export function getAddressById (addressId) {
-  const url = `${api}/sicc/address/getAddressById`
+  const url = `${process.env.API_HOST}/sicc/address/getAddressById`
   return axios.get(url, {
     params: {
       addressId: addressId
@@ -159,7 +159,7 @@ export function getAddressById (addressId) {
 
 // 获取所有收货地
 export function getAllAddress (userid) {
-  const url = `${api}/sicc/address/getAllAddress`
+  const url = `${process.env.API_HOST}/sicc/address/getAllAddress`
   return axios.get(url, {
     params: {
       userId: userid
@@ -171,7 +171,7 @@ export function getAllAddress (userid) {
 
 // 获取所有商品订单
 export function getAllGoodsOrder (userid, type) {
-  const url = `${api}/sicc/order/getAllGoodsOrder`
+  const url = `${process.env.API_HOST}/sicc/order/getAllGoodsOrder`
   return axios.get(url, {
     params: {
       userId: userid,
@@ -184,7 +184,7 @@ export function getAllGoodsOrder (userid, type) {
 
 // 删除商品订单
 export function deleteOrder (data) {
-  const url = `${api}/sicc/order/deleteOrder`
+  const url = `${process.env.API_HOST}/sicc/order/deleteOrder`
   return axios.get(url, {
     params: {
       orderId: data
@@ -196,7 +196,7 @@ export function deleteOrder (data) {
 
 // 获取所有积分订单列表
 export function getAllPointGoodsOrder (userid) {
-  const url = `${api}/sicc/order/getAllPointGoodsOrder`
+  const url = `${process.env.API_HOST}/sicc/order/getAllPointGoodsOrder`
   return axios.get(url, {
     params: {
       userId: userid
@@ -208,7 +208,7 @@ export function getAllPointGoodsOrder (userid) {
 
 // 获取代金券列表
 export function getALLVoucher (userid, type) {
-  const url = `${api}/sicc/voucher/getALLVoucher`
+  const url = `${process.env.API_HOST}/sicc/voucher/getALLVoucher`
   return axios.get(url, {
     params: {
       userId: userid,
@@ -221,7 +221,7 @@ export function getALLVoucher (userid, type) {
 
 // 转赠接口
 export function givenToOne (data) {
-  const url = `${api}/sicc/voucher/givenToOne`
+  const url = `${process.env.API_HOST}/sicc/voucher/givenToOne`
   return axios.post(url, {
     mobile: data.mobile,
     deliverer: data.deliverer,
@@ -233,7 +233,7 @@ export function givenToOne (data) {
 
 // 验证手机号
 export function checkMobile (mobile) {
-  const url = `${api}/sicc/voucher/checkMobile`
+  const url = `${process.env.API_HOST}/sicc/voucher/checkMobile`
   return axios.get(url, {
     params: {
       mobile: mobile

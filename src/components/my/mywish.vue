@@ -87,17 +87,17 @@ img {
   color: #9b9b9b;
   letter-spacing: 1.09px;
 }
-.new {
+.wish-name>.new {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
-.new div {
+.wish-name>.new div {
   font-size: 24px;
   color: #4a4a4a;
   letter-spacing: 1.45px;
 }
-.new div.newDetalis {
+.wish-name>.new div.newDetalis {
   width: 130px;
   height: 30px;
   line-height: 30px;

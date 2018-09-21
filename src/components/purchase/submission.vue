@@ -304,7 +304,7 @@ img {
   display: flex;
   justify-content: space-between;
 }
-.submission-name .new {
+.submission-name>.new {
   height: 45px;
   line-height: 45px;
   font-size: 24px;

@@ -1,43 +1,43 @@
-import { api } from './config'
+// import { api } from './config'
 import axios from 'axios'
 // 顶部Banner
 export function getTopBanner () {
-  const url = `${api}/sicc/index/getTopBanner`
+  const url = `${process.env.API_HOST}/sicc/index/getTopBanner`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取一期一会
 export function getOneStageBanner () {
-  const url = `${api}/sicc/index/getOneStageBanner`
+  const url = `${process.env.API_HOST}/sicc/index/getOneStageBanner`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取底部banner
 export function getBottomBanner () {
-  const url = `${api}/sicc/index/getBottomBanner`
+  const url = `${process.env.API_HOST}/sicc/index/getBottomBanner`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取介绍
 export function getIntroduce () {
-  const url = `${api}/sicc/index/getIntroduce`
+  const url = `${process.env.API_HOST}/sicc/index/getIntroduce`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取一隅一食
 export function getCornerMealBanner () {
-  const url = `${api}/sicc/index/getCornerMealBanner`
+  const url = `${process.env.API_HOST}/sicc/index/getCornerMealBanner`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取吧的详细内容
 export function getBar (id, barid) {
-  const url = `${api}/sicc/goods/getBar`
+  const url = `${process.env.API_HOST}/sicc/goods/getBar`
   return axios.get(url, {
     params: {
       userId: id,
@@ -50,7 +50,7 @@ export function getBar (id, barid) {
 
 // 添加心愿单
 export function inLove (userid, id) {
-  const url = `${api}/sicc/goods/inLove`
+  const url = `${process.env.API_HOST}/sicc/goods/inLove`
   return axios.post(url, {
     goodsId: id,
     userId: userid
@@ -60,7 +60,7 @@ export function inLove (userid, id) {
 }
 // 取消心愿单
 export function outLove (userid, id) {
-  const url = `${api}/sicc/goods/outLove`
+  const url = `${process.env.API_HOST}/sicc/goods/outLove`
   return axios.post(url, {
     goodsId: id,
     userId: userid
@@ -71,7 +71,7 @@ export function outLove (userid, id) {
 
 //  获取热门问题
 export function getAllHotIssues () {
-  const url = `${api}/sicc/service/getAllHotIssues`
+  const url = `${process.env.API_HOST}/sicc/service/getAllHotIssues`
   return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -79,7 +79,7 @@ export function getAllHotIssues () {
 
 // 会议预定
 export function bookMeeting (data) {
-  const url = `${api}/sicc/book/bookMeeting`
+  const url = `${process.env.API_HOST}/sicc/book/bookMeeting`
   return axios.post(url, {
     mobile: data.mobile,
     name: data.name,

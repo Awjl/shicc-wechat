@@ -1,8 +1,8 @@
-import { api } from './config'
+// import { api } from './config'
 import axios from 'axios'
 // 登录
 export function login (data) {
-  const url = `${api}/sicc/user/login`
+  const url = `${process.env.API_HOST}/sicc/user/login`
   return axios.post(url, {
     mobile: data.name,
     password: data.password
@@ -12,7 +12,7 @@ export function login (data) {
 }
 // 注册
 export function Register (data) {
-  const url = `${api}/sicc/user/register`
+  const url = `${process.env.API_HOST}/sicc/user/register`
   return axios.post(url, {
     identifyingCode: data.code,
     mobile: data.iphone,
@@ -23,7 +23,7 @@ export function Register (data) {
 }
 // 发送验证码
 export function sendSMS (iph) {
-  const url = `${api}/sicc/user/sendSMS`
+  const url = `${process.env.API_HOST}/sicc/user/sendSMS`
   return axios.get(url, {
     params: {
       mobile: iph
@@ -35,7 +35,7 @@ export function sendSMS (iph) {
 
 // 获取新手优惠券
 export function getNewbeeCoupon (userId) {
-  const url = `${api}/sicc/coupon/getNewbeeCoupon`
+  const url = `${process.env.API_HOST}/sicc/coupon/getNewbeeCoupon`
   return axios.get(url, {
     params: {
       userId: userId

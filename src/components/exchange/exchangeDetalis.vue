@@ -267,16 +267,16 @@ img {
 .title-jiage {
   margin-top: 19px;
 }
-.new {
+.title-jiage>.new {
   font-size: 28px;
   color: #ed6969;
 }
-.old {
+.title-jiage>.old {
   font-size: 18px;
   color: #9b9b9b;
   position: relative;
 }
-.old::before {
+.title-jiage .old::before {
   content: '';
   position: absolute;
   left: 0;

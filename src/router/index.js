@@ -25,6 +25,8 @@ import Login from '@/components/login' // 登录页面
 import Register from '@/components/register' // 注册页面
 
 import index from '@/base/homelist/homelist' // 酒店介绍页面
+import Packing from '@/base/parking/parking' // 停车页面
+
 
 Vue.use(Router)
 
@@ -238,6 +240,14 @@ export default new Router({
       name: 'index',
       meta: {
         title: '酒店介绍'
+      }
+    },
+    {
+      path: '/packing',
+      component: Packing,
+      name: 'packing',
+      meta: {
+        title: '优惠停车'
       }
     }
   ]
