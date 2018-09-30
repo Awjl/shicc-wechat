@@ -257,6 +257,7 @@ img {
   color: #4a4a4a;
   line-height: 35px;
   letter-spacing: 1px;
+  text-align: center;
 }
 .name p {
   font-size: 20px;
@@ -267,6 +268,9 @@ img {
 .title-jiage {
   margin-top: 19px;
 }
+.title-jiage>span{
+  display: block;
+}
 .title-jiage>.new {
   font-size: 28px;
   color: #ed6969;
@@ -275,6 +279,7 @@ img {
   font-size: 18px;
   color: #9b9b9b;
   position: relative;
+  text-align: center;
 }
 .title-jiage .old::before {
   content: '';

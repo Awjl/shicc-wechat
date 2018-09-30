@@ -309,7 +309,7 @@ img {
   padding: 30px;
   box-sizing: border-box;
 }
-.couponitem {
+.logincouponlist>.couponitem {
   width: 690px;
   height: 200px;
   border-radius: 10px;

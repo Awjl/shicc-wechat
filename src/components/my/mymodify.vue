@@ -18,15 +18,16 @@
       <div class="modifyItem">
         <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
         <div class="sex">
-          <span @click="sexgentlemen"><img :src="trueiocn"  v-if="user.sex == 1"> <img :src="weiiocn"  v-else>男</span>
+          <span @click="sexgentlemen"><img :src="trueiocn" v-if="user.sex == 1"> <img :src="weiiocn" v-else>男</span>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span @click="sexLadies"><img :src="trueiocn"  v-if="user.sex == 2"> <img :src="weiiocn"  v-else>女</span>
+          <span @click="sexLadies"><img :src="trueiocn" v-if="user.sex == 2"> <img :src="weiiocn" v-else>女</span>
         </div>
       </div>
       <div class="line"></div>
       <div class="modifyItem" @click="setDate()">
         <span>出生日期：</span>
-        <span v-if=" user.birthday !== null">{{new Date(user.birthday).getFullYear()}}/{{new Date(user.birthday).getMonth() + 1}}/{{new Date(user.birthday).getDate()}}</span>
+        <span v-if="user.birthday !== null">{{new Date(dataTime).getFullYear()}}-{{new Date(dataTime).getMonth() + 1}}-{{new Date(dataTime).getDate()}} </span>
+        <!-- <span v-if="dataTime">{{dataTime}}</span> -->
       </div>
     </div>
     <div class="submission-btn" @click="_editUserInfoDetail">
@@ -40,7 +41,7 @@ import { mapGetters } from 'vuex'
 import { getUserInfoDetail, editUserInfoDetail } from 'api/user'
 import { ERR_OK } from 'api/config'
 export default {
-  data () {
+  data() {
     return {
       imgTou: './static/myimg/my-tou.png',
       weiiocn: './static/myimg/wei.png',
@@ -55,10 +56,11 @@ export default {
         url: '',
         userId: '',
         birthDate: ''
-      }
+      },
+      dataTime: ''
     }
   },
-  created () {
+  created() {
     this._getUserInfoDetail()
   },
   computed: {
@@ -67,17 +69,18 @@ export default {
     ])
   },
   methods: {
-    _getUserInfoDetail () {
+    _getUserInfoDetail() {
       console.log('ddddddddd')
       getUserInfoDetail(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           console.log('查找个人信息============')
           console.log(res.data)
           this.user = res.data
+          this.dataTime = this.user.birthday
         }
       })
     },
-    _editUserInfoDetail () {
+    _editUserInfoDetail() {
       this.user.userId = this.UserID
       this.user.birthDate = this.user.birthday
       console.log(this.user)
@@ -89,18 +92,19 @@ export default {
         }
       })
     },
-    setDate () {
+    setDate() {
       this.$picker.show({
         type: 'datePicker',
         onOk: date => {
-          this.user.birthday = date.replace(new RegExp(/-/gm), '/')
+          this.user.birthday = date
+          this.dataTime = date.replace(new RegExp(/-/gm), '/')
         }
       })
     },
-    sexgentlemen () {
+    sexgentlemen() {
       this.user.sex = 1
     },
-    sexLadies () {
+    sexLadies() {
       this.user.sex = 2
     }
   }
@@ -108,15 +112,15 @@ export default {
 </script>
 
 <style>
-img{
+img {
   width: 100%;
 }
-.line{
+.line {
   width: 100%;
   height: 2px;
   background: #dcdddc;
 }
-.modify{
+.modify {
   width: 100vw;
   height: calc(100vh - 100px);
   background: #f2f2f2;
@@ -140,41 +144,41 @@ img{
 }
 .tou-btn {
   font-size: 20px;
-  color: #9B9B9B;
+  color: #9b9b9b;
 }
 .modifyList {
-  margin-top:10px;
+  margin-top: 10px;
   width: 100%;
   background: #fff;
   padding: 0 40px;
   box-sizing: border-box;
 }
-.modifyItem{
+.modifyItem {
   width: 100%;
   height: 78px;
   line-height: 78px;
   display: flex;
   align-items: center;
 }
-.modifyItem>span{
+.modifyItem > span {
   display: block;
   width: 130px;
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
 }
-.modifyItem input{
+.modifyItem input {
   width: 500px;
   outline: none;
 }
 .sex {
   display: flex;
 }
-.sex img{
+.sex img {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
-.sex span{
+.sex span {
   display: flex;
   align-items: center;
 }

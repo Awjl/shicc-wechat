@@ -188,7 +188,7 @@ img {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.title {
+.list-left>.title {
   width: 400px;
   display: flex;
   justify-content: space-between;
