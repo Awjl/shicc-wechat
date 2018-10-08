@@ -1,4 +1,3 @@
-// import { api } from './config'
 import axios from 'axios'
 // 登录
 export function login (data) {

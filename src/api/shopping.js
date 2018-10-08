@@ -1,4 +1,3 @@
-// import { api } from './config'
 import axios from 'axios'
 // 获取一隅
 export function getCornerGoods (pn, pg) {
