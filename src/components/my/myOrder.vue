@@ -54,6 +54,9 @@
         </div>
       </div>
     </div>
+    <div class="orderNone" v-if="dataList.length == 0">
+      - 暂无订单 -
+    </div>
   </div>
 </template>
 
@@ -155,6 +158,12 @@ img {
 }
 .orderList {
   padding-top: 88px;
+}
+.orderNone{
+  width: 100%;
+  text-align: center;
+  color: #ddd;
+  margin: 100px 0;
 }
 .active {
   border-bottom: 4px solid #59c2fa;

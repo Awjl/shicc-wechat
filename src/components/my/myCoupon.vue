@@ -21,7 +21,7 @@
             <p>{{item.name}}</p>
             <p> {{new Date(item.startTime).getFullYear()}}/{{new Date(item.startTime).getMonth() + 1}}/{{new Date(item.startTime).getDate()}} - {{new Date(item.endTime).getFullYear()}}/{{new Date(item.endTime).getMonth() + 1}}/{{new Date(item.endTime).getDate()}}</p>
           </div>
-          <div class="couponitem-btn" v-if="item.state == 1">
+          <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping()">
             立即使用
           </div>
         </div>
@@ -29,6 +29,9 @@
           {{item.title}}
         </div>
       </div>
+    </div>
+    <div class="wishNone" v-if="items.length == 0">
+      - 暂无优惠券信息 -
     </div>
   </div>
 </template>
@@ -39,14 +42,14 @@ import { getAllCoupon } from 'api/user'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       index: 1,
       type: 0,
       items: []
     }
   },
-  created () {
+  created() {
     this._getAllCoupon()
   },
   computed: {
@@ -55,7 +58,7 @@ export default {
     ])
   },
   methods: {
-    _getAllCoupon () {
+    _getAllCoupon() {
       getAllCoupon(this.UserID, this.index, this.type).then((res) => {
         if (res.code === ERR_OK) {
           console.log('获取优惠券列表========================')
@@ -64,17 +67,22 @@ export default {
         }
       })
     },
-    notused () {
+    goShopping() {
+      this.$router.push({
+        path: `/Purchase`
+      })
+    },
+    notused() {
       this.index = 1
       this.items = []
       this._getAllCoupon()
     },
-    alreadyused () {
+    alreadyused() {
       this.index = 2
       this.items = []
       this._getAllCoupon()
     },
-    expired () {
+    expired() {
       this.index = 3
       this.items = []
       this._getAllCoupon()
@@ -86,6 +94,12 @@ export default {
 <style>
 .coupon {
   padding-top: 82px;
+}
+.wishNone{
+  width: 100%;
+  text-align: center;
+  margin: 100px 0;
+  color: #ddd;
 }
 .coupon-nav {
   position: fixed;

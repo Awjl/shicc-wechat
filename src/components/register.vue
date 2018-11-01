@@ -67,7 +67,7 @@ import { ERR_OK } from 'api/config'
 let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
 
 export default {
-  data () {
+  data() {
     return {
       overImg: './static/icon/done.png',
       imgbg: './static/loginimg/bg.png',
@@ -90,7 +90,7 @@ export default {
     }
   },
   methods: {
-    _Register () {
+    _Register() {
       Register(this.user).then((res) => {
         if (res.code === ERR_OK) {
           console.log(res.data)
@@ -104,7 +104,7 @@ export default {
         }
       })
     },
-    _getNewbeeCoupon (id) {
+    _getNewbeeCoupon(id) {
       getNewbeeCoupon(id).then((res) => {
         if (res.code === ERR_OK) {
           console.log('新手优惠券================================')
@@ -114,7 +114,7 @@ export default {
         }
       })
     },
-    yanzheng () {
+    yanzheng() {
       if (this.user.iphone) {
         if (!phoneReg.test(this.user.iphone)) {
           return
@@ -139,7 +139,7 @@ export default {
         this.nameErr = '请输入手机号'
       }
     },
-    OnBlur () {
+    OnBlur() {
       if (this.user.iphone) {
         if (phoneReg.test(this.user.iphone)) {
           this.nameErr = ''
@@ -150,7 +150,7 @@ export default {
         this.nameErr = '请输入手机号'
       }
     },
-    OnPassWord () {
+    OnPassWord() {
       let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/
       if (this.user.password) {
         if (password.test(this.user.password)) {
@@ -162,28 +162,28 @@ export default {
         this.passwordeErr = '请输入密码'
       }
     },
-    gologin () {
+    gologin() {
       this.$router.push({
         path: '/Login'
       })
     },
-    tohome () {
+    tohome() {
       this.show = false
       this.$router.push({
         path: '/Home'
       })
     },
-    register () {
+    register() {
       console.log('注册')
-      if (this.nameErr == '' && this.user.code != '' && this.passwordeErr ==  '' && this.user.password != '') {
+      if (this.nameErr == '' && this.user.code != '' && this.passwordeErr == '' && this.user.password != '') {
         this._Register()
       }
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    to.meta.keepAlive = false
-    next()
   }
+  // beforeRouteLeave (to, from, next) {
+  //   to.meta.keepAlive = false
+  //   next()
+  // }
 }
 </script>
 
@@ -309,7 +309,7 @@ img {
   padding: 30px;
   box-sizing: border-box;
 }
-.logincouponlist>.couponitem {
+.logincouponlist > .couponitem {
   width: 690px;
   height: 200px;
   border-radius: 10px;

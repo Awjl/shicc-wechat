@@ -45,8 +45,8 @@ export default new Router({
           component: Home,
           name: 'Home',
           meta: {
-            title: '首页',
-            keepAlive: true
+            title: '首页'
+            // keepAlive: true
           }
         },
         {
@@ -54,8 +54,8 @@ export default new Router({
           component: My,
           name: 'My',
           meta: {
-            title: '个人中心',
-            keepAlive: true
+            title: '个人中心'
+            // keepAlive: true
           }
         },
         {
@@ -63,8 +63,8 @@ export default new Router({
           component: Purchase,
           name: 'Purchase',
           meta: {
-            title: '荟购',
-            keepAlive: true
+            title: '荟购'
+            // keepAlive: true
           }
         },
         {
@@ -72,8 +72,8 @@ export default new Router({
           component: Exchange,
           name: 'Exchange',
           meta: {
-            title: '荟兑',
-            keepAlive: true
+            title: '荟兑'
+            // keepAlive: true
           }
         }
       ]
@@ -91,8 +91,8 @@ export default new Router({
       component: Service,
       name: 'Service',
       meta: {
-        title: '服务',
-        keepAlive: false
+        title: '服务'
+        // keepAlive: false
       }
     },
     {
@@ -100,8 +100,8 @@ export default new Router({
       component: PurchaseDetalis,
       name: 'PurchaseDetalis',
       meta: {
-        title: '商品详情',
-        keepAlive: false
+        title: '商品详情'
+        // keepAlive: false
       }
     },
     {
@@ -109,8 +109,8 @@ export default new Router({
       component: Submission,
       name: 'Submission',
       meta: {
-        title: '提交订单',
-        keepAlive: false
+        title: '提交订单'
+        // keepAlive: false
       }
     },
     {
@@ -118,8 +118,8 @@ export default new Router({
       component: ExchangeDetalis,
       name: 'ExchangeDetalis',
       meta: {
-        title: '积分兑换',
-        keepAlive: false
+        title: '积分兑换'
+        // keepAlive: false
       }
     },
     {
@@ -127,8 +127,8 @@ export default new Router({
       component: TrueExchange,
       name: 'TrueExchange',
       meta: {
-        title: '兑换',
-        keepAlive: false
+        title: '兑换'
+        // keepAlive: false
       }
     },
     {
@@ -136,8 +136,8 @@ export default new Router({
       component: MyAddres,
       name: 'MyAddres',
       meta: {
-        title: '收货地址',
-        keepAlive: false
+        title: '收货地址'
+        // keepAlive: false
       }
     },
     {
@@ -145,8 +145,8 @@ export default new Router({
       component: AddAddres,
       name: 'AddAddres',
       meta: {
-        title: '添加收货地址',
-        keepAlive: false
+        title: '添加收货地址'
+        // keepAlive: false
       }
     },
     {
@@ -154,8 +154,8 @@ export default new Router({
       component: MyWish,
       name: 'MyWish',
       meta: {
-        title: '心愿单',
-        keepAlive: false
+        title: '心愿单'
+        // keepAlive: false
       }
     },
     {
@@ -163,8 +163,8 @@ export default new Router({
       component: MyTransfer,
       name: 'MyTransfer',
       meta: {
-        title: '代金券',
-        keepAlive: false
+        title: '代金券'
+        // keepAlive: false
       }
     },
     {
@@ -172,8 +172,8 @@ export default new Router({
       component: MyCoupon,
       name: 'MyCoupon',
       meta: {
-        title: '优惠券',
-        keepAlive: false
+        title: '优惠券'
+        // keepAlive: false
       }
     },
     {
@@ -181,8 +181,8 @@ export default new Router({
       component: MyOrder,
       name: 'MyOrder',
       meta: {
-        title: '我的订单',
-        keepAlive: false
+        title: '我的订单'
+        // keepAlive: false
       }
     },
     {
@@ -190,8 +190,8 @@ export default new Router({
       component: MyModify,
       name: 'MyModify',
       meta: {
-        title: '修改个人资料',
-        keepAlive: false
+        title: '修改个人资料'
+        // keepAlive: false
       }
     },
     {
@@ -199,8 +199,8 @@ export default new Router({
       component: MyIntegral,
       name: 'MyIntegral',
       meta: {
-        title: '个人积分',
-        keepAlive: false
+        title: '个人积分'
+        // keepAlive: false
       }
     },
     {
@@ -208,8 +208,8 @@ export default new Router({
       component: MyPassword,
       name: 'MyPassword',
       meta: {
-        title: '修改密码',
-        keepAlive: false
+        title: '修改密码'
+        // keepAlive: false
       }
     },
     {
@@ -217,8 +217,8 @@ export default new Router({
       component: Details,
       name: 'Details',
       meta: {
-        title: '商品详情',
-        keepAlive: false
+        title: '商品详情'
+        // keepAlive: false
       }
     },
     {

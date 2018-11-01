@@ -106,10 +106,10 @@ export default {
       this.$router.back(-1)
     }
   },
-  beforeRouteLeave (to, from, next) {
-    to.meta.keepAlive = false
-    next()
-  }
+  // beforeRouteLeave (to, from, next) {
+  //   to.meta.keepAlive = false
+  //   next()
+  // }
 }
 </script>
 

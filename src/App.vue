@@ -1,26 +1,28 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <!-- <keep-alive>
       <router-view v-if="$route.meta.keepAlive"  v-wechat-title="$route.meta.title"></router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title"></router-view>
+    </keep-alive> -->
+    <!-- <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title"></router-view> -->
+    <router-view v-wechat-title="$route.meta.title"></router-view>
+
   </div>
 </template>
 
 <script>
 export default {
-  provide () {
+  provide() {
     return {
       reload: this.reload
     }
   },
-  data () {
+  data() {
     return {
       isRouterAlive: true
     }
   },
   methods: {
-    reload () {
+    reload() {
       this.isRouterAlive = false
       this.$nextTick(function () {
         this.isRouterAlive = true

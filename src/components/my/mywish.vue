@@ -10,12 +10,15 @@
           <p>{{item.time}}</p>
           <div class="new">
             <div>￥{{item.newPrice}}</div>
-            <div class="newDetalis">查看详情</div>
+            <div class="newDetalis" @click="goDetalis(item.goodsId)">查看详情</div>
           </div>
         </div>
       </div>
       <div class="line">
       </div>
+    </div>
+    <div class="wishNone" v-if="items.length == 0">
+      - 暂无信息 -
     </div>
   </div>
 
@@ -27,12 +30,12 @@ import { getWishList } from 'api/user'
 import { ERR_OK } from 'api/config'
 
 export default {
-  data () {
+  data() {
     return {
       items: []
     }
   },
-  created () {
+  created() {
     this._getWishList()
   },
   computed: {
@@ -41,13 +44,18 @@ export default {
     ])
   },
   methods: {
-    _getWishList () {
+    _getWishList() {
       getWishList(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           console.log('获取心愿单============')
           console.log(res.data)
           this.items = res.data
         }
+      })
+    },
+    goDetalis(id) {
+      this.$router.push({
+        path: `/PurchaseDetalis/${id}`
       })
     }
   }
@@ -62,6 +70,12 @@ img {
   width: 100%;
   height: 2px;
   background: #dcdcdc;
+}
+.wishNone{
+  width: 100%;
+  text-align: center;
+  margin: 100px 0;
+  color: #ddd;
 }
 .wish-title {
   display: flex;
@@ -87,17 +101,17 @@ img {
   color: #9b9b9b;
   letter-spacing: 1.09px;
 }
-.wish-name>.new {
+.wish-name > .new {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
-.wish-name>.new div {
+.wish-name > .new div {
   font-size: 24px;
   color: #4a4a4a;
   letter-spacing: 1.45px;
 }
-.wish-name>.new div.newDetalis {
+.wish-name > .new div.newDetalis {
   width: 130px;
   height: 30px;
   line-height: 30px;

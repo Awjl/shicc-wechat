@@ -71,6 +71,9 @@
         </div>
       </div>
     </div>
+    <div class="wishNone" v-if="dataList.length == 0">
+      - 暂无代金券信息 -
+    </div>
     <div class="OverBox" v-if="showTrue">
       <div class="Box-one">
         <div class="box-title">
@@ -131,7 +134,7 @@ import { getALLVoucher, givenToOne, checkMobile } from 'api/user'
 import { ERR_OK } from 'api/config'
 
 export default {
-  data () {
+  data() {
     return {
       index: 0,
       TrueImg: './static/icon/true-iocn.png',
@@ -147,7 +150,7 @@ export default {
       time: ''
     }
   },
-  created () {
+  created() {
     this._getALLVoucher()
   },
   computed: {
@@ -156,7 +159,7 @@ export default {
     ])
   },
   methods: {
-    _getALLVoucher () {
+    _getALLVoucher() {
       getALLVoucher(this.UserID, this.index).then((res) => {
         if (res.code === ERR_OK) {
           console.log('这是代金券列表=============================')
@@ -165,7 +168,7 @@ export default {
         }
       })
     },
-    _givenToOne () {
+    _givenToOne() {
       givenToOne(this.giveUser).then((res) => {
         if (res.code === ERR_OK) {
           console.log('转赠===================')
@@ -174,7 +177,7 @@ export default {
         }
       })
     },
-    _checkMobile () {
+    _checkMobile() {
       checkMobile(this.giveUser.mobile).then((res) => {
         if (res.code === ERR_OK) {
           console.log('查询结果===================')
@@ -187,45 +190,45 @@ export default {
         }
       })
     },
-    notused () {
+    notused() {
       this.index = 0
       this.dataList = []
       this._getALLVoucher()
     },
-    alreadyused () {
+    alreadyused() {
       this.index = 1
       this.dataList = []
       this._getALLVoucher()
     },
-    over () {
+    over() {
       this.index = 2
       this.dataList = []
       this._getALLVoucher()
     },
-    transfer () {
+    transfer() {
       this.index = 3
       this.dataList = []
       this._getALLVoucher()
     },
-    hide () {
+    hide() {
       this.showTrue = false
     },
-    show () {
+    show() {
       this.showTrue = true
     },
-    showgi (id) {
+    showgi(id) {
       this.giveUser.deliverer = this.UserID
       this.giveUser.couponId = id
       this.showgive = true
     },
-    givetrue () {
+    givetrue() {
       this.time = '请稍后'
       this._checkMobile()
     },
-    giveargin () {
+    giveargin() {
       this.time = ''
     },
-    givequxiao () {
+    givequxiao() {
       this.showgive = false
     }
   }
@@ -235,6 +238,12 @@ export default {
 <style>
 img {
   width: 100%;
+}
+.wishNone{
+  width: 100%;
+  text-align: center;
+  margin: 100px 0;
+  color: #ddd;
 }
 .line {
   width: 100%;
@@ -316,20 +325,20 @@ img {
   font-size: 24px;
   color: #161616;
 }
-.orderitem-name>.new,
-.orderitem-name>.num,
-.orderitem-name>.sum {
+.orderitem-name > .new,
+.orderitem-name > .num,
+.orderitem-name > .sum {
   width: 100%;
   text-align: right;
   font-size: 24px;
   color: #9b9b9b;
 }
-.orderitem>.orderitembtn {
+.orderitem > .orderitembtn {
   width: 100%;
   height: 103px;
   display: flex;
   /* flex-direction: row-reverse; */
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
 }
 .btn-btn {
@@ -385,26 +394,27 @@ img {
 .box-erwei {
   width: 200px;
   height: 200px;
-  background: #D8D8D8;
+  background: #d8d8d8;
   margin: 17px 0;
 }
-.box-name,.box-text{
+.box-name,
+.box-text {
   width: 100%;
   padding: 0 40px;
   box-sizing: border-box;
   line-height: 35px;
   font-size: 24px;
-  color: #9B9B9B;
+  color: #9b9b9b;
 }
-.box-name{
-  color: #4A4A4A;
+.box-name {
+  color: #4a4a4a;
 }
 .OverBox-img {
   margin-top: 74px;
   width: 60px;
   height: 60px;
 }
-.giveUser{
+.giveUser {
   position: fixed;
   top: 0;
   left: 0;
@@ -437,17 +447,17 @@ img {
 .giveUser-inp {
   width: 70%;
   height: 50px;
-  line-height:50px;
+  line-height: 50px;
   margin: 80px auto;
 }
 .giver-time {
   width: 70%;
   text-align: center;
   height: 50px;
-  line-height:50px;
+  line-height: 50px;
   margin: 80px auto;
 }
-.giveUser-inp input{
+.giveUser-inp input {
   height: 60px;
   border-bottom: 1px solid #ddd;
   outline: none;
@@ -458,7 +468,7 @@ img {
   display: flex;
   justify-content: space-between;
 }
-.give-btn>span{
+.give-btn > span {
   display: block;
   width: 150px;
   height: 50px;
@@ -469,7 +479,7 @@ img {
   border: 2px solid #59c2fa;
   color: #59c2fa;
 }
-.give-btn>span.give-true{
+.give-btn > span.give-true {
   background: #59c2fa;
   color: #ffffff;
 }

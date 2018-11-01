@@ -142,23 +142,23 @@ export default {
       this._deleteAddressById(id)
     }
   },
-  beforeRouteLeave (to, from, next) {
-    if (to.name === 'TrueExchange') {
-      console.log('执行')
-      to.meta.keepAlive = false
-      next()
-    }
-    if (to.name === 'AddAddres') {
-      console.log('执行')
-      to.meta.keepAlive = false
-      next()
-    }
-    if (to.name === 'My') {
-      console.log('执行')
-      to.meta.keepAlive = true
-      next()
-    }
-  }
+  // beforeRouteLeave (to, from, next) {
+  //   if (to.name === 'TrueExchange') {
+  //     console.log('执行')
+  //     to.meta.keepAlive = false
+  //     next()
+  //   }
+  //   if (to.name === 'AddAddres') {
+  //     console.log('执行')
+  //     to.meta.keepAlive = false
+  //     next()
+  //   }
+  //   if (to.name === 'My') {
+  //     console.log('执行')
+  //     to.meta.keepAlive = true
+  //     next()
+  //   }
+  // }
 }
 </script>
 

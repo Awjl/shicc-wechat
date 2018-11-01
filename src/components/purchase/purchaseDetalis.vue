@@ -174,20 +174,34 @@ export default {
   components: {
     Swiper
   },
-  beforeRouteLeave (to, from, next) {
-    if (to.name === 'Purchase') {
-      to.meta.keepAlive = true
-      next()
-    } else {
-      to.meta.keepAlive = false
-      next()
-    }
-  }
+  // beforeRouteLeave (to, from, next) {
+  //   if (to.name === 'Purchase') {
+  //     to.meta.keepAlive = true
+  //     next()
+  //   } else {
+  //     to.meta.keepAlive = false
+  //     next()
+  //   }
+  // }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.swiper-wrapper{
+  height: 650px;
+  /* display: flex; */
+  /* justify-content: center;
+  align-items: center; */
+}
+.swiper-slide{
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide>img{
+  width: 100%;
+  height: 100%;
+}
 img {
   width: 100%;
 }
