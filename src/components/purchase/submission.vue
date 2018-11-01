@@ -92,12 +92,13 @@
 
 <script>
 import { getGoodsOrderDetail, changeAddressById } from 'api/shopping'
-import { getAllCoupon } from 'api/user'
+// import { getParam } from 'api/user'
+import { getAllCoupon, getParam } from 'api/user'
 import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       num: 1,
       sum: 1,
@@ -119,7 +120,7 @@ export default {
       showbox: false
     }
   },
-  created () {
+  created() {
     this._getGoodsOrderDetail()
   },
   computed: {
@@ -128,7 +129,7 @@ export default {
     ])
   },
   methods: {
-    _getGoodsOrderDetail () {
+    _getGoodsOrderDetail() {
       console.log(this.UserID, this.$route.params.id)
       getGoodsOrderDetail(this.UserID, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
@@ -142,7 +143,7 @@ export default {
         }
       })
     },
-    _getAllCoupon () {
+    _getAllCoupon() {
       getAllCoupon(this.UserID, 1, this.shoping.type).then((res) => {
         if (res.code === ERR_OK) {
           console.log('查询')
@@ -154,7 +155,7 @@ export default {
         }
       })
     },
-    _changeAddressById () {
+    _changeAddressById() {
       console.log(this.shoping)
       this.shoping.userId = this.UserID
       changeAddressById(this.shoping).then((res) => {
@@ -163,7 +164,7 @@ export default {
         }
       })
     },
-    showboxtrue () {
+    showboxtrue() {
       this.showbox = true
       this.shoping.couponId = ''
       this.numquan = this.items.length + '个优惠券'
@@ -171,7 +172,7 @@ export default {
       this.num = this.shoping.num
       this.sum = this.shoping.total
     },
-    quxiao () {
+    quxiao() {
       this.showbox = false
       this.shoping.couponId = ''
       this.numquan = this.items.length + '个优惠券'
@@ -179,13 +180,40 @@ export default {
       this.num = this.shoping.num
       this.sum = this.shoping.total
     },
-    sumBtn () {
+    sumBtn() {
+      getParam(window.location.href.split('#')[0]).then(res => {
+        if (res.code === ERR_OK) {
+          var self = this
+          wx.config({
+            debug: true, //调试模式   当为tru时，开启调试模式
+            appId: res.data.appid,
+            timestamp: res.data.timestamp,
+            nonceStr: res.data.nonceStr,
+            signature: res.data.signature,
+            packages: res.data.package,
+            paySign: res.data.paySign,
+            jsApiList: ['chooseWXPay'],
+          })
+          wx.ready(function () {
+            wx.chooseWXPay({
+              timestamp: timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+              nonceStr: nonceStr, // 支付签名随机串，不长于 32 位
+              package: packages, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+              signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+              paySign: paySign, // 支付签名
+              success: function (res) {
+                console.log(res)
+              }
+            });
+          })
+        }
+      })
       this._changeAddressById()
     },
-    trueover () {
+    trueover() {
       this.showbox = false
     },
-    subclick () {
+    subclick() {
       if (this.shoping.num === 1) {
         return
       }
@@ -199,7 +227,7 @@ export default {
       this.num = this.shoping.num
       this.sum = this.shoping.total
     },
-    addclick () {
+    addclick() {
       this.shoping.num = this.shoping.num + 1
       this.shoping.total = this.shoping.newPrice * this.shoping.num
       this.num = this.shoping.num
@@ -210,7 +238,7 @@ export default {
       this.num = this.shoping.num
       this.sum = this.shoping.total
     },
-    activetrue (item, index) {
+    activetrue(item, index) {
       console.log(item.limitPrice <= this.sum)
       if (this.typeindex === null) {
         if (item.saleType === 1) {
@@ -304,7 +332,7 @@ img {
   display: flex;
   justify-content: space-between;
 }
-.submission-name>.new {
+.submission-name > .new {
   height: 45px;
   line-height: 45px;
   font-size: 24px;

@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"', // 生产环境
-  API_HOST: '"http://47.96.165.248:8081/"'
+  API_HOST: '"http://sicc.byrgb.com"'
 }

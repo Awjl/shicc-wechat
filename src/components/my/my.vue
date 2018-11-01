@@ -216,6 +216,8 @@ img {
   background: #f2f2f2;
 }
 .my-bg {
+  width: 100%;
+  height: 400px;
   position: relative;
 }
 .my-name {

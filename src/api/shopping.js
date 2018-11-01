@@ -157,3 +157,15 @@ export function getPointGoodsOrderDetail (data) {
     return Promise.resolve(res.data)
   })
 }
+
+// 获取核销优惠券信息
+export function getVoucherInfo (id) {
+  const url = `${process.env.API_HOST}/sicc/voucher/getVoucherInfo`
+  return axios.get(url, {
+    params: {
+      id: id
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

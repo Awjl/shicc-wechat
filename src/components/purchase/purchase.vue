@@ -193,6 +193,7 @@ img {
 }
 .purchase-banner {
   width: 100%;
+  height: 300px;
   position: relative;
 }
 .banner-text {
@@ -245,6 +246,8 @@ img {
 }
 .purchase-img {
   position: relative;
+  height: 300px;
+  overflow: hidden;
 }
 .purchase-name {
   position: absolute;

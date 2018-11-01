@@ -61,7 +61,7 @@
             <div v-else></div>
             <div class="btn-btn">
               <span class="over-btn" v-if="item.state == 1" @click="showgi(item.goodsId)">转赠</span>
-              <span class="true-btn" v-if="item.state == 1" @click="show">立即使用</span>
+              <span class="true-btn" v-if="item.state == 1" @click="show(item.goodsId)">立即使用</span>
               <span class="over-btn" v-if="item.state == 2">再来一单</span>
             </div>
           </div>

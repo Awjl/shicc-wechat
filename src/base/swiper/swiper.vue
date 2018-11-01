@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="(str, index) in listImg" :key="index">
+      <div class="swiper-slide" v-for="(str, index) in listImg" :key="index" :style="{height: height + 'px' }">
         <!-- <img :src="`http://${str.pictureUrl}?x-oss-process=image/format,png`" @click="goDetails(str.id)" /> -->
         <img :src="str.url" @click="goDetails(str.id)" />
       </div>
@@ -14,7 +14,7 @@
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 export default {
-  props: ['listImg'],
+  props: ['listImg' ,'height'],
   updated () {
     var swiper = new Swiper('.swiper-container', {
       observer: true,

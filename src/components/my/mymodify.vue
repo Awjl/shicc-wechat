@@ -1,10 +1,11 @@
 <template>
   <div class="modify">
     <div class="modify-tou">
-      <div class="tou">
-        <img :src="user.url" alt="">
+      <div class="tou" @click="uplode">
+        <img :src="user.url" alt="" v-if="!serverId">
+        <img :src="wxImg" alt="" v-else>
       </div>
-      <div class="tou-btn">点击修改头像</div>
+      <div class="tou-btn" @click="uplode">点击修改头像</div>
     </div>
     <div class="modifyList">
       <div class="modifyItem">
@@ -38,8 +39,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getUserInfoDetail, editUserInfoDetail } from 'api/user'
+import { getUserInfoDetail, editUserInfoDetail, uploadHead, getParam } from 'api/user'
 import { ERR_OK } from 'api/config'
+import { wxChooseImage } from 'api/wxconfig'
 export default {
   data() {
     return {
@@ -55,9 +57,12 @@ export default {
         sign: '',
         url: '',
         userId: '',
-        birthDate: ''
+        birthDate: '',
+        pictureId: ''
       },
-      dataTime: ''
+      dataTime: '',
+      wxImg: '',
+      serverId: ''
     }
   },
   created() {
@@ -70,7 +75,6 @@ export default {
   },
   methods: {
     _getUserInfoDetail() {
-      console.log('ddddddddd')
       getUserInfoDetail(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           console.log('查找个人信息============')
@@ -92,6 +96,41 @@ export default {
         }
       })
     },
+    uplode() {
+      // alert('123')
+      getParam(window.location.href.split('#')[0]).then(res => {
+        // var serverId, wxImg
+        // alert(window.location.href.split('#')[0])
+        if (res.code === ERR_OK) {
+          var self = this
+          wx.config({
+            debug: true, //调试模式   当为tru时，开启调试模式
+            appId: res.data.appid,
+            timestamp: res.data.timestamp, //签名时间戳
+            nonceStr: res.data.nonceStr, //生成签名的随机串
+            signature: res.data.signature, //签名
+            jsApiList: ['chooseImage', 'uploadImage'],
+          })
+          wx.ready(function () {
+            wx.chooseImage({
+              count: 1, // 默认9
+              sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+              sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+              success: function (res) {
+                self.wxImg = res.localIds[0].toString(); // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                wx.uploadImage({
+                  localId: self.wxImg, // 需要上传的图片的本地ID，由chooseImage接口获得
+                  isShowProgressTips: 1, // 默认为1，显示进度提示
+                  success: function (res) {
+                    self.serverId = res.serverId
+                  }
+                });
+              }
+            });
+          })
+        }
+      })
+    },
     setDate() {
       this.$picker.show({
         type: 'datePicker',
@@ -106,6 +145,18 @@ export default {
     },
     sexLadies() {
       this.user.sex = 2
+    }
+  },
+  watch: {
+    serverId: function () {
+      uploadHead(this.user.pictureId, this.serverId).then((res) => {
+        if (res.data) {
+          alert('保存成功')
+        } else {
+          alert('保存失败')
+          this.wxImg = ''
+        }
+      })
     }
   }
 }

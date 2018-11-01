@@ -22,7 +22,7 @@
     <div class="integralList" v-for="(item, index) in listData" :key="index">
       <div class="integralItem">
         <div class="integralTitle">
-          {{new Date(item.createDate).getFullYear()}}-{{new Date(item.createDate).getMonth() + 1}}-{{new Date(item.createDate).getDate()}}
+          {{new Date(item.createDate.replace(new RegExp(/-/gm), '/')).getFullYear()}}-{{new Date(item.createDate.replace(new RegExp(/-/gm), '/')).getMonth() + 1}}-{{new Date(item.createDate.replace(new RegExp(/-/gm), '/')).getDate()}}
         </div>
         <div class="line"></div>
         <div class="integral-conter">

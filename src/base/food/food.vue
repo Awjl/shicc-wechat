@@ -58,6 +58,7 @@ export default {
 }
 .foodItem{
   width: 100%;
+  height: 300px;
   position: relative;
   margin-bottom: 20px;
 }

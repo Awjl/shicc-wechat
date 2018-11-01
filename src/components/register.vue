@@ -39,7 +39,7 @@
             <div class="couponitem-name">
               <p>{{item.name}}</p>
               <p>
-                {{new Date(item.startTime).getFullYear()}}/{{new Date(item.startTime).getMonth() + 1}}/{{new Date(item.startTime).getDate()}} - {{new Date(item.endTime).getFullYear()}}/{{new Date(item.endTime).getMonth() + 1}}/{{new Date(item.endTime).getDate()}}
+                {{new Date(item.startTime.replace(new RegExp(/-/gm), '/')).getFullYear()}}/{{new Date(item.startTime.replace(new RegExp(/-/gm), '/')).getMonth() + 1}}/{{new Date(item.startTime.replace(new RegExp(/-/gm), '/')).getDate()}} - {{new Date(item.endTime.replace(new RegExp(/-/gm), '/')).getFullYear()}}/{{new Date(item.endTime.replace(new RegExp(/-/gm), '/')).getMonth() + 1}}/{{new Date(item.endTime.replace(new RegExp(/-/gm), '/')).getDate()}}
               </p>
             </div>
             <div class="couponitem-btn" v-if="item.state == 1">

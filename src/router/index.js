@@ -24,6 +24,9 @@ import MyPassword from '@/components/my/mypassword' // 修改密码
 import Login from '@/components/login' // 登录页面
 import Register from '@/components/register' // 注册页面
 
+import QRcode from '@/components/code/QRcode' // 扫描二维码
+import QRover from '@/components/code/QRover' // 扫描成功
+import QRsuccess from '@/components/code/QRsuccess' // 领取成功
 import index from '@/base/homelist/homelist' // 酒店介绍页面
 import Packing from '@/base/parking/parking' // 停车页面
 
@@ -33,7 +36,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/Home',
       component: Tab,
       redirect: '/home',
       children: [
@@ -249,6 +252,30 @@ export default new Router({
       meta: {
         title: '优惠停车'
       }
-    }
+    },
+    {
+      path: '/QRcode',
+      component: QRcode,
+      name: 'QRcode',
+      meta: {
+        title: '核销优惠券'
+      }
+    },
+    {
+      path: '/QRover/:id',
+      component: QRover,
+      name: 'QRover',
+      meta: {
+        title: '确认核销'
+      }
+    },
+    {
+      path: '/QRsuccess',
+      component: QRsuccess,
+      name: 'QRsuccess',
+      meta: {
+        title: '领取成功'
+      }
+    },
   ]
 })

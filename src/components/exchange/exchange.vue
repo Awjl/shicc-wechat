@@ -24,7 +24,9 @@
     </div>
     <div class="exchangelist">
       <div class="item" v-for="(item, index) in items" :key="index" @click="goDetalis(item.id, type, Levelnum.level)">
-        <img :src="item.pictureUrl" alt="">
+        <div class="exchangelist-img">
+          <img :src="item.pictureUrl" alt="">
+        </div>
         <div class="item-title">
           <p>{{item.name}}</p>
           <div class="item-jiage">
@@ -36,7 +38,7 @@
       </div>
     </div>
     <div class="bottom" v-if="!showover">- 到底了 -</div>
-    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom" >
+    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom">
       - 加载中 -
     </mugen-scroll>
     <not-logged v-if="notShow"></not-logged>
@@ -52,7 +54,7 @@ import { getV1PointGoods, getV2PointGoods } from 'api/shopping'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       bg: './static/exchangeImg/bg.png',
       show: true,
@@ -67,7 +69,7 @@ export default {
       type: 1
     }
   },
-  created () {
+  created() {
     if (this.UserID) {
       this._getUserLevel(this.UserID)
     } else {
@@ -85,7 +87,7 @@ export default {
     MugenScroll
   },
   methods: {
-    _getUserLevel (id) {
+    _getUserLevel(id) {
       getUserLevel(id).then((res) => {
         if (res.code === ERR_OK) {
           console.log('会员积分=============')
@@ -95,7 +97,7 @@ export default {
         }
       })
     },
-    _getV1PointGoods (pn, pg) {
+    _getV1PointGoods(pn, pg) {
       getV1PointGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
           console.log('获取V1积分列表==================')
@@ -112,7 +114,7 @@ export default {
         }
       })
     },
-    _getV2PointGoods (pn, pg) {
+    _getV2PointGoods(pn, pg) {
       getV2PointGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
           console.log('获取V2积分列表==================')
@@ -129,12 +131,12 @@ export default {
         }
       })
     },
-    gologin () {
+    gologin() {
       this.$router.push({
         path: '/Login'
       })
     },
-    fetchData () {
+    fetchData() {
       this.loading = true
       this.pn++
       if (this.show) {
@@ -143,14 +145,14 @@ export default {
         this._getV2PointGoods(this.pn, this.pg)
       }
     },
-    notShowbox () {
+    notShowbox() {
       if (!this.UserID) {
         this.$router.push({
           path: '/Login'
         })
       }
     },
-    tabOne () {
+    tabOne() {
       this.showover = true
       this.show = true
       this.pn = 1
@@ -158,7 +160,7 @@ export default {
       this.type = 1
       this._getV1PointGoods(this.pn, this.pg)
     },
-    tabTwo () {
+    tabTwo() {
       if (this.Levelnum.level === 1) {
         alert('您现在还没达到购买资格')
       }
@@ -169,7 +171,7 @@ export default {
       this.type = 2
       this._getV2PointGoods(this.pn, this.pg)
     },
-    goDetalis (id, type, level) {
+    goDetalis(id, type, level) {
       this.notShowbox()
       console.log(type)
       if (this.UserID) {
@@ -189,6 +191,7 @@ img {
 }
 .exchange-bg {
   width: 100%;
+  height: 400px;
   position: relative;
 }
 .exchange-title {
@@ -279,11 +282,19 @@ img {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.exchangelist .item {
+.exchangelist > .item {
   width: 325px;
   height: 450px;
   margin-bottom: 20px;
   border: 1px solid #dcdcdc;
+}
+.exchangelist-img {
+  height: 350px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .item-title p {
   height: 40px;
@@ -295,11 +306,11 @@ img {
 .item-jiage {
   padding-left: 20px;
 }
-.item-title>.item-jiage>.new {
+.item-title > .item-jiage > .new {
   font-size: 24px;
   color: #ed6969;
 }
-.item-title>.item-jiage>.old {
+.item-title > .item-jiage > .old {
   font-size: 18px;
   color: #9b9b9b;
   letter-spacing: 0.97px;

@@ -1,27 +1,31 @@
 import axios from 'axios'
 import { ERR_OK } from "api/config";
 
-const appId = ''
-const timestamp = ''
-const nonceStr = ''
-const signature = ''
-const packages = ''
-const paySign = ''
+let appId = ''
+let timestamp = ''
+let nonceStr = ''
+let signature = ''
+let packages = ''
+let paySign = ''
 // 请求参数
 function getParam(urlList) {
-  const url = `${process.env.API_HOST}/wmore/user/getParam`
+  const url = `${process.env.API_HOST}/sicc/wechat/getParam`
   return axios.get(url, {
     params: {
       url: urlList
     }
   }).then((res) => {
-    if (res.code === ERR_OK) {
-      appId = res.data.appId;
-      timestamp = res.data.timeStamp;
-      nonceStr = res.data.nonceStr;
-      signature = res.data.signature;
-      packages = res.data.package;
-      paySign = res.data.paySign;
+    console.log(res)
+    if (res.data.code === ERR_OK) {
+      console.log('---------------------------------------------------------------')
+      console.log(res.data.data)
+      appId = res.data.data.appid
+      timestamp = res.data.data.timeStamp
+      nonceStr = res.data.data.nonceStr
+      signature = res.data.data.signature
+      packages = res.data.data.package
+      paySign = res.data.data.paySign
+      allBase()
     }
   })
 }
@@ -112,7 +116,7 @@ function chooseImage() {
 // 分享调用
 export function wxshare(url) {
   getParam(url)
-  allBase()
+  // allBase()
   wx.ready(function () {
     onMenuShareTimeline()
     onMenuShareAppMessage()
@@ -121,7 +125,7 @@ export function wxshare(url) {
 // 微信支付
 export function wxPay(url) {
   getParam(url)
-  allBase()
+  // allBase()
   wx.ready(function () {
     chooseWXPay()
   })
@@ -129,16 +133,58 @@ export function wxPay(url) {
 // 扫一扫
 export function wxScanQRCode(url) {
   getParam(url)
-  allBase()
+  // allBase()
   wx.ready(function () {
     scanQRCode()
   })
 }
 // 上传头像
-export function wxChooseImage(url) {
-  getParam(url)
-  allBase()
-  wx.ready(function () {
-    return chooseImage()
+export function wxChooseImage(urlList) {
+
+  let url = `${process.env.API_HOST}/sicc/wechat/getParam`
+  return axios.get(url, {
+    params: {
+      url: urlList
+    }
+  }).then((res) => {
+    console.log(res)
+    if (res.data.code === ERR_OK) {
+      console.log('---------------------------------------------------------------')
+      // alert(res.data.data.);
+      appId = res.data.data.appid
+      timestamp = res.data.data.timestamp
+      nonceStr = res.data.data.nonceStr
+      signature = res.data.data.signature
+      packages = res.data.data.package
+      paySign = res.data.data.paySign
+      // alert(res.data.data);
+      wx.config({
+        debug: false, //调试模式   当为true时，开启调试模式
+        appId: appId,
+        timestamp: timestamp, //签名时间戳
+        nonceStr: nonceStr, //生成签名的随机串
+        signature: signature, //签名
+        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline', 'chooseImage', 'uploadImage', 'chooseWXPay', 'scanQRCode'],
+      })
+      wx.ready(function () {
+        // function chooseImage() {
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            let wxImg = res.localIds[0].toString(); // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            wx.uploadImage({
+              localId: wxImg, // 需要上传的图片的本地ID，由chooseImage接口获得
+              isShowProgressTips: 1, // 默认为1，显示进度提示
+              success: function (res) {
+                return res.serverId
+              }
+            });
+          }
+        });
+        // }
+      })
+    }
   })
 }

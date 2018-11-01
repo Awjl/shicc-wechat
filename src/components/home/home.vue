@@ -1,18 +1,24 @@
 <template>
   <div class="home">
-    <Swiper :listImg="listImg"></Swiper>
+    <div class="banner-he">
+      <Swiper :listImg="listImg" :height="height"></Swiper>
+    </div>
     <div class="he40"></div>
     <div class="title">
       <div class="title-text">一期一会</div>
     </div>
     <div class="he20"></div>
-    <hall :hallList="hallList"></hall>
+    <div class="hall-he">
+      <hall :hallList="hallList"></hall>
+    </div>
     <div class="he20"></div>
     <div class="title">
       <div class="title-text">一隅一食</div>
     </div>
     <div class="he20"></div>
-    <Food :footList="footList"></Food>
+    <div class="food-he">
+      <Food :footList="footList"></Food>
+    </div>
     <div class="title">
       <div class="title-text">关于我们</div>
     </div>
@@ -42,16 +48,17 @@ import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       img: './static/icon/service-icon.png',
       listImg: [],
       hallList: [],
       footList: [],
+      height: '161',
       notShow: false
     }
   },
-  created () {
+  created() {
     this._getTopBanner()
   },
   computed: {
@@ -60,7 +67,7 @@ export default {
     ])
   },
   methods: {
-    _getTopBanner () {
+    _getTopBanner() {
       getTopBanner().then((res) => {
         if (res.code === ERR_OK) {
           console.log(`顶部banner=====`)
@@ -70,7 +77,7 @@ export default {
         }
       })
     },
-    _getOneStageBanner () {
+    _getOneStageBanner() {
       getOneStageBanner().then((res) => {
         if (res.code === ERR_OK) {
           console.log(`一期一会banner=====`)
@@ -80,7 +87,7 @@ export default {
         }
       })
     },
-    _getCornerMealBanner () {
+    _getCornerMealBanner() {
       getCornerMealBanner().then((res) => {
         if (res.code === ERR_OK) {
           console.log(`一隅一食banner=====`)
@@ -89,14 +96,14 @@ export default {
         }
       })
     },
-    notShowbox () {
+    notShowbox() {
       if (!this.UserID) {
         this.$router.push({
           path: '/Login'
         })
       }
     },
-    goReserve () {
+    goReserve() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -104,7 +111,7 @@ export default {
         })
       }
     },
-    goSrver () {
+    goSrver() {
       this.$router.push({
         path: `/Service`
       })
@@ -129,6 +136,15 @@ export default {
 }
 .he30 {
   height: 30px;
+}
+.banner-he {
+  height: 322px;
+}
+.hall-he {
+  height: 300px;
+}
+.food-he {
+  min-height:320px;
 }
 .title-text {
   width: 140px;
