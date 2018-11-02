@@ -34,11 +34,13 @@ import Packing from '@/base/parking/parking' // 停车页面
 Vue.use(Router)
 
 export default new Router({
+  mode: "hash",
+  base: '/?#',
   routes: [
     {
-      path: '/Home',
+      path: '/',
       component: Tab,
-      redirect: '/home',
+      redirect: '/Home',
       children: [
         {
           path: '/Home',

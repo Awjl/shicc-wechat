@@ -48,46 +48,6 @@
 </template>
 <script>
 export default {
-  data () {
-    return {
-      // one: true,
-      // two: false,
-      // three: false,
-      // four: false
-      item: '1',
-    }
-  },
-  methods: {
-    oneItem (id) {
-      this.item = id
-      // console.log('1')
-      // this.one = true
-      // this.two = false
-      // this.three = false
-      // this.four = false
-    }
-    // twoItem () {
-    //   console.log('2')
-    //   this.one = false
-    //   this.two = true
-    //   this.three = false
-    //   this.four = false
-    // },
-    // threeItem () {
-    //   console.log('3')
-    //   this.one = false
-    //   this.two = false
-    //   this.three = true
-    //   this.four = false
-    // },
-    // fourItem () {
-    //   console.log('4')
-    //   this.one = false
-    //   this.two = false
-    //   this.three = false
-    //   this.four = true
-    // }
-  }
 }
 </script>
 

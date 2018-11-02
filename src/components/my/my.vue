@@ -86,7 +86,7 @@ import { getUserInfo } from 'api/user'
 import { ERR_OK } from 'api/config'
 
 export default {
-  data () {
+  data() {
     return {
       imgbg: './static/myimg/my-bg.png',
       imgTou: './static/myimg/my-tou.png',
@@ -100,10 +100,12 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     console.log('这里是个人中心=====')
     console.log(this.UserID)
-    this._getUserInfo()
+    if (this.UserID) {
+      this._getUserInfo()
+    }
   },
   computed: {
     ...mapGetters([
@@ -111,7 +113,7 @@ export default {
     ])
   },
   methods: {
-    _getUserInfo () {
+    _getUserInfo() {
       getUserInfo(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           console.log('获取全部信息==============')
@@ -121,14 +123,14 @@ export default {
         }
       })
     },
-    notShowbox () {
+    notShowbox() {
       if (!this.UserID) {
         this.$router.push({
           path: '/Login'
         })
       }
     },
-    gowish () {
+    gowish() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -136,7 +138,7 @@ export default {
         })
       }
     },
-    gocoupon () {
+    gocoupon() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -144,7 +146,7 @@ export default {
         })
       }
     },
-    goOrder () {
+    goOrder() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -152,7 +154,7 @@ export default {
         })
       }
     },
-    gotransfer () {
+    gotransfer() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -160,7 +162,7 @@ export default {
         })
       }
     },
-    gomodify () {
+    gomodify() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -168,7 +170,7 @@ export default {
         })
       }
     },
-    goaddres (type) {
+    goaddres(type) {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -176,7 +178,7 @@ export default {
         })
       }
     },
-    gointegral () {
+    gointegral() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -184,7 +186,7 @@ export default {
         })
       }
     },
-    gopassword () {
+    gopassword() {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
@@ -192,7 +194,7 @@ export default {
         })
       }
     },
-    gologin () {
+    gologin() {
       this.$router.push({
         path: '/Login'
       })

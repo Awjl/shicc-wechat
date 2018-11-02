@@ -24,6 +24,20 @@ export function getParam(urlList) {
     return Promise.resolve(res.data)
   })
 }
+// 获取微信支付权限配置
+export function createWechatPayOrder(urlList, userId, orderId) {
+  console.log(userId, orderId)
+  const url = `${process.env.API_HOST}/sicc/wechatpay/createWechatPayOrder`
+  return axios.get(url, {
+    params: {
+      url: urlList,
+      userId: userId,
+      orderId: orderId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
 // 修改个人头像uploadHead
 export function uploadHead(pictureId, mediaId) {
   const url = `${process.env.API_HOST}/sicc/user/uploadHead`
