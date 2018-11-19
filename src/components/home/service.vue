@@ -39,7 +39,7 @@ import { ERR_OK } from 'api/config'
 export default {
   data () {
     return {
-      service: './static/img/service.png',
+      service: './static/myimg/service.png',
       rightimg: './static/icon/ic_back.png',
       dataList: []
     }

@@ -33,7 +33,8 @@ import Packing from '@/base/parking/parking' // 停车页面
 
 Vue.use(Router)
 
-export default new Router({
+
+const router = new Router({
   mode: "hash",
   base: '/?#',
   routes: [
@@ -66,7 +67,6 @@ export default new Router({
           name: 'Purchase',
           meta: {
             title: '荟购'
-            // keepAlive: true
           }
         },
         {
@@ -75,7 +75,6 @@ export default new Router({
           name: 'Exchange',
           meta: {
             title: '荟兑'
-            // keepAlive: true
           }
         }
       ]
@@ -94,7 +93,6 @@ export default new Router({
       name: 'Service',
       meta: {
         title: '服务'
-        // keepAlive: false
       }
     },
     {
@@ -103,7 +101,6 @@ export default new Router({
       name: 'PurchaseDetalis',
       meta: {
         title: '商品详情'
-        // keepAlive: false
       }
     },
     {
@@ -112,7 +109,6 @@ export default new Router({
       name: 'Submission',
       meta: {
         title: '提交订单'
-        // keepAlive: false
       }
     },
     {
@@ -121,7 +117,6 @@ export default new Router({
       name: 'ExchangeDetalis',
       meta: {
         title: '积分兑换'
-        // keepAlive: false
       }
     },
     {
@@ -130,7 +125,6 @@ export default new Router({
       name: 'TrueExchange',
       meta: {
         title: '兑换'
-        // keepAlive: false
       }
     },
     {
@@ -139,7 +133,6 @@ export default new Router({
       name: 'MyAddres',
       meta: {
         title: '收货地址'
-        // keepAlive: false
       }
     },
     {
@@ -148,7 +141,6 @@ export default new Router({
       name: 'AddAddres',
       meta: {
         title: '添加收货地址'
-        // keepAlive: false
       }
     },
     {
@@ -157,7 +149,6 @@ export default new Router({
       name: 'MyWish',
       meta: {
         title: '心愿单'
-        // keepAlive: false
       }
     },
     {
@@ -166,7 +157,6 @@ export default new Router({
       name: 'MyTransfer',
       meta: {
         title: '代金券'
-        // keepAlive: false
       }
     },
     {
@@ -175,7 +165,6 @@ export default new Router({
       name: 'MyCoupon',
       meta: {
         title: '优惠券'
-        // keepAlive: false
       }
     },
     {
@@ -184,7 +173,6 @@ export default new Router({
       name: 'MyOrder',
       meta: {
         title: '我的订单'
-        // keepAlive: false
       }
     },
     {
@@ -193,7 +181,6 @@ export default new Router({
       name: 'MyModify',
       meta: {
         title: '修改个人资料'
-        // keepAlive: false
       }
     },
     {
@@ -202,7 +189,6 @@ export default new Router({
       name: 'MyIntegral',
       meta: {
         title: '个人积分'
-        // keepAlive: false
       }
     },
     {
@@ -211,7 +197,6 @@ export default new Router({
       name: 'MyPassword',
       meta: {
         title: '修改密码'
-        // keepAlive: false
       }
     },
     {
@@ -220,7 +205,6 @@ export default new Router({
       name: 'Details',
       meta: {
         title: '商品详情'
-        // keepAlive: false
       }
     },
     {
@@ -281,3 +265,11 @@ export default new Router({
     },
   ]
 })
+router.beforeEach((to, from, next) => {
+  // //会在任意路由跳转前执行，next一定要记着执行，不然路由不能跳转了
+  console.log('beforeEach-----------------------------------------------------------')
+  console.log(to, from)
+  // //
+  next()
+})
+export default router
