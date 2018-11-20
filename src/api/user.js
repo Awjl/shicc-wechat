@@ -218,10 +218,11 @@ export function getAllGoodsOrder(userid, type) {
 }
 
 // 删除商品订单
-export function deleteOrder(data) {
+export function deleteOrder(userId, data) {
   const url = `${process.env.API_HOST}/sicc/order/deleteOrder`
   return axios.get(url, {
     params: {
+      userId: userId,
       orderId: data
     }
   }).then((res) => {

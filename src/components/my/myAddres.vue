@@ -11,7 +11,7 @@
               </div>
               <p>{{item.city}}{{item.address}}</p>
             </div>
-            <div class="myadd-right"  @click.stop="addAddres(item.id)">
+            <div class="myadd-right" @click.stop="addAddres(item.id)">
               修改<img :src="rightImg" alt="">
             </div>
           </div>
@@ -34,7 +34,7 @@ import { getAllAddress, deleteAddressById } from 'api/user'
 import { ERR_OK } from 'api/config'
 
 export default {
-  data () {
+  data() {
     return {
       rightImg: './static/icon/addres.png',
       list: [],
@@ -42,7 +42,7 @@ export default {
       endX: 0
     }
   },
-  created () {
+  created() {
     this._getAllAddress()
   },
   computed: {
@@ -55,7 +55,7 @@ export default {
     ...mapMutations({
       setAddres: 'SET_ADDRES'
     }),
-    _getAllAddress () {
+    _getAllAddress() {
       getAllAddress(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           console.log('查询所有地址信息=============')
@@ -64,7 +64,7 @@ export default {
         }
       })
     },
-    _deleteAddressById (id) {
+    _deleteAddressById(id) {
       deleteAddressById(id).then((res) => {
         if (res.code === ERR_OK) {
           console.log('删除地址信息=============')
@@ -72,14 +72,14 @@ export default {
         }
       })
     },
-    addAddres (id) {
+    addAddres(id) {
       console.log(id)
       this.$router.push({
         path: `/AddAddres/${id}`
       })
     },
     // 跳转
-    skip (id) {
+    skip(id) {
       if (this.checkSlide()) {
         this.restSlide()
       } else {
@@ -91,12 +91,12 @@ export default {
       }
     },
     // 滑动开始
-    touchStart (e) {
+    touchStart(e) {
       // 记录初始位置
       this.startX = e.touches[0].clientX
     },
     // 滑动结束
-    touchEnd (e) {
+    touchEnd(e) {
       // 当前滑动的父级元素
       let parentElement = e.currentTarget.parentElement
       // 记录结束位置
@@ -115,7 +115,7 @@ export default {
       this.endX = 0
     },
     // 判断当前是否有滑块处于滑动状态
-    checkSlide () {
+    checkSlide() {
       let listItems = document.querySelectorAll('.list-item')
       for (let i = 0; i < listItems.length; i++) {
         if (listItems[i].dataset.type === '1') {
@@ -125,7 +125,7 @@ export default {
       return false
     },
     // 复位滑动状态
-    restSlide () {
+    restSlide() {
       let listItems = document.querySelectorAll('.list-item')
       // 复位
       for (let i = 0; i < listItems.length; i++) {
@@ -133,7 +133,7 @@ export default {
       }
     },
     // 删除
-    deleteItem (index, id) {
+    deleteItem(index, id) {
       // 当前索引
       // 复位
       this.restSlide()
@@ -141,24 +141,7 @@ export default {
       this.list.splice(index, 1)
       this._deleteAddressById(id)
     }
-  },
-  // beforeRouteLeave (to, from, next) {
-  //   if (to.name === 'TrueExchange') {
-  //     console.log('执行')
-  //     to.meta.keepAlive = false
-  //     next()
-  //   }
-  //   if (to.name === 'AddAddres') {
-  //     console.log('执行')
-  //     to.meta.keepAlive = false
-  //     next()
-  //   }
-  //   if (to.name === 'My') {
-  //     console.log('执行')
-  //     to.meta.keepAlive = true
-  //     next()
-  //   }
-  // }
+  }
 }
 </script>
 
@@ -166,12 +149,12 @@ export default {
 ul {
   width: 100%;
   overflow: hidden;
-  background: #F2F2F2;
+  background: #f2f2f2;
 }
-.myaddline{
+.myaddline {
   width: 100%;
   height: 10px;
-  background: #F2F2F2;
+  background: #f2f2f2;
 }
 .myadd-item {
   position: relative;
@@ -209,12 +192,12 @@ ul {
   align-items: center;
   justify-content: space-between;
 }
-.myadd-item span{
+.myadd-item span {
   display: block;
   color: #333;
   overflow: hidden;
   font-size: 28px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   letter-spacing: 1px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -227,7 +210,7 @@ ul {
 .myadd-left p {
   margin-top: 20px;
   font-size: 24px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   letter-spacing: 1px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -239,7 +222,7 @@ ul {
   justify-content: center;
   height: 60px;
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   letter-spacing: 0.67px;
 }
 .myadd-right img {

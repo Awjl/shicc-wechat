@@ -80,6 +80,7 @@ export default {
           console.log('查找个人信息============')
           console.log(res.data)
           this.user = res.data
+          console.log(this.user.birthday)
           this.dataTime = this.user.birthday
         }
       })
@@ -99,8 +100,6 @@ export default {
     uplode() {
       // alert('123')
       getParam(window.location.href.split('#')[0]).then(res => {
-        // var serverId, wxImg
-        // alert(window.location.href.split('#')[0])
         if (res.code === ERR_OK) {
           var self = this
           wx.config({
@@ -136,6 +135,7 @@ export default {
         type: 'datePicker',
         onOk: date => {
           this.user.birthday = date
+          console.log(this.user.birthday)
           this.dataTime = date.replace(new RegExp(/-/gm), '/')
         }
       })

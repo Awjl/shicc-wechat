@@ -1,19 +1,19 @@
 <template>
   <div class="purchaseDetalis">
     <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="(str, index) in dataList.bannerUrls" :key="index">
-        <!-- <img :src="`http://${str.pictureUrl}?x-oss-process=image/format,png`" @click="goDetails(str.id)" /> -->
-        <img :src="str" @click="goDetails(str.id)" style="vertical-align:middle"/>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(str, index) in dataList.bannerUrls" :key="index">
+          <!-- <img :src="`http://${str.pictureUrl}?x-oss-process=image/format,png`" @click="goDetails(str.id)" /> -->
+          <img :src="str" @click="goDetails(str.id)" style="vertical-align:middle" />
+        </div>
       </div>
+      <div class="swiper-pagination swiper-pagination-white"></div>
     </div>
-    <div class="swiper-pagination swiper-pagination-white"></div>
-  </div>
     <div class="Detalis-title">
       <div class="title-left">
         <p class="leftName">{{dataList.name}}(<span v-if="dataList.isBespeak === 1 ">需要预约</span><span v-else>不需要预约</span>)</p>
         <p class="leftjiage">代金券：
-          <span>¥{{dataList.oldPrice}}</span>
+          <span>¥{{dataList.oldPrice | formatFee}}</span>
         </p>
       </div>
       <div class="title-right">
@@ -74,8 +74,8 @@
     </div>
     <div class="footer">
       <div class="footer-left">
-        <span class="new">¥<span>{{dataList.newPrice}}</span></span>
-        <span class="old">¥{{dataList.oldPrice}}</span>
+        <span class="new">¥<span>{{dataList.newPrice | formatFee}}</span></span>
+        <span class="old">¥{{dataList.oldPrice | formatFee}}</span>
       </div>
       <div class="footer-over" @click="goSubmission(dataList.goodsId)">
         立即购买
@@ -94,7 +94,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   inject: ['reload'],
-  data () {
+  data() {
     return {
       xinIcon: './static/icon/xin-icon.png',
       xinactiveIcon: './static/icon/xinactive-icon.png',
@@ -104,7 +104,7 @@ export default {
       dataList: {}
     }
   },
-  updated () {
+  updated() {
     var swiper = new Swiper('.swiper-container', {
       observer: true,
       observeParents: true,
@@ -123,7 +123,7 @@ export default {
       }
     })
   },
-  created () {
+  created() {
     this.reload()
     if (this.UserID) {
       this.user = this.UserID
@@ -136,7 +136,7 @@ export default {
     ])
   },
   methods: {
-    _getGoodsDetail (user) {
+    _getGoodsDetail(user) {
       console.log('商品详情===================')
       getGoodsDetail(user, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
@@ -148,24 +148,24 @@ export default {
         }
       })
     },
-    collection (id) {
+    collection(id) {
       if (this.dataList.isLove === 1) {
         this.dataList.isLove = null
-        outLove(this.user, id).then((res) => {
+        outLove(this.user, id, 2).then((res) => {
           if (res.code === ERR_OK) {
             console.log('取消成功')
           }
         })
       } else {
         this.dataList.isLove = 1
-        inLove(this.user, id).then((res) => {
+        inLove(this.user, id, 2).then((res) => {
           if (res.code === ERR_OK) {
             console.log('保存成功')
           }
         })
       }
     },
-    goSubmission (id) {
+    goSubmission(id) {
       this.$router.push({
         path: `/Submission/${id}`
       })
@@ -188,17 +188,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.swiper-wrapper{
+.swiper-wrapper {
   height: 650px;
   /* display: flex; */
   /* justify-content: center;
   align-items: center; */
 }
-.swiper-slide{
+.swiper-slide {
   width: 100%;
   height: 100%;
 }
-.swiper-slide>img{
+.swiper-slide > img {
   width: 100%;
   height: 100%;
 }
@@ -296,11 +296,11 @@ img {
   text-align: center;
   margin-bottom: 30px;
   font-size: 28px;
-  color: #4A4A4A;
+  color: #4a4a4a;
 }
 .text-center {
   font-size: 24px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   padding: 0 40px;
   box-sizing: border-box;
   line-height: 40px;
@@ -316,42 +316,42 @@ img {
   display: flex;
   justify-content: space-between;
 }
-.footer div{
+.footer div {
   width: 50%;
   height: 88px;
   line-height: 88px;
   text-align: center;
 }
-.footer-left>.new{
+.footer-left > .new {
   font-size: 24px;
-  color: #ED6969;
+  color: #ed6969;
   letter-spacing: 2.59px;
   margin-right: 10px;
 }
-.footer-left>.new span{
+.footer-left > .new span {
   font-size: 48px;
 }
-.footer-left>.old {
+.footer-left > .old {
   font-size: 22px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   letter-spacing: 0.97px;
-  position:relative;
+  position: relative;
 }
-.footer-left .old::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:45%;
-  width:100%;
-  height:2px;
-  box-sizing:border-box;
-  background:#9B9B9B;
-  transform-origin:bottom center;
-  transform: rotate(9deg)
+.footer-left .old::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 45%;
+  width: 100%;
+  height: 2px;
+  box-sizing: border-box;
+  background: #9b9b9b;
+  transform-origin: bottom center;
+  transform: rotate(9deg);
 }
-.footer-over{
-  background: #59C2FA;
+.footer-over {
+  background: #59c2fa;
   font-size: 28px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 </style>

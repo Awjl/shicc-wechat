@@ -108,14 +108,14 @@ export default {
     addwish (id, ind) {
       if (this.pages[ind].isLove === 1) {
         this.pages[ind].isLove = null
-        outLove(this.user, id).then((res) => {
+        outLove(this.user, id, 1).then((res) => {
           if (res.code === ERR_OK) {
             console.log('取消成功')
           }
         })
       } else {
         this.pages[ind].isLove = 1
-        inLove(this.user, id).then((res) => {
+        inLove(this.user, id, 1).then((res) => {
           if (res.code === ERR_OK) {
             console.log('保存成功')
           }

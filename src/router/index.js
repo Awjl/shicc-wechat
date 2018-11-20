@@ -265,11 +265,11 @@ const router = new Router({
     },
   ]
 })
-router.beforeEach((to, from, next) => {
-  // //会在任意路由跳转前执行，next一定要记着执行，不然路由不能跳转了
-  console.log('beforeEach-----------------------------------------------------------')
-  console.log(to, from)
-  // //
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   // //会在任意路由跳转前执行，next一定要记着执行，不然路由不能跳转了
+//   console.log('beforeEach-----------------------------------------------------------')
+//   console.log(to, from)
+//   // //
+//   next()
+// })
 export default router

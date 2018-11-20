@@ -14,7 +14,7 @@
             </p>
           </div>
           <div class="new">
-            ¥{{shoping.newPrice}}
+            ¥{{shoping.newPrice | formatFee}}
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
           小计：
         </div>
         <div class="num-jiage">
-          {{sum}}
+          {{sum | formatFee}}
         </div>
       </div>
       <div class="line">
@@ -71,13 +71,13 @@
         <div class="line"></div>
         <div class="couponlist">
           <div class="couponitem" v-for="(item, index) in items" :key="index" @click="activetrue(item, index)" :class="{couponitemactive: index == typeindex }">
-            <div class="couponitem-title" :class="{activebg: item.limitPrice >= sum }">
+            <div class="couponitem-title" :class="{activebg: item.limitPrice > sum }">
               <div class="couponitem-new">
-                <span>{{item.price}}</span>元
+                <span>{{item.price/100}}</span>元
               </div>
               <div class="couponitem-name">
                 <p>{{item.name}}</p>
-                <p> {{new Date(item.startTime).getFullYear()}}/{{new Date(item.startTime).getMonth() + 1}}/{{new Date(item.startTime).getDate()}} - {{new Date(item.endTime).getFullYear()}}/{{new Date(item.endTime).getMonth() + 1}}/{{new Date(item.endTime).getDate()}}</p>
+                <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
               </div>
             </div>
             <div class="couponitem-footer">
@@ -155,18 +155,15 @@ export default {
       })
     },
     _changeAddressById() {
-      console.log(this.shoping)
       this.shoping.userId = this.UserID
       changeAddressById(this.shoping).then((res) => {
         if (res.code === ERR_OK) {
-          alert('提交成功')
-          console.log(this.UserID, '13')
-          createWechatPayOrder(window.location.href.split('#')[0], this.UserID, '13').then(res => {
+          createWechatPayOrder(window.location.href.split('#')[0], this.UserID, res.data).then(res => {
             if (res.code === ERR_OK) {
               var self = this
               console.log(res)
               wx.config({
-                debug: true, //调试模式   当为tru时，开启调试模式
+                debug: false, //调试模式   当为tru时，开启调试模式
                 appId: res.data.appId,
                 timestamp: res.data.timeStamp,
                 nonceStr: res.data.nonceStr,
@@ -175,14 +172,28 @@ export default {
               })
               wx.ready(function () {
                 wx.chooseWXPay({
+                  appId: res.data.appId,
                   timestamp: res.data.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
                   nonceStr: res.data.nonceStr, // 支付签名随机串，不长于 32 位
                   package: res.data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
                   signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                   paySign: res.data.paySign, // 支付签名
                   success: function (res) {
-                    // console.log(res)
-                    alert('支付成功')
+                    if (res.errMsg == "chooseWXPay:ok") {
+                      self.$router.push({
+                        path: '/MyOrder'
+                      })
+                    }
+                  },
+                  cancel: function (res) {
+                    self.$router.push({
+                      path: '/MyOrder'
+                    })
+                  },
+                  fail: function (res) {
+                    self.$router.push({
+                      path: '/MyOrder'
+                    })
                   }
                 });
               })
@@ -474,7 +485,7 @@ img {
   background: #9b9b9b;
 }
 .couponitem-new {
-  width: 109px;
+  width: 159px;
   height: 98px;
   text-align: center;
   line-height: 98px;
@@ -486,7 +497,7 @@ img {
   font-size: 70px;
 }
 .couponitem-name {
-  width: 250px;
+  width: 450px;
   margin-top: 30px;
   color: #fff;
   line-height: 35px;

@@ -1,12 +1,12 @@
 <template>
   <div class="exchangeDetalis">
     <Swiper :listImg="listImg.banner"></Swiper>
-    <div class="title">
-      <div class="name">
+    <div class="exchangeDetalistitle">
+      <div class="exchangeDetalisname">
         {{listImg.pointGoods.name}}
         <p> {{listImg.pointGoods.summary}}</p>
       </div>
-      <div class="title-jiage">
+      <div class="exchangeDetalistitle-jiage">
         <span class="new" v-if="type === '1'">{{listImg.pointGoods.v1NewPoint}}积分</span>
         <span class="new" v-else>{{listImg.pointGoods.v2NewPoint}}积分</span>
         <span class="old">{{listImg.pointGoods.oldPoint}}积分</span>
@@ -33,8 +33,7 @@
       <img :src="item.url" alt="" v-for="(item, index) in listImg.introduce" :key="index">
     </div>
 
-
-    <div  v-if="level>= type">
+    <div v-if="level>= type">
       <div v-if="listImg.pointGoods.stock > 0">
         <div class="footer" @click="goTrue" v-if='showtreu'>
           立即兑换
@@ -44,7 +43,7 @@
         </div>
       </div>
       <div class="footer-active" v-else>
-       库存不足
+        库存不足
       </div>
     </div>
     <div class="footer-active" v-else>
@@ -244,7 +243,7 @@ img {
   height: 10px;
   background: #f5f5f5;
 }
-.title {
+.exchangeDetalistitle {
   width: 100%;
   height: 198px;
   display: flex;
@@ -252,7 +251,7 @@ img {
   justify-content: center;
   align-items: center;
 }
-.name {
+.exchangeDetalisname {
   font-size: 24px;
   color: #4a4a4a;
   line-height: 35px;
@@ -265,23 +264,23 @@ img {
   letter-spacing: 0;
   text-align: center;
 }
-.title-jiage {
+.exchangeDetalistitle-jiage {
   margin-top: 19px;
 }
-.title-jiage>span{
+.exchangeDetalistitle-jiage > span {
   display: block;
 }
-.title-jiage>.new {
+.exchangeDetalistitle-jiage > .new {
   font-size: 28px;
   color: #ed6969;
 }
-.title-jiage>.old {
+.exchangeDetalistitle-jiage > .old {
   font-size: 18px;
   color: #9b9b9b;
   position: relative;
   text-align: center;
 }
-.title-jiage .old::before {
+.exchangeDetalistitle-jiage .old::before {
   content: '';
   position: absolute;
   left: 0;

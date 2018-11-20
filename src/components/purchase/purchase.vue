@@ -28,14 +28,14 @@
             </div>
           </div>
           <div class="Price">
-            <span class="PriceNew">￥{{item.newPrice}}</span>
-            <span class="PriceOld">￥{{item.oldPrice}}</span>
+            <span class="PriceNew">￥{{item.newPrice | formatFee}}</span>
+            <span class="PriceOld">￥{{item.oldPrice | formatFee}}</span>
           </div>
         </div>
       </div>
     </div>
     <div class="bottom" v-if="!showover">- 到底了 -</div>
-    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom" >
+    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom">
       - 加载中 -
     </mugen-scroll>
     <not-logged v-if="notShow"></not-logged>
@@ -50,7 +50,7 @@ import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       dataList: {
         picture: {
@@ -68,7 +68,7 @@ export default {
       notShow: false
     }
   },
-  created () {
+  created() {
     this._getCornerGoods(this.pn, this.pg)
   },
   computed: {
@@ -77,7 +77,7 @@ export default {
     ])
   },
   methods: {
-    _getCornerGoods (pn, pg) {
+    _getCornerGoods(pn, pg) {
       getCornerGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
           console.log(`商品列表banner=====`)
@@ -95,7 +95,7 @@ export default {
         }
       })
     },
-    _getMealGoods (pn, pg) {
+    _getMealGoods(pn, pg) {
       getMealGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
           console.log(`商品列表banner=====`)
@@ -113,14 +113,14 @@ export default {
         }
       })
     },
-    notShowbox () {
+    notShowbox() {
       if (!this.UserID) {
         this.$router.push({
           path: '/Login'
         })
       }
     },
-    fetchData () {
+    fetchData() {
       this.loading = true
       this.pn++
       if (this.show) {
@@ -129,7 +129,7 @@ export default {
         this._getMealGoods(this.pn, this.pg)
       }
     },
-    tabOne () {
+    tabOne() {
       this.showover = true
       this.show = true
       this.pn = 1
@@ -142,7 +142,7 @@ export default {
       }
       this._getCornerGoods(this.pn, this.pg)
     },
-    tabTwo () {
+    tabTwo() {
       this.showover = true
       this.show = false
       this.pn = 1
@@ -155,7 +155,7 @@ export default {
       }
       this._getMealGoods(this.pn, this.pg)
     },
-    goDetalis (id) {
+    goDetalis(id) {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({

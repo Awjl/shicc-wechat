@@ -8,6 +8,8 @@ import store from './store'
 import './common/style/index.css'
 import VueWechatTitle from 'vue-wechat-title'
 import Calendar from 'vue2-datepick'
+import fliter from "./utils/filter"
+
 
 Vue.use(Calendar) // 日期选择器
 Vue.use(VueWechatTitle) // 修改标题

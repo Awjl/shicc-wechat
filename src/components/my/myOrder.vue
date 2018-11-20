@@ -31,22 +31,22 @@
                 {{item.name}}
               </div>
               <div class="new">
-                ￥{{item.newPrice}}
+                ￥{{item.newPrice | formatFee}}
               </div>
               <div class="num">
                 x {{item.num}}
               </div>
               <div class="sum">
-                总计：￥{{item.total}}
+                总计：￥{{item.total | formatFee}}
               </div>
             </div>
           </div>
           <div class="line">
           </div>
           <div class="btn">
-            <span class="true-btn" v-if="item.state == 1">立即付款</span>
+            <span class="true-btn" v-if="item.state == 1" @click="sumBtn(item.id)">立即付款</span>
             <span class="over-btn" v-if="item.state == 2">再来一单</span>
-            <span class="del-btn" @click="delorder(item.id, index)">删除订单</span>
+            <span class="del-btn" @click="delorder(item.id, index)" v-if="item.state == 1">取消订单</span>
           </div>
         </div>
         <div class="line5">
@@ -62,11 +62,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getAllGoodsOrder, deleteOrder } from 'api/user'
+import { getAllGoodsOrder, deleteOrder, createWechatPayOrder } from 'api/user'
+import { changeAddressById } from 'api/shopping'
 import { ERR_OK } from 'api/config'
 
 export default {
-  data () {
+  data() {
     return {
       index: 1,
       TrueImg: './static/icon/true-iocn.png',
@@ -76,7 +77,7 @@ export default {
       dataList: []
     }
   },
-  created () {
+  created() {
     this._getAllGoodsOrder()
   },
   computed: {
@@ -85,7 +86,7 @@ export default {
     ])
   },
   methods: {
-    _getAllGoodsOrder () {
+    _getAllGoodsOrder() {
       getAllGoodsOrder(this.UserID, this.type).then((res) => {
         if (res.code === ERR_OK) {
           console.log('这是订单中心=============================')
@@ -94,27 +95,74 @@ export default {
         }
       })
     },
-    _deleteOrder (id) {
-      deleteOrder(id).then((res) => {
+    _deleteOrder(id) {
+      deleteOrder(this.UserID, id).then((res) => {
         if (res.code === ERR_OK) {
           console.log('删除订单=================================')
           alert('删除成功')
         }
       })
     },
-    notused () {
+    sumBtn(id) {
+      this._changeAddressById(id)
+    },
+    _changeAddressById(id) {
+      console.log(id)
+      createWechatPayOrder(window.location.href.split('#')[0], this.UserID, id).then(res => {
+        if (res.code === ERR_OK) {
+          var self = this
+          console.log(res)
+          wx.config({
+            debug: false, //调试模式   当为tru时，开启调试模式
+            appId: res.data.appId,
+            timestamp: res.data.timeStamp,
+            nonceStr: res.data.nonceStr,
+            signature: res.data.signature,
+            jsApiList: ['chooseWXPay'],
+          })
+          wx.ready(function () {
+            wx.chooseWXPay({
+              appId: res.data.appId,
+              timestamp: res.data.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+              nonceStr: res.data.nonceStr, // 支付签名随机串，不长于 32 位
+              package: res.data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+              signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+              paySign: res.data.paySign, // 支付签名
+              success: function (res) {
+                if (res.errMsg == "chooseWXPay:ok") {
+                  self.$router.push({
+                    path: '/MyOrder'
+                  })
+                }
+              },
+              cancel: function (res) {
+                self.$router.push({
+                  path: '/MyOrder'
+                })
+              },
+              fail: function (res) {
+                self.$router.push({
+                  path: '/MyOrder'
+                })
+              }
+            });
+          })
+        }
+      })
+    },
+    notused() {
       this.index = 1
       this.type = 1
       this.dataList = []
       this._getAllGoodsOrder()
     },
-    alreadyused () {
+    alreadyused() {
       this.index = 2
       this.type = 2
       this.dataList = []
       this._getAllGoodsOrder()
     },
-    delorder (id, index) {
+    delorder(id, index) {
       console.log(id, index)
       this._deleteOrder(id)
       this.dataList.splice(index, 1)
@@ -159,7 +207,7 @@ img {
 .orderList {
   padding-top: 88px;
 }
-.orderNone{
+.orderNone {
   width: 100%;
   text-align: center;
   color: #ddd;
@@ -213,9 +261,9 @@ img {
   font-size: 24px;
   color: #161616;
 }
-.orderitem-name>.new,
-.orderitem-name>.num,
-.orderitem-name>.sum {
+.orderitem-name > .new,
+.orderitem-name > .num,
+.orderitem-name > .sum {
   width: 100%;
   text-align: right;
   font-size: 24px;
@@ -241,7 +289,7 @@ img {
   background: #59c2fa;
   color: #ffffff;
 }
-.btn span.del-btn{
+.btn span.del-btn {
   background: #ff4949;
   color: #ffffff;
   margin-right: 10px;
@@ -282,19 +330,20 @@ img {
 .box-erwei {
   width: 200px;
   height: 200px;
-  background: #D8D8D8;
+  background: #d8d8d8;
   margin: 17px 0;
 }
-.box-name,.box-text{
+.box-name,
+.box-text {
   width: 100%;
   padding: 0 40px;
   box-sizing: border-box;
   line-height: 35px;
   font-size: 24px;
-  color: #9B9B9B;
+  color: #9b9b9b;
 }
-.box-name{
-  color: #4A4A4A;
+.box-name {
+  color: #4a4a4a;
 }
 .OverBox-img {
   margin-top: 74px;
