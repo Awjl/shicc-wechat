@@ -42,7 +42,7 @@ import Hall from 'base/hall/hall'
 import Food from 'base/food/food'
 import HomeList from 'base/homelist/homelist'
 
-import { getTopBanner, getOneStageBanner, getCornerMealBanner } from 'api/homeapi'
+import { getTopBanner, getOneStageBanner, getCornerMealBanner, defaultLogin } from 'api/homeapi'
 import { ERR_OK } from 'api/config'
 import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
@@ -60,6 +60,7 @@ export default {
   },
   created() {
     this._getTopBanner()
+    this._defaultLogin(this.UserID)
   },
   computed: {
     ...mapGetters([
@@ -67,6 +68,16 @@ export default {
     ])
   },
   methods: {
+    _defaultLogin(id) {
+      console.log('用户ID-------------------------------------------------')
+      console.log(id)
+      defaultLogin(id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('获取UserId-------------------------------------')
+          console.log(res.data)
+        }
+      })
+    },
     _getTopBanner() {
       getTopBanner().then((res) => {
         if (res.code === ERR_OK) {
@@ -144,7 +155,7 @@ export default {
   height: 300px;
 }
 .food-he {
-  min-height:320px;
+  min-height: 320px;
 }
 .title-text {
   width: 140px;

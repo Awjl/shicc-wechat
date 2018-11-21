@@ -27,6 +27,7 @@ import Register from '@/components/register' // 注册页面
 import QRcode from '@/components/code/QRcode' // 扫描二维码
 import QRover from '@/components/code/QRover' // 扫描成功
 import QRsuccess from '@/components/code/QRsuccess' // 领取成功
+import QRsuccessCode from '@/components/code/QRsuccessCode' // 领取成功
 import index from '@/base/homelist/homelist' // 酒店介绍页面
 import Packing from '@/base/parking/parking' // 停车页面
 
@@ -49,7 +50,6 @@ const router = new Router({
           name: 'Home',
           meta: {
             title: '首页'
-            // keepAlive: true
           }
         },
         {
@@ -58,7 +58,6 @@ const router = new Router({
           name: 'My',
           meta: {
             title: '个人中心'
-            // keepAlive: true
           }
         },
         {
@@ -263,6 +262,14 @@ const router = new Router({
         title: '领取成功'
       }
     },
+    {
+      path: '/QRsuccessCode',
+      component: QRsuccessCode,
+      name: 'QRsuccessCode',
+      meta: {
+        title: '核销成功'
+      }
+    }
   ]
 })
 // router.beforeEach((to, from, next) => {

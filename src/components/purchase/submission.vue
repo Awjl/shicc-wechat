@@ -163,7 +163,7 @@ export default {
               var self = this
               console.log(res)
               wx.config({
-                debug: false, //调试模式   当为tru时，开启调试模式
+                debug: false, 
                 appId: res.data.appId,
                 timestamp: res.data.timeStamp,
                 nonceStr: res.data.nonceStr,
@@ -173,15 +173,15 @@ export default {
               wx.ready(function () {
                 wx.chooseWXPay({
                   appId: res.data.appId,
-                  timestamp: res.data.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                  nonceStr: res.data.nonceStr, // 支付签名随机串，不长于 32 位
-                  package: res.data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-                  signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                  paySign: res.data.paySign, // 支付签名
+                  timestamp: res.data.timeStamp, 
+                  nonceStr: res.data.nonceStr, 
+                  package: res.data.package,
+                  signType: 'MD5', 
+                  paySign: res.data.paySign,
                   success: function (res) {
                     if (res.errMsg == "chooseWXPay:ok") {
                       self.$router.push({
-                        path: '/MyOrder'
+                        path: '/MyTransfer'
                       })
                     }
                   },
@@ -480,16 +480,17 @@ img {
   background: -moz-linear-gradient(#ff7d7d, #ed6969); /* Firefox 3.6 - 15 */
   background: linear-gradient(#ff7d7d, #ed6969); /* 标准的语法 */
   display: flex;
+  align-items: center;
 }
 .activebg {
   background: #9b9b9b;
 }
 .couponitem-new {
-  width: 159px;
+  width: 189px;
   height: 98px;
   text-align: center;
   line-height: 98px;
-  margin: 30px 50px;
+  /* margin: 30px 50px; */
   font-size: 24px;
   color: #ffffff;
 }
@@ -497,8 +498,7 @@ img {
   font-size: 70px;
 }
 .couponitem-name {
-  width: 450px;
-  margin-top: 30px;
+  width: 400px;
   color: #fff;
   line-height: 35px;
 }

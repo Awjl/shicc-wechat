@@ -30,7 +30,7 @@
         <span>使&nbsp;用&nbsp;&nbsp;时&nbsp;间：</span>{{obj.useTime}}
       </div>
       <div class="QRbtn">
-        <div class="true">
+        <div class="true" @click="_writeOffVoucher()">
           确认
         </div>
         <div>
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import { getVoucherInfo } from 'api/shopping'
+import { getVoucherInfo, writeOffVoucher } from 'api/shopping'
 export default {
   data() {
     return {
@@ -68,6 +68,20 @@ export default {
       getVoucherInfo(this.$route.params.id).then(res => {
         console.log(res)
         this.obj = res.data
+      })
+    },
+    _writeOffVoucher() {
+      writeOffVoucher(this.$route.params.id).then(res => {
+        console.log(res)
+        if (res.code === 0) {
+          if (res.data.code === 200) {
+            this.$router.push({
+              path: "/QRsuccessCode"
+            })
+          } else {
+            alert(res.data.message)
+          }
+        }
       })
     }
   }
@@ -118,7 +132,7 @@ export default {
   align-items: center;
   margin-top: 50px;
 }
-.QRbtn>div{
+.QRbtn > div {
   width: 150px;
   height: 50px;
   text-align: center;
@@ -128,8 +142,8 @@ export default {
   margin: 0 20px;
   border-radius: 10px;
 }
-.QRbtn>div.true{
-  border:1px solid #59c2fa;
+.QRbtn > div.true {
+  border: 1px solid #59c2fa;
   background: #59c2fa;
   color: #fff;
 }

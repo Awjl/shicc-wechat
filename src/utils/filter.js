@@ -10,6 +10,8 @@ Vue.filter('formatFee', function (value) {
 Vue.filter('formatDate', function (value) {
   if (value) {
     console.log(value)
-    return `${new Date(value).getFullYear()}年${new Date(value).getMonth() + 1}月${new Date(value).getDate()}日`
+    // console.log(new Date(value))
+    let time = value.split('T')[0]
+    return `${new Date(time.replace(new RegExp(/-/gm), '/')).getFullYear()}/${new Date(time.replace(new RegExp(/-/gm), '/')).getMonth() + 1}/${new Date(time.replace(new RegExp(/-/gm), '/')).getDate()}`
   }
 });

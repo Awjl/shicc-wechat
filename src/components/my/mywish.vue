@@ -1,13 +1,13 @@
 <template>
   <div class="wish">
-    <div v-for="(item, index) in items" :key="index">
+    <div v-for="item in items.room">
       <div class="wish-title">
         <div class="wish-img">
           <img :src="item.url" alt="">
         </div>
         <div class="wish-name">
           <p>{{item.name}}</p>
-          <p>{{item.time}}</p>
+          <p>{{item.useTime}} <span v-if="item.isBespeak === 1">需要预约</span> <span v-else>无需预约</span></p>
           <div class="new">
             <div>￥{{item.newPrice}}</div>
             <div class="newDetalis" @click="goDetalis(item.goodsId)">查看详情</div>
@@ -17,7 +17,23 @@
       <div class="line">
       </div>
     </div>
-    <div class="wishNone" v-if="items.length == 0">
+    <div v-for="item in items.food">
+      <div class="wish-title">
+        <div class="wish-img">
+          <img :src="item.url" alt="">
+        </div>
+        <div class="wish-name">
+          <p>{{item.name}}</p>
+          <p>周一至周日 无需预约</p>
+          <div class="newEnd">
+            <p>详情请至门店</p>
+          </div>
+        </div>
+      </div>
+      <div class="line">
+      </div>
+    </div>
+    <div class="wishNone" v-if="items.room.length == 0 && items.food.length == 0">
       - 暂无信息 -
     </div>
   </div>
@@ -71,7 +87,7 @@ img {
   height: 2px;
   background: #dcdcdc;
 }
-.wishNone{
+.wishNone {
   width: 100%;
   text-align: center;
   margin: 100px 0;
@@ -102,9 +118,18 @@ img {
   letter-spacing: 1.09px;
 }
 .wish-name > .new {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
+}
+.wish-name > .newEnd {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.wish-name > .newEnd > p {
+  font-size: 20px;
+  color: #9b9b9b;
 }
 .wish-name > .new div {
   font-size: 24px;

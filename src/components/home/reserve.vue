@@ -68,7 +68,7 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      listImgtwo: './static/img/listthree2.png',
+      listImgtwo: './static/myimg/listthree2.png',
       overImg: './static/icon/done.png',
       TrueImg: './static/icon/true-iocn.png',
       showTrue: false,

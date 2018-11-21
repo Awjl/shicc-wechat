@@ -1,6 +1,6 @@
 import axios from 'axios'
 // 获取一隅
-export function getCornerGoods (pn, pg) {
+export function getCornerGoods(pn, pg) {
   const url = `${process.env.API_HOST}/sicc/goods/getCornerGoods`
   return axios.get(url, {
     params: {
@@ -12,7 +12,7 @@ export function getCornerGoods (pn, pg) {
   })
 }
 // 获取一食
-export function getMealGoods (pn, pg) {
+export function getMealGoods(pn, pg) {
   const url = `${process.env.API_HOST}/sicc/goods/getMealGoods`
   return axios.get(url, {
     params: {
@@ -24,7 +24,7 @@ export function getMealGoods (pn, pg) {
   })
 }
 // 获取详情
-export function getGoodsDetail (userid, id) {
+export function getGoodsDetail(userid, id) {
   const url = `${process.env.API_HOST}/sicc/goods/getGoodsDetail`
   return axios.get(url, {
     params: {
@@ -37,7 +37,7 @@ export function getGoodsDetail (userid, id) {
 }
 
 // 获取v1商品
-export function getV1PointGoods (pn, pg) {
+export function getV1PointGoods(pn, pg) {
   const url = `${process.env.API_HOST}/sicc/pointGoods/getV1PointGoods`
   return axios.get(url, {
     params: {
@@ -50,7 +50,7 @@ export function getV1PointGoods (pn, pg) {
 }
 
 // 获取v2商品
-export function getV2PointGoods (pn, pg) {
+export function getV2PointGoods(pn, pg) {
   const url = `${process.env.API_HOST}/sicc/pointGoods/getV2PointGoods`
   return axios.get(url, {
     params: {
@@ -63,7 +63,7 @@ export function getV2PointGoods (pn, pg) {
 }
 
 // 积分商品详情
-export function getPointGoodsDetailById (id) {
+export function getPointGoodsDetailById(id) {
   const url = `${process.env.API_HOST}/sicc/pointGoods/getPointGoodsDetailById`
   return axios.get(url, {
     params: {
@@ -75,7 +75,7 @@ export function getPointGoodsDetailById (id) {
 }
 
 // 兑换积分商品
-export function exchangeGoods (userId, point) {
+export function exchangeGoods(userId, point) {
   const url = `${process.env.API_HOST}/sicc/pointGoods/exchangeGoods`
   return axios.get(url, {
     params: {
@@ -88,7 +88,7 @@ export function exchangeGoods (userId, point) {
 }
 
 // 生成商品订单
-export function changeAddressById (data) {
+export function changeAddressById(data) {
   const url = `${process.env.API_HOST}/sicc/order/createOrder`
   return axios.post(url, {
     goodsId: data.goodsId,
@@ -103,7 +103,7 @@ export function changeAddressById (data) {
 }
 
 // 查询商品
-export function getGoodsOrderDetail (userId, goodsId) {
+export function getGoodsOrderDetail(userId, goodsId) {
   const url = `${process.env.API_HOST}/sicc/order/getGoodsOrderDetail`
   return axios.get(url, {
     params: {
@@ -116,7 +116,7 @@ export function getGoodsOrderDetail (userId, goodsId) {
 }
 
 // 生成积分商品订单
-export function createPointOrder (data) {
+export function createPointOrder(data) {
   const url = `${process.env.API_HOST}/sicc/order/createPointOrder`
   return axios.post(url, {
     addressId: data.addressId,
@@ -131,7 +131,7 @@ export function createPointOrder (data) {
 }
 
 // 查询积分是否足够
-export function isEnoughPoint (userId, point) {
+export function isEnoughPoint(userId, point) {
   const url = `${process.env.API_HOST}/sicc/pointGoods/isEnoughPoint`
   return axios.get(url, {
     params: {
@@ -144,7 +144,7 @@ export function isEnoughPoint (userId, point) {
 }
 
 // 查询积分详情
-export function getPointGoodsOrderDetail (data) {
+export function getPointGoodsOrderDetail(data) {
   const url = `${process.env.API_HOST}/sicc/order/getPointGoodsOrderDetail`
   return axios.get(url, {
     params: {
@@ -159,8 +159,19 @@ export function getPointGoodsOrderDetail (data) {
 }
 
 // 获取核销优惠券信息
-export function getVoucherInfo (id) {
+export function getVoucherInfo(id) {
   const url = `${process.env.API_HOST}/sicc/voucher/getVoucherInfo`
+  return axios.get(url, {
+    params: {
+      id: id
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 核销优惠券信息
+export function writeOffVoucher(id) {
+  const url = `${process.env.API_HOST}/sicc/goods/writeOffVoucher`
   return axios.get(url, {
     params: {
       id: id

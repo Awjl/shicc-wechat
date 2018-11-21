@@ -39,10 +39,10 @@
             <div class="couponitem-name">
               <p>{{item.name}}</p>
               <p>
-                {{new Date(item.startTime.replace(new RegExp(/-/gm), '/')).getFullYear()}}/{{new Date(item.startTime.replace(new RegExp(/-/gm), '/')).getMonth() + 1}}/{{new Date(item.startTime.replace(new RegExp(/-/gm), '/')).getDate()}} - {{new Date(item.endTime.replace(new RegExp(/-/gm), '/')).getFullYear()}}/{{new Date(item.endTime.replace(new RegExp(/-/gm), '/')).getMonth() + 1}}/{{new Date(item.endTime.replace(new RegExp(/-/gm), '/')).getDate()}}
+                {{item.startTime | formatDate}} - {{item.endTime | formatDate}}
               </p>
             </div>
-            <div class="couponitem-btn" v-if="item.state == 1">
+            <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping()">
               立即使用
             </div>
           </div>
@@ -114,6 +114,11 @@ export default {
         }
       })
     },
+    goShopping() {
+      this.$router.push({
+        path: `/Purchase`
+      })
+    },
     yanzheng() {
       if (this.user.iphone) {
         if (!phoneReg.test(this.user.iphone)) {
@@ -169,9 +174,7 @@ export default {
     },
     tohome() {
       this.show = false
-      this.$router.push({
-        path: '/Home'
-      })
+      this.$router.back(-1)
     },
     register() {
       console.log('注册')
@@ -180,10 +183,6 @@ export default {
       }
     }
   }
-  // beforeRouteLeave (to, from, next) {
-  //   to.meta.keepAlive = false
-  //   next()
-  // }
 }
 </script>
 

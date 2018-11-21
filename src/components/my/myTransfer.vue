@@ -61,7 +61,7 @@
             <div v-else></div>
             <div class="btn-btn">
               <span class="over-btn" v-if="item.state == 1" @click="showgi(item.goodsId)">转赠</span>
-              <span class="true-btn" v-if="item.state == 1" @click="show(item.goodsId)">立即使用</span>
+              <span class="true-btn" v-if="item.state == 1" @click="show(item.orderCode)">立即使用</span>
               <span class="over-btn" v-if="item.state == 2">再来一单</span>
             </div>
           </div>
@@ -79,30 +79,29 @@
         <div class="box-title">
           卡券兑换码
         </div>
+        <div class="boxTwotitle">
+          券码：{{useCode.couponCode}}
+        </div>
         <div class="box-erwei">
-
+          <img :src="useCode.qrCode" alt="">
         </div>
         <div class="box-name">
           有效期：
         </div>
         <div class="box-text">
-          2018.07.01至2019.07.01 （周末、法定节假日通用）
+          {{useCode.termOfValidity}}
         </div>
         <div class="box-name">
           使用时间：
         </div>
         <div class="box-text">
-          10:00-22:00
+          {{useCode.useTime}}
         </div>
         <div class="box-name">
           使用规则：
         </div>
         <div class="box-text">
-          <p>*需要提前预约</p>
-          <p>*不可叠加使用</p>
-          <p>不兑现、不找零</p>
-          <p>*提供免费Wifi</p>
-          <p>停车位收费标准：详情到店或者电话咨询</p>
+        <p v-for="(item, index) in useCode.useRule" :key="index">{{item}} </p>
         </div>
       </div>
       <div class="OverBox-img" @click="hide">
@@ -130,7 +129,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getALLVoucher, givenToOne, checkMobile } from 'api/user'
+import { getALLVoucher, givenToOne, checkMobile, getQRcode } from 'api/user'
 import { ERR_OK } from 'api/config'
 
 export default {
@@ -141,6 +140,13 @@ export default {
       overImg: './static/icon/done.png',
       showTrue: false,
       showgive: false,
+      useCode: {
+        couponCode: '',
+        qrCode: '',
+        termOfValidity: '',
+        useRule: '',
+        useTime: ''
+      },
       dataList: [],
       giveUser: {
         mobile: '',
@@ -168,12 +174,23 @@ export default {
         }
       })
     },
+    _getQRcode(goodsID) {
+      getQRcode(goodsID, this.UserID).then((res) => {
+        if (res.code === ERR_OK) {
+          this.showTrue = true
+          console.log(res.data)
+          this.useCode = res.data
+          this.useCode.useRule = this.useCode.useRule.split(',')
+        }
+      })
+    },
     _givenToOne() {
       givenToOne(this.giveUser).then((res) => {
         if (res.code === ERR_OK) {
           console.log('转赠===================')
           this.showgive = false
           alert('转赠成功')
+          this._getALLVoucher()
         }
       })
     },
@@ -212,9 +229,11 @@ export default {
     },
     hide() {
       this.showTrue = false
+      this._getALLVoucher()
     },
-    show() {
-      this.showTrue = true
+    show(id) {
+      console.log(id)
+      this._getQRcode(id)
     },
     showgi(id) {
       this.giveUser.deliverer = this.UserID
@@ -239,7 +258,7 @@ export default {
 img {
   width: 100%;
 }
-.wishNone{
+.wishNone {
   width: 100%;
   text-align: center;
   margin: 100px 0;
@@ -383,10 +402,18 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: auto;
 }
 .box-title {
-  margin-top: 50px;
-  font-size: 24px;
+  margin-top: 30px;
+  font-size: 28px;
+  color: #161616;
+  height: 35px;
+  line-height: 35px;
+}
+.boxTwotitle {
+  margin-top: 20px;
+  font-size: 22px;
   color: #161616;
   height: 35px;
   line-height: 35px;

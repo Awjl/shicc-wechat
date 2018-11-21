@@ -27,13 +27,18 @@
       <div class="line"></div>
       <div class="modifyItem" @click="setDate()">
         <span>出生日期：</span>
-        <span v-if="user.birthday !== null">{{new Date(dataTime).getFullYear()}}-{{new Date(dataTime).getMonth() + 1}}-{{new Date(dataTime).getDate()}} </span>
-        <!-- <span v-if="dataTime">{{dataTime}}</span> -->
+        <span v-if="user.birthday !== null">{{dataTime | formatDate}} </span>
       </div>
     </div>
     <div class="submission-btn" @click="_editUserInfoDetail">
       保存
     </div>
+    <!-- <div class="MyMoDifyBox" v-if="showMyMoDifyBox">
+      <div class="MoDifyBox">
+        <p>修改成功</p>
+        <div @click="toMy">返回个人中心</div>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -49,6 +54,7 @@ export default {
       weiiocn: './static/myimg/wei.png',
       trueiocn: './static/myimg/true.png',
       sexMen: true,
+      showMyMoDifyBox: false,
       date: '',
       user: {
         birthday: null,
@@ -82,6 +88,7 @@ export default {
           this.user = res.data
           console.log(this.user.birthday)
           this.dataTime = this.user.birthday
+          console.log(this.dataTime)
         }
       })
     },
@@ -93,33 +100,34 @@ export default {
         if (res.code === ERR_OK) {
           console.log('修改个人资料============')
           console.log(res.data)
-          alert('修改完成')
+          this.$router.push({
+            path: '/My'
+          })
         }
       })
     },
     uplode() {
-      // alert('123')
       getParam(window.location.href.split('#')[0]).then(res => {
         if (res.code === ERR_OK) {
           var self = this
           wx.config({
-            debug: true, //调试模式   当为tru时，开启调试模式
+            debug: false,
             appId: res.data.appid,
-            timestamp: res.data.timestamp, //签名时间戳
-            nonceStr: res.data.nonceStr, //生成签名的随机串
-            signature: res.data.signature, //签名
-            jsApiList: ['chooseImage', 'uploadImage'],
+            timestamp: res.data.timestamp,
+            nonceStr: res.data.nonceStr,
+            signature: res.data.signature,
+            jsApiList: ['chooseImage', 'uploadImage']
           })
           wx.ready(function () {
             wx.chooseImage({
               count: 1, // 默认9
-              sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-              sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+              sizeType: ['original', 'compressed'],
+              sourceType: ['album', 'camera'],
               success: function (res) {
-                self.wxImg = res.localIds[0].toString(); // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                self.wxImg = res.localIds[0].toString();
                 wx.uploadImage({
-                  localId: self.wxImg, // 需要上传的图片的本地ID，由chooseImage接口获得
-                  isShowProgressTips: 1, // 默认为1，显示进度提示
+                  localId: self.wxImg,
+                  isShowProgressTips: 1,
                   success: function (res) {
                     self.serverId = res.serverId
                   }
@@ -151,7 +159,7 @@ export default {
     serverId: function () {
       uploadHead(this.user.pictureId, this.serverId).then((res) => {
         if (res.data) {
-          alert('保存成功')
+          // alert('保存成功')
         } else {
           alert('保存失败')
           this.wxImg = ''
@@ -165,6 +173,42 @@ export default {
 <style>
 img {
   width: 100%;
+}
+.MyMoDifyBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(000, 000, 000, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.MoDifyBox {
+  width: 400px;
+  height: 300px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.MoDifyBox > p {
+  text-align: center;
+  font-size: 40px;
+}
+.MoDifyBox > div {
+  width: 180px;
+  height: 50px;
+  line-height: 50px;
+  margin-top: 50px;
+  font-size: 12px;
+  background: #59c2fa;
+  border-radius: 10px;
+  text-align: center;
+  color: #ffffff;
 }
 .line {
   width: 100%;

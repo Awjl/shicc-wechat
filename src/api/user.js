@@ -278,3 +278,17 @@ export function checkMobile(mobile) {
     return Promise.resolve(res.data)
   })
 }
+
+// 立即使用
+// /voucher/getQRcode
+export function getQRcode(code, userId) {
+  const url = `${process.env.API_HOST}/sicc/voucher/getQRcode`
+  return axios.get(url, {
+    params: {
+      code: code,
+      userId: userId
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

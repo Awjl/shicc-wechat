@@ -15,11 +15,11 @@
       <div class="couponitem" v-for="(item, index) in items" :key="index">
         <div class="couponitem-title" :class="{activebg: item.state == 2 || item.state == 3}">
           <div class="couponitem-new">
-            <span>{{item.price}}</span>元
+            <span>{{item.price/100}}</span>元
           </div>
           <div class="couponitem-name">
             <p>{{item.name}}</p>
-            <p> {{new Date(item.startTime).getFullYear()}}/{{new Date(item.startTime).getMonth() + 1}}/{{new Date(item.startTime).getDate()}} - {{new Date(item.endTime).getFullYear()}}/{{new Date(item.endTime).getMonth() + 1}}/{{new Date(item.endTime).getDate()}}</p>
+            <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
           </div>
           <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping()">
             立即使用
@@ -95,7 +95,7 @@ export default {
 .coupon {
   padding-top: 82px;
 }
-.wishNone{
+.wishNone {
   width: 100%;
   text-align: center;
   margin: 100px 0;
@@ -146,16 +146,16 @@ export default {
   background: -moz-linear-gradient(#ff7d7d, #ed6969); /* Firefox 3.6 - 15 */
   background: linear-gradient(#ff7d7d, #ed6969); /* 标准的语法 */
   display: flex;
+  align-items: center;
 }
 .activebg {
   background: #9b9b9b;
 }
 .couponitem-new {
-  width: 109px;
+  width: 189px;
   height: 98px;
   text-align: center;
   line-height: 98px;
-  margin: 30px 50px;
   font-size: 24px;
   color: #ffffff;
 }
@@ -164,7 +164,6 @@ export default {
 }
 .couponitem-name {
   width: 250px;
-  margin-top: 30px;
   color: #fff;
   line-height: 35px;
 }
@@ -183,7 +182,6 @@ export default {
   font-size: 18px;
   color: #ee6a6a;
   border-radius: 100px;
-  margin-top: 63px;
   margin-left: 70px;
 }
 .couponitem-footer {
