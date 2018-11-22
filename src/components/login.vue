@@ -31,7 +31,7 @@ import { ERR_OK } from 'api/config'
 import { setUserID, getUserID } from 'common/js/auth'
 
 export default {
-  data () {
+  data() {
     return {
       imgbg: './static/loginimg/bg.png',
       logo: './static/loginimg/logo.png',
@@ -46,7 +46,7 @@ export default {
     }
   },
   methods: {
-    _login () {
+    _login() {
       login(this.user).then((res) => {
         if (res.code === ERR_OK) {
           console.log(res.data)
@@ -64,7 +64,7 @@ export default {
         }
       })
     },
-    OnBlur () {
+    OnBlur() {
       let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
       if (this.user.name) {
         if (phoneReg.test(this.user.name)) {
@@ -76,7 +76,7 @@ export default {
         this.nameErr = '请输入手机号'
       }
     },
-    OnPassWord () {
+    OnPassWord() {
       let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/
       if (this.user.password) {
         if (password.test(this.user.password)) {
@@ -88,17 +88,20 @@ export default {
         this.passwordeErr = '请输入密码'
       }
     },
-    goRegister () {
+    goRegister() {
       this.$router.push({
-        path: '/Register'
+        path: '/Register',
+        query: {
+          name: login
+        }
       })
     },
-    gowant () {
+    gowant() {
       this.$router.push({
         path: '/MyPassword'
       })
     },
-    goLoing () {
+    goLoing() {
       console.log('登录')
       if (this.nameErr == '' && this.passwordeErr == '' && this.user.name != '' && this.user.password != '') {
         this._login()

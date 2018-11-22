@@ -46,6 +46,8 @@ import { getTopBanner, getOneStageBanner, getCornerMealBanner, defaultLogin } fr
 import { ERR_OK } from 'api/config'
 import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
+import { setUserID } from 'common/js/auth'
+
 
 export default {
   data() {
@@ -60,7 +62,7 @@ export default {
   },
   created() {
     this._getTopBanner()
-    this._defaultLogin(this.UserID)
+    this._defaultLogin()
   },
   computed: {
     ...mapGetters([
@@ -68,13 +70,13 @@ export default {
     ])
   },
   methods: {
-    _defaultLogin(id) {
-      console.log('用户ID-------------------------------------------------')
-      console.log(id)
-      defaultLogin(id).then((res) => {
+    _defaultLogin() {
+      defaultLogin().then((res) => {
         if (res.code === ERR_OK) {
           console.log('获取UserId-------------------------------------')
           console.log(res.data)
+          this.$store.commit('SET_USERID', res.data)
+          setUserID(res.data)
         }
       })
     },

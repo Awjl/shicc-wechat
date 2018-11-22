@@ -1,12 +1,8 @@
 import axios from 'axios'
 //  获取userId
-export function defaultLogin(id) {
+export function defaultLogin() {
   const url = `${process.env.API_HOST}/sicc/user/defaultLogin`
-  return axios.get(url, {
-    params: {
-      userId: id
-    }
-  }).then((res) => {
+  return axios.get(url).then((res) => {
     return Promise.resolve(res.data)
   })
 }

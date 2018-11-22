@@ -33,7 +33,7 @@
         <div class="true" @click="_writeOffVoucher()">
           确认
         </div>
-        <div>
+        <div @click="closeWx">
           取消
         </div>
       </div>
@@ -83,13 +83,16 @@ export default {
           }
         }
       })
+    },
+    closeWx() {
+      WeixinJSBridge.call('closeWindow');
     }
   }
 }
 </script>
 
 <style>
-.QRover {
+/* .QRover {
   top: 0;
   left: 0;
   width: 100vw;
@@ -97,7 +100,7 @@ export default {
   position: fixed;
   background: url(./static/loginimg/bg.png) no-repeat;
   background-size: 100% 100%;
-}
+} */
 .QRover-box {
   display: flex;
   flex-direction: column;
@@ -138,7 +141,7 @@ export default {
   text-align: center;
   line-height: 50px;
   font-size: 26px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   margin: 0 20px;
   border-radius: 10px;
 }

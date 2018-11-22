@@ -75,7 +75,15 @@ const router = new Router({
           meta: {
             title: '荟兑'
           }
-        }
+        },
+        {
+          path: '/My/MyOrder',
+          component: MyOrder,
+          name: 'MyOrder',
+          meta: {
+            title: '我的订单'
+          }
+        },
       ]
     },
     {
@@ -164,14 +172,6 @@ const router = new Router({
       name: 'MyCoupon',
       meta: {
         title: '优惠券'
-      }
-    },
-    {
-      path: '/MyOrder',
-      component: MyOrder,
-      name: 'MyOrder',
-      meta: {
-        title: '我的订单'
       }
     },
     {

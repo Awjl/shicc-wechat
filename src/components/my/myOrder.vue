@@ -142,12 +142,12 @@ export default {
               },
               cancel: function (res) {
                 self.$router.push({
-                  path: '/MyOrder'
+                  path: '/My/MyOrder'
                 })
               },
               fail: function (res) {
                 self.$router.push({
-                  path: '/MyOrder'
+                  path: '/My/MyOrder'
                 })
               }
             });

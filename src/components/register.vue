@@ -34,7 +34,7 @@
         <div class="couponitem" v-for="(item, index) in items" :key="index">
           <div class="couponitem-title" :class="{activebg: item.state == 2 || item.state == 3}">
             <div class="couponitem-new">
-              <span>{{item.price}}</span>元
+              <span>{{item.price/100}}</span>元
             </div>
             <div class="couponitem-name">
               <p>{{item.name}}</p>
@@ -174,10 +174,17 @@ export default {
     },
     tohome() {
       this.show = false
-      this.$router.back(-1)
+      if (this.$route.query.id == 'login') {
+        this.$router.push({
+          path: '/My'
+        })
+      } else if (this.$route.query.id == 'paking') {
+        this.$router.push({
+          path: '/packing'
+        })
+      }
     },
     register() {
-      console.log('注册')
       if (this.nameErr == '' && this.user.code != '' && this.passwordeErr == '' && this.user.password != '') {
         this._Register()
       }
@@ -324,16 +331,16 @@ img {
   background: -moz-linear-gradient(#ff7d7d, #ed6969); /* Firefox 3.6 - 15 */
   background: linear-gradient(#ff7d7d, #ed6969); /* 标准的语法 */
   display: flex;
+  align-items: center;
 }
 .activebg {
   background: #9b9b9b;
 }
 .couponitem-new {
-  width: 109px;
+  width: 189px;
   height: 98px;
   text-align: center;
   line-height: 98px;
-  margin: 30px 50px;
   font-size: 24px;
   color: #ffffff;
 }

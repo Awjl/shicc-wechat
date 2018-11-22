@@ -150,7 +150,7 @@ export default {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
-          path: '/MyOrder'
+          path: '/My/MyOrder'
         })
       }
     },

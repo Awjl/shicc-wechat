@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style>
-.QRsuccess-box {
+/* .QRsuccess-box {
   top: 0;
   left: 0;
   width: 100vw;
@@ -35,7 +35,7 @@ export default {
   position: fixed;
   background: url(./static/loginimg/bg.png) no-repeat;
   background-size: 100% 100%;
-}
+} */
 .QRsuccess {
   position: absolute;
   top: 0;
