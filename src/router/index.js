@@ -29,7 +29,8 @@ import QRover from '@/components/code/QRover' // 扫描成功
 import QRsuccess from '@/components/code/QRsuccess' // 领取成功
 import QRsuccessCode from '@/components/code/QRsuccessCode' // 领取成功
 import index from '@/base/homelist/homelist' // 酒店介绍页面
-import Packing from '@/base/parking/parking' // 停车页面
+import Parking from '@/base/parking/parking' // 停车页面
+import ParkOver from '@/components/code/packOver' // 停车支付成功
 
 
 Vue.use(Router)
@@ -231,9 +232,9 @@ const router = new Router({
       }
     },
     {
-      path: '/packing',
-      component: Packing,
-      name: 'packing',
+      path: '/Parking',
+      component: Parking,
+      name: 'Parking',
       meta: {
         title: '优惠停车'
       }
@@ -268,6 +269,14 @@ const router = new Router({
       name: 'QRsuccessCode',
       meta: {
         title: '核销成功'
+      }
+    },
+    {
+      path: '/ParkOver/:id',
+      component: ParkOver,
+      name: 'ParkOver',
+      meta: {
+        title: '支付成功'
       }
     }
   ]

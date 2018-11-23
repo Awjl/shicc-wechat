@@ -92,7 +92,7 @@ export default {
       this.$router.push({
         path: '/Register',
         query: {
-          name: login
+          name: "login"
         }
       })
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="QRsuccess-box">
     <div class="QRsuccess">
-      <div class="QRsuccess-title">{{dataList}}</div>
+      <div class="QRsuccess-title">{{dataname}}</div>
       <div>
         <img :src="TrueImg" alt="">
       </div>
@@ -12,17 +12,23 @@
   </div>
 </template>
 <script>
-
+import { successParkPay } from 'api/login'
 export default {
   data() {
     return {
+      dataname: '',
       TrueImg: './static/icon/true-iocn.png',
-      dataList: window.location.href.split('=')[1]
     }
   },
   created() {
+    successParkPay(this.$route.params.id).then(res => {
+      if (res.code === 0) {
+        this.dataname = res.data
+      }
+    })
   },
   methods: {
+
     closeWx() {
       WeixinJSBridge.call('closeWindow');
     }

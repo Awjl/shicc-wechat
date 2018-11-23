@@ -14,14 +14,17 @@
     <div class="couponlist">
       <div class="couponitem" v-for="(item, index) in items" :key="index">
         <div class="couponitem-title" :class="{activebg: item.state == 2 || item.state == 3}">
-          <div class="couponitem-new">
+          <div class="couponitem-new" v-if="item.type === 1">
             <span>{{item.price/100}}</span>元
+          </div>
+          <div class="couponitem-new" v-if="item.type === 2">
+            <span>P</span>停车券
           </div>
           <div class="couponitem-name">
             <p>{{item.name}}</p>
             <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
           </div>
-          <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping()">
+          <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping(item.type)">
             立即使用
           </div>
         </div>
@@ -67,10 +70,16 @@ export default {
         }
       })
     },
-    goShopping() {
-      this.$router.push({
-        path: `/Purchase`
-      })
+    goShopping(id) {
+      if (id === 1) {
+        this.$router.push({
+          path: `/Purchase`
+        })
+      } else {
+        this.$router.push({
+          path: `/packing`
+        })
+      }
     },
     notused() {
       this.index = 1
