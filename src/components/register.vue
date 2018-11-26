@@ -183,11 +183,11 @@ export default {
     },
     tohome() {
       this.show = false
-      if (this.$route.query.name == 'login') {
+      if (this.$route.params.id == 'login') {
         this.$router.push({
           path: '/My'
         })
-      } else if (this.$route.query.name == 'paking') {
+      } else if (this.$route.params.id == 'packing') {
         this.$router.push({
           path: '/packing'
         })

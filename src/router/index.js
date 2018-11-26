@@ -216,7 +216,7 @@ const router = new Router({
       }
     },
     {
-      path: '/Register',
+      path: '/Register/:id',
       component: Register,
       name: 'Register',
       meta: {

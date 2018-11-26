@@ -59,9 +59,11 @@ export function parkLogin(openId) {
 // 绑定车牌号
 export function bindPlateNumber(id, Num) {
   const url = `${process.env.API_HOST}/sicc/park/bindPlateNumber`
-  return axios.post(url, {
-    userId: id,
-    plateNumber: Num
+  return axios.get(url, {
+    params: {
+      userId: id,
+      plateNumber: Num
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })

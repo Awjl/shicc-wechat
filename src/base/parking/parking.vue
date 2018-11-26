@@ -167,10 +167,7 @@ export default {
           console.log(res.data)
           if (res.data.code === 500107) {
             this.$router.push({
-              path: '/Register',
-              query: {
-                name: "paking"
-              }
+              path: '/Register/packing'
             })
           }
           if (res.data.code === 201) {
@@ -185,6 +182,7 @@ export default {
       })
     },
     _bindPlateNumber() {
+      // console.log()
       bindPlateNumber(this.carList.userId, this.carList.number).then(res => {
         if (res.code === 0) {
           this.showPacking = false

@@ -90,10 +90,7 @@ export default {
     },
     goRegister() {
       this.$router.push({
-        path: '/Register',
-        query: {
-          name: "login"
-        }
+        path: '/Register/login'
       })
     },
     gowant() {
