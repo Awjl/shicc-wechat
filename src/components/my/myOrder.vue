@@ -45,7 +45,7 @@
           </div>
           <div class="btn">
             <span class="true-btn" v-if="item.state == 1" @click="sumBtn(item.id)">立即付款</span>
-            <span class="over-btn" v-if="item.state == 2" @click="toShopping">再来一单</span>
+            <span class="over-btn" v-if="item.state == 2" @click="toShopping(item.goodsId)">再来一单</span>
             <span class="del-btn" @click="delorder(item.id, index)" v-if="item.state == 1">取消订单</span>
           </div>
         </div>
@@ -106,9 +106,9 @@ export default {
     sumBtn(id) {
       this._changeAddressById(id)
     },
-    toShopping() {
+    toShopping(id) {
       this.$router.push({
-        path: "/Purchase"
+        path: `/PurchaseDetalis/${id}`
       })
     },
     _changeAddressById(id) {
@@ -136,7 +136,7 @@ export default {
               success: function (res) {
                 if (res.errMsg == "chooseWXPay:ok") {
                   self.$router.push({
-                    path: '/MyTransfer'
+                    path: '/My/MyOrder'
                   })
                 }
               },

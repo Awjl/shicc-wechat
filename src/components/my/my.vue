@@ -182,7 +182,7 @@ export default {
       this.notShowbox()
       if (this.UserID) {
         this.$router.push({
-          path: '/MyIntegral'
+          path: '/My/MyIntegral'
         })
       }
     },

@@ -1,10 +1,10 @@
 <template>
   <div class="QRsuccess-box">
     <div class="QRsuccess">
-      <div class="QRsuccess-title">领取成功</div>
       <div>
         <img :src="TrueImg" alt="">
       </div>
+      <div class="QRsuccess-title">{{dataList}}</div>
       <router-link tag="div" class="goHome" to="/Home">
         去首页
       </router-link>
@@ -16,7 +16,8 @@
 export default {
   data() {
     return {
-      TrueImg: './static/icon/true-iocn.png',
+      TrueImg: './static/loginimg/logo.png',
+      dataList: window.location.href.split('=')[1]
     }
   },
   created() {
@@ -27,15 +28,7 @@ export default {
 </script>
 
 <style>
-/* .QRsuccess-box {
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  background: url(./static/loginimg/bg.png) no-repeat;
-  background-size: 100% 100%;
-} */
+
 .QRsuccess {
   position: absolute;
   top: 0;
@@ -49,7 +42,7 @@ export default {
 }
 .QRsuccess-title {
   font-size: 50px;
-  margin-bottom: 60px;
+  margin: 60px 0;
 }
 .goHome {
   width: 150px;

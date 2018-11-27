@@ -182,15 +182,16 @@ img {
   height: 200px;
 }
 .ture-box {
+  margin-top: 100px;
   width: 690px;
   height: 80px;
   text-align: center;
   line-height: 80px;
-  position: fixed;
-  bottom: 100px;
-  left: 0;
-  right: 0;
-  margin: auto;
+  /* position: fixed; */
+  /* bottom: 100px; */
+  /* left: 0; */
+  /* right: 0; */
+  /* margin: auto; */
   background: #59c2fa;
   border-radius: 10px;
   font-size: 28px;
@@ -211,7 +212,7 @@ img {
 .Box-one {
   width: 550px;
   height: 700px;
-  box-shadow: 0px 10px 10px #fff;
+  /* box-shadow: 0px 10px 10px #fff; */
   background: #fff;
   border-radius: 10px;
   position: relative;

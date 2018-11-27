@@ -113,7 +113,7 @@ export default {
     }
   },
   created() {
-    this._parkLogin(window.location.href.split('=')[1])
+    this._parkLogin()
   },
   methods: {
     activetrue(item, index) {
@@ -160,8 +160,8 @@ export default {
         }
       })
     },
-    _parkLogin(id) {
-      parkLogin(id).then(res => {
+    _parkLogin() {
+      parkLogin(window.location.href.split('=')[1]).then(res => {
         if (res.code === 0) {
           console.log("停车----------------------------------")
           console.log(res.data)

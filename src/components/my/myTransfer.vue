@@ -41,13 +41,13 @@
                 {{item.name}}
               </div>
               <div class="new">
-                ￥{{item.newPrice}}
+                ￥{{item.newPrice | formatFee}}
               </div>
               <div class="num">
                 x 1
               </div>
               <div class="sum">
-                总计：￥{{item.newPrice}}
+                总计：￥{{item.newPrice | formatFee}}
               </div>
             </div>
           </div>
@@ -61,8 +61,8 @@
             <div v-else></div>
             <div class="btn-btn">
               <span class="over-btn" v-if="item.state == 1" @click="showgi(item.goodsId)">转赠</span>
-              <span class="true-btn" v-if="item.state == 1" @click="show(item.orderCode)">立即使用</span>
-              <span class="over-btn" v-if="item.state == 2">再来一单</span>
+              <span class="true-btn" v-if="item.state == 1" @click="show(item.id)">立即使用</span>
+              <span class="over-btn" v-if="item.state == 2" @click="toShopping(item.goodsId)">再来一单</span>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@
           使用规则：
         </div>
         <div class="box-text">
-        <p v-for="(item, index) in useCode.useRule" :key="index">{{item}} </p>
+          <p v-for="(item, index) in useCode.useRule" :key="index">{{item}} </p>
         </div>
       </div>
       <div class="OverBox-img" @click="hide">
@@ -175,7 +175,7 @@ export default {
       })
     },
     _getQRcode(goodsID) {
-      getQRcode(goodsID, this.UserID).then((res) => {
+      getQRcode(goodsID).then((res) => {
         if (res.code === ERR_OK) {
           this.showTrue = true
           console.log(res.data)
@@ -195,7 +195,7 @@ export default {
       })
     },
     _checkMobile() {
-      checkMobile(this.giveUser.mobile).then((res) => {
+      checkMobile(this.giveUser.mobile, this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           console.log('查询结果===================')
           console.log(res.data)
@@ -205,6 +205,11 @@ export default {
             this.time = res.data.msg
           }
         }
+      })
+    },
+    toShopping(id) {
+      this.$router.push({
+        path: `/PurchaseDetalis/${id}`
       })
     },
     notused() {
@@ -476,6 +481,7 @@ img {
   height: 50px;
   line-height: 50px;
   margin: 80px auto;
+  display: flex;
 }
 .giver-time {
   width: 70%;

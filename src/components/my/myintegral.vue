@@ -22,7 +22,7 @@
     <div class="integralList" v-for="(item, index) in listData" :key="index">
       <div class="integralItem">
         <div class="integralTitle">
-          {{new Date(item.createDate.replace(new RegExp(/-/gm), '/')).getFullYear()}}-{{new Date(item.createDate.replace(new RegExp(/-/gm), '/')).getMonth() + 1}}-{{new Date(item.createDate.replace(new RegExp(/-/gm), '/')).getDate()}}
+          {{item.createDate | formatDate}}-{{item.createDate | formatDate}}
         </div>
         <div class="line"></div>
         <div class="integral-conter">
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="integralListbox" v-show='showover'>
-     - 暂无兑换记录 - 
+      - 暂无兑换记录 -
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@ import { getUserLevel, getAllPointGoodsOrder } from 'api/user'
 import { mapGetters } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       bg: './static/exchangeImg/bg.png',
       Levelnum: {},
@@ -68,7 +68,7 @@ export default {
       showover: true
     }
   },
-  created () {
+  created() {
     this._getUserLevel(this.UserID)
   },
   computed: {
@@ -77,7 +77,7 @@ export default {
     ])
   },
   methods: {
-    _getUserLevel (id) {
+    _getUserLevel(id) {
       getUserLevel(id).then((res) => {
         if (res.code === ERR_OK) {
           console.log('会员积分=============================')
@@ -87,7 +87,7 @@ export default {
         }
       })
     },
-    _getAllPointGoodsOrder () {
+    _getAllPointGoodsOrder() {
       getAllPointGoodsOrder(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           console.log('积分兑换列表=============')
@@ -111,7 +111,7 @@ export default {
 img {
   width: 100%;
 }
-.he20{
+.he20 {
   height: 6px;
 }
 .line {
@@ -189,7 +189,6 @@ img {
   height: 100px;
   line-height: 100px;
   color: #999;
-
 }
 .integralTitle {
   width: 100%;

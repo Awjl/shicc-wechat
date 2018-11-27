@@ -163,7 +163,7 @@ export default {
               var self = this
               console.log(res)
               wx.config({
-                debug: false, 
+                debug: false,
                 appId: res.data.appId,
                 timestamp: res.data.timeStamp,
                 nonceStr: res.data.nonceStr,
@@ -173,15 +173,15 @@ export default {
               wx.ready(function () {
                 wx.chooseWXPay({
                   appId: res.data.appId,
-                  timestamp: res.data.timeStamp, 
-                  nonceStr: res.data.nonceStr, 
+                  timestamp: res.data.timeStamp,
+                  nonceStr: res.data.nonceStr,
                   package: res.data.package,
-                  signType: 'MD5', 
+                  signType: 'MD5',
                   paySign: res.data.paySign,
                   success: function (res) {
                     if (res.errMsg == "chooseWXPay:ok") {
                       self.$router.push({
-                        path: '/MyTransfer'
+                        path: '/My/MyOrder'
                       })
                     }
                   },
@@ -498,7 +498,7 @@ img {
   font-size: 70px;
 }
 .couponitem-name {
-  width: 400px;
+  width: 250px;
   color: #fff;
   line-height: 35px;
 }
@@ -517,7 +517,6 @@ img {
   font-size: 18px;
   color: #ee6a6a;
   border-radius: 100px;
-  margin-top: 63px;
   margin-left: 70px;
 }
 .couponitem-footer {

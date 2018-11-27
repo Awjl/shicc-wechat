@@ -268,11 +268,12 @@ export function givenToOne(data) {
 }
 
 // 验证手机号
-export function checkMobile(mobile) {
+export function checkMobile(mobile, userid) {
   const url = `${process.env.API_HOST}/sicc/voucher/checkMobile`
   return axios.get(url, {
     params: {
-      mobile: mobile
+      mobile: mobile,
+      userId: userid
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -280,13 +281,11 @@ export function checkMobile(mobile) {
 }
 
 // 立即使用
-// /voucher/getQRcode
-export function getQRcode(code, userId) {
+export function getQRcode(id) {
   const url = `${process.env.API_HOST}/sicc/voucher/getQRcode`
   return axios.get(url, {
     params: {
-      code: code,
-      userId: userId
+      id: id
     }
   }).then((res) => {
     return Promise.resolve(res.data)

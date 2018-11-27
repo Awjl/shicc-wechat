@@ -229,8 +229,9 @@ export default {
 .box-title span {
   width: 100px;
   height: 40px;
-  text-align: center;
-  line-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
   border: 2px solid #ddd;
   font-size: 26px;
   border-radius: 20px;

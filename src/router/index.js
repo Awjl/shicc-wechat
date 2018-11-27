@@ -85,6 +85,14 @@ const router = new Router({
             title: '我的订单'
           }
         },
+        {
+          path: '/My/MyIntegral',
+          component: MyIntegral,
+          name: 'MyIntegral',
+          meta: {
+            title: '个人积分'
+          }
+        },
       ]
     },
     {
@@ -181,14 +189,6 @@ const router = new Router({
       name: 'MyModify',
       meta: {
         title: '修改个人资料'
-      }
-    },
-    {
-      path: '/MyIntegral',
-      component: MyIntegral,
-      name: 'MyIntegral',
-      meta: {
-        title: '个人积分'
       }
     },
     {

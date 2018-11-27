@@ -5,9 +5,9 @@
       + 添加收货信息
     </div>
     <div class="addres" v-else @click="goAddres(1)">
-      <div class="list-content">
-        <div class="list-left">
-          <div class="title">
+      <div class="addreslist-content">
+        <div class="addreslist-left">
+          <div class="addrestitle">
             <span>{{addres.name}}</span>
             <span>{{addres.mobile}}</span>
           </div>
@@ -53,7 +53,7 @@ import { getAddressById } from 'api/user'
 import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 export default {
-  data () {
+  data() {
     return {
       rightImg: './static/icon/addres.png',
       img: './static/showImg/address.png',
@@ -74,7 +74,7 @@ export default {
       addres: {}
     }
   },
-  created () {
+  created() {
     this._getPointGoodsOrderDetail()
     this._getAddressById()
   },
@@ -85,7 +85,7 @@ export default {
     ])
   },
   methods: {
-    _getAddressById () {
+    _getAddressById() {
       if (this.AddresId) {
         getAddressById(this.AddresId).then((res) => {
           if (res.code === ERR_OK) {
@@ -99,7 +99,7 @@ export default {
         this.show = true
       }
     },
-    _getPointGoodsOrderDetail () {
+    _getPointGoodsOrderDetail() {
       this.data.userId = this.UserID
       this.data.goodsId = this.$route.params.id
       this.data.kind = this.$route.params.kind
@@ -112,23 +112,25 @@ export default {
         }
       })
     },
-    _createPointOrder (data) {
+    _createPointOrder(data) {
       createPointOrder(data).then((res) => {
         if (res.code === ERR_OK) {
           if (res.data.code === 500206) {
             alert('库存不足')
           } else {
-            alert('订单提交成功')
+            this.$router.push({
+              path: `/My/MyIntegral`
+            })
           }
         }
       })
     },
-    goAddres (tyep) {
+    goAddres(tyep) {
       this.$router.push({
         path: `/MyAddres/${tyep}`
       })
     },
-    trueorder () {
+    trueorder() {
       this.data.addressId = this.AddresId
       this.data.goodsKind = this.data.kind
       this.data.total = this.data.point
@@ -136,6 +138,9 @@ export default {
       this.data.goodsId = this.$route.params.id
       this.data.num = 1
       console.log(this.data)
+      if (!this.data.addressId) {
+        return alert('请选择地址')
+      }
       this._createPointOrder(this.data)
     }
   }
@@ -143,7 +148,7 @@ export default {
 </script>
 
 <style scoped>
-.he30{
+.he30 {
   height: 30px;
 }
 img {
@@ -169,7 +174,7 @@ img {
 .addresactive {
   line-height: 136px;
 }
-.list-content {
+.addreslist-content {
   height: 100%;
   width: 100%;
   padding: 0 50px;
@@ -179,7 +184,7 @@ img {
   justify-content: space-between;
   overflow: hidden;
 }
-.list-content span {
+.addreslist-content span {
   display: block;
   color: #333;
   font-size: 28px;
@@ -188,12 +193,12 @@ img {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.list-left>.title {
+.addreslist-left > .addrestitle {
   width: 400px;
   display: flex;
   justify-content: space-between;
 }
-.list-left p {
+.addreslist-left p {
   margin-top: 20px;
   font-size: 24px;
   color: #9b9b9b;
@@ -246,7 +251,7 @@ img {
   justify-content: space-between;
   align-items: center;
 }
-.list-jiage>.new {
+.list-jiage > .new {
   font-size: 28px;
   color: #ed6969;
   letter-spacing: 0.78px;

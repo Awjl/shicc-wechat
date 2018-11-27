@@ -92,15 +92,6 @@ export default {
 </script>
 
 <style>
-/* .QRover {
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  background: url(./static/loginimg/bg.png) no-repeat;
-  background-size: 100% 100%;
-} */
 .QRover-box {
   display: flex;
   flex-direction: column;

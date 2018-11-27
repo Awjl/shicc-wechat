@@ -3,7 +3,7 @@
     <div class="foodItem" v-for="(str, index) in footList" :key="index" @click="goDetails(str.goodsId)">
       <img :src="str.pictureUrl" alt="" style="vertical-align:middle">
       <div class="foodItem-text">
-       <span>{{str.title}}</span> <span><span style="font-size:10px;">惠后价：</span>￥{{str.newPrice}}</span>
+        <span>{{str.title}}</span> <span><span style="font-size:10px;">惠后价：</span>￥{{str.newPrice | formatFee}}</span>
       </div>
     </div>
     <!-- <not-logged v-if="notShow"></not-logged> -->
@@ -15,7 +15,7 @@
 import { mapGetters } from 'vuex'
 export default {
   props: ['footList'],
-  data () {
+  data() {
     return {
       notShow: false
     }
@@ -26,14 +26,14 @@ export default {
     ])
   },
   methods: {
-    notShowbox () {
+    notShowbox() {
       if (!this.UserID) {
         this.$router.push({
           path: '/Login'
         })
       }
     },
-    goDetails (id) {
+    goDetails(id) {
       this.notShowbox()
       if (this.UserID) {
         console.log(id)
@@ -50,36 +50,36 @@ export default {
 </script>
 
 <style>
-.he20{
+.he20 {
   height: 20px;
 }
-.food{
+.food {
   width: 100%;
 }
-.foodItem{
+.foodItem {
   width: 100%;
   height: 300px;
   position: relative;
   margin-bottom: 20px;
 }
-.foodItem-text{
+.foodItem-text {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 60px;
   line-height: 60px;
-  background:  rgba(0,0,0,0.50);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   padding: 0 30px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
 }
-.foodItem-text span{
+.foodItem-text span {
   font-size: 24px;
 }
-.foodItem img{
+.foodItem img {
   width: 100%;
 }
 </style>

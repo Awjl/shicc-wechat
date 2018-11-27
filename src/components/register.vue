@@ -263,6 +263,7 @@ img {
 }
 .inp input {
   width: 400px;
+  height: 40px;
   outline: none;
   background: inherit;
 }
@@ -388,6 +389,13 @@ img {
   background: #fff;
 }
 .boxImg {
+  width: 130px;
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.boxImg img {
   width: 60px;
   height: 60px;
 }
