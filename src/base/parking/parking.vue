@@ -1,9 +1,17 @@
 <template>
   <div class="packing">
     <div class="bg">
-      <img src="./pack.png" alt="">
+      <img
+        src="./pack.png"
+        alt=""
+      >
       <div class="bg-text">
-        <input type="text" placeholder="请输入车牌号" v-model="carList.number" disabled="disabled">
+        <input
+          type="text"
+          placeholder="请输入车牌号"
+          v-model="carList.number"
+          disabled="disabled"
+        >
         <div class="packingtext">
           上海国际会议中心停车场
         </div>
@@ -25,7 +33,10 @@
       <div class="he20"></div>
       <div class="packingline"></div>
       <div class="he20"></div>
-      <div class="packinglistitem" @click="showBoxStata">
+      <div
+        class="packinglistitem"
+        @click="showBoxStata"
+      >
         <span>抵用券：</span>
         <span>{{numquan}}</span>
       </div>
@@ -37,31 +48,59 @@
         <div>小计<span class="redcolor redsum">￥{{carList.due/100}}</span></div>
       </div>
     </div>
-    <div class="packing-btn" @click="goPayPacking">
+    <div
+      class="packing-btn"
+      @click="goPayPacking"
+    >
       立即支付
     </div>
-    <div class="packingBox" v-if="showPacking">
+    <div
+      class="packingBox"
+      v-if="showPacking"
+    >
       <div class="packingBoxBind">
         <div class="packingBoxBindTitle">绑定车牌号</div>
         <div class="packingBoxBindInp">
-          <input type="text" placeholder="请输入车牌号" v-model="carList.number">
+          <input
+            type="text"
+            placeholder="请输入车牌号"
+            v-model="carList.number"
+          >
         </div>
-        <div class="packingBoxBindBtn" @click="_bindPlateNumber">
+        <div
+          class="packingBoxBindBtn"
+          @click="_bindPlateNumber"
+        >
           绑定
         </div>
       </div>
     </div>
-    <div class="box" v-if='showbox'>
+    <div
+      class="box"
+      v-if='showbox'
+    >
       <div class="box-item">
         <div class="box-title">
           <span @click='quxiao'>取消</span> 选择优惠券
-          <span class="box-true" @click='trueover'>确定</span>
+          <span
+            class="box-true"
+            @click='trueover'
+          >确定</span>
         </div>
         <div class="line"></div>
         <div class="couponlist">
-          <div class="couponitem" v-for="(item, index) in items" :key="index" @click="activetrue(item.id, index)" :class="{couponitemactive: index == typeindex }">
+          <div
+            class="couponitem"
+            v-for="(item, index) in items"
+            :key="index"
+            @click="activetrue(item.id, index, item.name)"
+            :class="{couponitemactive: index == typeindex }"
+          >
             <div class="couponitem-title">
-              <div class="couponitem-new" v-if="item.type === 2">
+              <div
+                class="couponitem-new"
+                v-if="item.type === 2"
+              >
                 <span>P</span>停车券
               </div>
               <div class="couponitem-name">
@@ -116,9 +155,10 @@ export default {
     this._parkLogin()
   },
   methods: {
-    activetrue(item, index) {
+    activetrue(item, index, name) {
       this.typeindex = index
       this.youhuiId = item
+      this.numquan = name
     },
     showBoxStata() {
       this.showbox = true
@@ -126,6 +166,7 @@ export default {
     quxiao() {
       this.showbox = false
       this.youhuiId = ''
+      this.numquan = ''
       this._queryParkingCost(this.youhuiId)
     },
     trueover() {
@@ -382,7 +423,7 @@ span.redsum {
   border: 1px solid #ddd;
 }
 .couponitemactive {
-  box-shadow: 0 0 10px 10px #fff5f5;
+  box-shadow: 0 0 10px 10px #ed6969;
 }
 .couponitem-title {
   width: 100%;
@@ -410,7 +451,7 @@ span.redsum {
   font-size: 70px;
 }
 .couponitem-name {
-  width: 400px;
+  width: 250px;
   color: #fff;
   line-height: 35px;
 }
@@ -429,7 +470,6 @@ span.redsum {
   font-size: 18px;
   color: #ee6a6a;
   border-radius: 100px;
-  margin-top: 63px;
   margin-left: 70px;
 }
 .couponitem-footer {

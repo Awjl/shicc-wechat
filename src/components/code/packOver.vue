@@ -16,19 +16,15 @@ import { successParkPay } from 'api/login'
 export default {
   data() {
     return {
-      dataname: '',
+      dataname: '支付成功',
       TrueImg: './static/icon/true-iocn.png',
     }
   },
   created() {
     successParkPay(this.$route.params.id).then(res => {
-      if (res.code === 0) {
-        this.dataname = res.data
-      }
     })
   },
   methods: {
-
     closeWx() {
       WeixinJSBridge.call('closeWindow');
     }

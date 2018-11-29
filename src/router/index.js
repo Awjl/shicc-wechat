@@ -260,7 +260,7 @@ const router = new Router({
       component: QRsuccess,
       name: 'QRsuccess',
       meta: {
-        title: '领取成功'
+        title: '领取页面'
       }
     },
     {
