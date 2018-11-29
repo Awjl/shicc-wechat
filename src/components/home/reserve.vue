@@ -182,16 +182,11 @@ img {
   height: 200px;
 }
 .ture-box {
-  margin-top: 100px;
   width: 690px;
   height: 80px;
   text-align: center;
   line-height: 80px;
-  /* position: fixed; */
-  /* bottom: 100px; */
-  /* left: 0; */
-  /* right: 0; */
-  /* margin: auto; */
+  margin:100px auto 0;
   background: #59c2fa;
   border-radius: 10px;
   font-size: 28px;

@@ -1,12 +1,12 @@
 <template>
   <div class="service">
     <div class="service-box">
-      <img :src="service" alt="">
+      <img :src="service" alt="" >
       <div class="service-title">
         <p class="sie-24">在线客服</p>
         <div class="he10"></div>
         <p class="sie-20">人工服务时间：工作日 9:00 - 18:00</p>
-        <a href="tel:862150370000">拨打电话</a>
+        <a :href="phone">拨打电话</a>
       </div>
     </div>
     <div class="hot">
@@ -15,7 +15,12 @@
       <div class="hot-line"></div>
     </div>
     <div class="he10"></div>
-    <div class="hot-list" @click="detile($event)" style="height:16px;" v-for="(item, index) in dataList" :key="index">
+    <div
+      class="hot-list"
+      @click="detile($event)"
+      style="height:16px;"
+      v-for="(item, index) in dataList"
+      :key="index">
       <div class="hot-name">
         <div class="hot-span">
           <span>&#8226;</span>{{item.question}}
@@ -33,22 +38,33 @@
 </template>
 
 <script>
-import { getAllHotIssues } from 'api/homeapi'
+import { getAllHotIssues, getPhone } from 'api/homeapi'
 import { ERR_OK } from 'api/config'
 
 export default {
-  data () {
+  data() {
     return {
       service: './static/myimg/service.png',
       rightimg: './static/icon/ic_back.png',
-      dataList: []
+      dataList: [],
+      phone: ''
     }
   },
-  created () {
+  created() {
     this._getAllHotIssues()
+    this._getPhone()
   },
   methods: {
-    _getAllHotIssues () {
+    _getPhone() {
+      getPhone().then((res) => {
+        if (res.code === ERR_OK) {
+          console.log('电话-----------------------')
+          console.log(res.data)
+          this.phone = `tel:${res.data}`
+        }
+      })
+    },
+    _getAllHotIssues() {
       getAllHotIssues().then((res) => {
         if (res.code === ERR_OK) {
           console.log('热门问题=======')
@@ -57,7 +73,7 @@ export default {
         }
       })
     },
-    detile (e) {
+    detile(e) {
       if (e.currentTarget.style.height) {
         e.currentTarget.style.height = ''
         e.currentTarget.children[0].children[1].style.transform = 'rotate(90deg)'
@@ -146,29 +162,29 @@ img {
   justify-content: space-between;
   align-items: center;
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   letter-spacing: 1.45px;
 }
 .hot-text {
   padding-left: 20px;
   box-sizing: border-box;
   font-size: 20px;
-  color: #9B9B9B;
+  color: #9b9b9b;
   margin-bottom: 30px;
 }
 .hot-name span {
   font-size: 30px;
-  display:inline-block;
+  display: inline-block;
   width: 20px;
 }
 .hot-right {
   height: 30px;
   width: 17px;
-  transform:rotate(-90deg);
+  transform: rotate(-90deg);
   transition: all 0.5s;
 }
-.hot-span{
+.hot-span {
   font-size: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
 }
 </style>

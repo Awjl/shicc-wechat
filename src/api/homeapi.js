@@ -84,7 +84,13 @@ export function getAllHotIssues() {
     return Promise.resolve(res.data)
   })
 }
-
+// 获取电话
+export function getPhone() {
+  const url = `${process.env.API_HOST}/sicc/service/getPhone`
+  return axios.get(url).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
 // 会议预定
 export function bookMeeting(data) {
   const url = `${process.env.API_HOST}/sicc/book/bookMeeting`
