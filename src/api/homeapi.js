@@ -100,7 +100,8 @@ export function bookMeeting(data) {
     note: data.note,
     userId: data.userId,
     topic: data.topic,
-    num: data.num
+    num: data.num,  
+    email: data.email
   }).then((res) => {
     return Promise.resolve(res.data)
   })

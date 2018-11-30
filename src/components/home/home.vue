@@ -3,7 +3,7 @@
     <div class="banner-he">
       <Swiper :listImg="listImg" :height="height"></Swiper>
     </div>
-    <div class="he40"></div>
+    <div class="he20"></div>
     <div class="title">
       <div class="title-text">一期一会</div>
     </div>
@@ -19,18 +19,28 @@
     <div class="food-he">
       <Food :footList="footList"></Food>
     </div>
+    <div class="he20"></div>
     <div class="title">
       <div class="title-text">关于我们</div>
     </div>
     <div class="he20"></div>
     <HomeList></HomeList>
     <div class="he30"></div>
-    <div class="reserve" @click="goReserve">
+    <div
+      class="reserve"
+      @click="goReserve"
+    >
       会议预定
     </div>
     <div class="he20"></div>
-    <div class="homebtn" @click="goSrver">
-      <img :src="img" alt="">
+    <div
+      class="homebtn"
+      @click="goSrver"
+    >
+      <img
+        :src="img"
+        alt=""
+      >
     </div>
     <not-logged v-if="notShow"></not-logged>
   </div>
@@ -73,8 +83,8 @@ export default {
     _defaultLogin() {
       defaultLogin().then((res) => {
         if (res.code === ERR_OK) {
-          console.log('获取UserId-------------------------------------')
-          console.log(res.data)
+          // console.log('获取UserId-------------------------------------')
+          // console.log(res.data)
           this.$store.commit('SET_USERID', res.data)
           setUserID(res.data)
         }
@@ -83,8 +93,8 @@ export default {
     _getTopBanner() {
       getTopBanner().then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`顶部banner=====`)
-          console.log(res.data)
+          // console.log(`顶部banner=====`)
+          // console.log(res.data)
           this.listImg = res.data
           this._getOneStageBanner()
         }
@@ -93,8 +103,8 @@ export default {
     _getOneStageBanner() {
       getOneStageBanner().then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`一期一会banner=====`)
-          console.log(res.data)
+          // console.log(`一期一会banner=====`)
+          // console.log(res.data)
           this.hallList = res.data
           this._getCornerMealBanner()
         }
@@ -103,8 +113,8 @@ export default {
     _getCornerMealBanner() {
       getCornerMealBanner().then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`一隅一食banner=====`)
-          console.log(res.data)
+          // console.log(`一隅一食banner=====`)
+          // console.log(res.data)
           this.footList = res.data
         }
       })

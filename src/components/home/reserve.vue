@@ -16,6 +16,9 @@
       <div class="from-item">
         <label>手机号码</label><input type="text" placeholder="请输入您的手机号" v-model="data.mobile">
       </div>
+      <div class="from-item">
+        <label>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label><input type="text" placeholder="请输入您的邮箱" v-model="data.email ">
+      </div>
       <div class="he20"></div>
       <div class="from-item">
         <label>会议主题</label><input type="text" placeholder="请输入会议主题" v-model="data.topic">
@@ -78,7 +81,8 @@ export default {
         note: '',
         userId: '',
         topic: '',
-        num: ''
+        num: '',
+        email: ''
       }
     }
   },
@@ -91,25 +95,21 @@ export default {
     _bookMeeting (data) {
       bookMeeting(data).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('预定成功')
+          // console.log('预定成功')
           this.showTrue = true
         }
       })
     },
     show () {
       this.data.userId = this.UserID
-      console.log(this.data)
+      // console.log(this.data)
       this._bookMeeting(this.data)
     },
     hide () {
       this.showTrue = false
       this.$router.back(-1)
     }
-  },
-  // beforeRouteLeave (to, from, next) {
-  //   to.meta.keepAlive = false
-  //   next()
-  // }
+  }
 }
 </script>
 

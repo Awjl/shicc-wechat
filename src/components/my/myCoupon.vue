@@ -64,8 +64,8 @@ export default {
     _getAllCoupon() {
       getAllCoupon(this.UserID, this.index, this.type).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('获取优惠券列表========================')
-          console.log(res.data)
+          // console.log('获取优惠券列表========================')
+          // console.log(res.data)
           this.items = res.data
         }
       })
@@ -76,9 +76,10 @@ export default {
           path: `/Purchase`
         })
       } else {
-        this.$router.push({
-          path: `/packing`
-        })
+        // this.$router.push({
+        //   path: `/parking`
+        // })
+        window.location.href = 'http://www.shiccs.net/sicc/park/index';
       }
     },
     notused() {

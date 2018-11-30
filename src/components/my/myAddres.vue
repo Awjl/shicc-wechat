@@ -58,8 +58,8 @@ export default {
     _getAllAddress() {
       getAllAddress(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('查询所有地址信息=============')
-          console.log(res.data)
+          // console.log('查询所有地址信息=============')
+          // console.log(res.data)
           this.list = res.data
         }
       })
@@ -67,13 +67,13 @@ export default {
     _deleteAddressById(id) {
       deleteAddressById(id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('删除地址信息=============')
-          console.log(res.data)
+          // console.log('删除地址信息=============')
+          // console.log(res.data)
         }
       })
     },
     addAddres(id) {
-      console.log(id)
+      // console.log(id)
       this.$router.push({
         path: `/AddAddres/${id}`
       })
@@ -85,7 +85,7 @@ export default {
       } else {
         if (this.$route.params.type === '1') {
           this.$store.commit('SET_ADDRES', id)
-          console.log(this.AddresId)
+          // console.log(this.AddresId)
           this.$router.back(-1)
         }
       }

@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     _getAddressById () {
-      console.log(this.$route.params.id !== 'null')
+      // console.log(this.$route.params.id !== 'null')
       if (this.$route.params.id !== 'null') {
         getAddressById(this.$route.params.id).then((res) => {
           if (res.code === ERR_OK) {

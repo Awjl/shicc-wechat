@@ -80,8 +80,8 @@ export default {
     _getCornerGoods(pn, pg) {
       getCornerGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`商品列表banner=====`)
-          console.log(res.data)
+          // console.log(`商品列表banner=====`)
+          // console.log(res.data)
           this.dataList = res.data
           let vm = this
           if (res.data.goodsOuts.length === 0) {
@@ -98,8 +98,8 @@ export default {
     _getMealGoods(pn, pg) {
       getMealGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`商品列表banner=====`)
-          console.log(res.data)
+          // console.log(`商品列表banner=====`)
+          // console.log(res.data)
           this.dataList = res.data
           let vm = this
           if (res.data.goodsOuts.length === 0) {

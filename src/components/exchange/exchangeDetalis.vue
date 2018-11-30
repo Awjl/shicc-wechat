@@ -106,16 +106,16 @@ export default {
       if (this.type === '1') {
         isEnoughPoint(this.UserID, this.listImg.pointGoods.v1NewPoint).then((res) => {
           if (res.code === ERR_OK) {
-            console.log('判断积分是否做够===========')
-            console.log(res.data)
+            // console.log('判断积分是否做够===========')
+            // console.log(res.data)
             this.showtreu = res.data
           }
         })
       } else {
         isEnoughPoint(this.UserID, this.listImg.pointGoods.v2NewPoint).then((res) => {
           if (res.code === ERR_OK) {
-            console.log('判断积分是否做够===========')
-            console.log(res.data)
+            // console.log('判断积分是否做够===========')
+            // console.log(res.data)
             this.showtreu = res.data
           }
         })
@@ -125,11 +125,11 @@ export default {
       getPointGoodsDetailById(this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
           if (res.code === ERR_OK) {
-            console.log('积分详情=============')
-            console.log(res.data)
+            // console.log('积分详情=============')
+            // console.log(res.data)
             this.type = this.$route.params.type
             this.level = this.$route.params.level
-            console.log(this.type === '1')
+            // console.log(this.type === '1')
             this.listImg = res.data
             this.listImg.pointGoods.param = JSON.parse(this.listImg.pointGoods.param)
             this.listImg.pointGoods.kind = this.listImg.pointGoods.kind.split(',')

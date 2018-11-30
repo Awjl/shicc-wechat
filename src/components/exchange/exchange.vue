@@ -90,8 +90,8 @@ export default {
     _getUserLevel(id) {
       getUserLevel(id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('会员积分=============')
-          console.log(res.data)
+          // console.log('会员积分=============')
+          // console.log(res.data)
           this.showLevel = true
           this.Levelnum = res.data
         }
@@ -100,8 +100,8 @@ export default {
     _getV1PointGoods(pn, pg) {
       getV1PointGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('获取V1积分列表==================')
-          console.log(res.data)
+          // console.log('获取V1积分列表==================')
+          // console.log(res.data)
           let vm = this
           if (res.data.length === 0) {
             this.showover = false
@@ -117,8 +117,8 @@ export default {
     _getV2PointGoods(pn, pg) {
       getV2PointGoods(pn, pg).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('获取V2积分列表==================')
-          console.log(res.data)
+          // console.log('获取V2积分列表==================')
+          // console.log(res.data)
           let vm = this
           if (res.data.length === 0) {
             this.showover = false
@@ -173,7 +173,7 @@ export default {
     },
     goDetalis(id, type, level) {
       this.notShowbox()
-      console.log(type)
+      // console.log(type)
       if (this.UserID) {
         this.$router.push({
           path: `/ExchangeDetalis/${id}/${type}/${level}`

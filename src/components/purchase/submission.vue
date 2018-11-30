@@ -129,11 +129,11 @@ export default {
   },
   methods: {
     _getGoodsOrderDetail() {
-      console.log(this.UserID, this.$route.params.id)
+      // console.log(this.UserID, this.$route.params.id)
       getGoodsOrderDetail(this.UserID, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`提交订单=====`)
-          console.log(res.data)
+          // console.log(`提交订单=====`)
+          // console.log(res.data)
           this.shoping = res.data
           this.shoping.num = 1
           this.shoping.total = this.shoping.num * this.shoping.newPrice
@@ -145,8 +145,8 @@ export default {
     _getAllCoupon() {
       getAllCoupon(this.UserID, 1, this.shoping.type).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('查询')
-          console.log(res.data)
+          // console.log('查询')
+          // console.log(res.data)
           if (res.data.length > 0) {
             this.numquan = res.data.length + '个优惠券'
             this.items = res.data
@@ -161,7 +161,7 @@ export default {
           createWechatPayOrder(window.location.href.split('#')[0], this.UserID, res.data).then(res => {
             if (res.code === ERR_OK) {
               var self = this
-              console.log(res)
+              // console.log(res)
               wx.config({
                 debug: false,
                 appId: res.data.appId,
@@ -250,7 +250,7 @@ export default {
       this.sum = this.shoping.total
     },
     activetrue(item, index) {
-      console.log(item.limitPrice <= this.sum)
+      // console.log(item.limitPrice <= this.sum)
       if (this.typeindex === null) {
         if (item.saleType === 1) {
           if (item.limitPrice <= this.sum) {
@@ -274,8 +274,8 @@ export default {
         this.num = this.shoping.num
         this.shoping.total = this.shoping.newPrice * this.shoping.num
         this.sum = this.shoping.total
-        console.log(this.num)
-        console.log(this.sum)
+        // console.log(this.num)
+        // console.log(this.sum)
         if (item.saleType === 1) {
           if (item.limitPrice <= this.sum) {
             this.typeindex = index

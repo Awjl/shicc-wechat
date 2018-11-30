@@ -63,11 +63,11 @@ export default {
   },
   methods: {
     nextPass () {
-      console.log(this.userdata)
+      // console.log(this.userdata)
       if (this.nameErr == '' && this.userdata.code != '') {
         matchCode(this.userdata).then((res) => {
           if (res.code === ERR_OK) {
-            console.log(res.data)
+            // console.log(res.data)
             if (res.data) {
               this.show = false
               this.nextshow = true
@@ -80,7 +80,7 @@ export default {
       }
     },
     overTrue () {
-      console.log(this.userdata)
+      // console.log(this.userdata)
       if (this.userdata.password != '' && this.passwordeErr == '') {
         changePwd(this.userdata).then((res) => {
           if (res.code === ERR_OK) {
@@ -141,7 +141,7 @@ export default {
           }
         }, 1000)
         sendSMS(this.userdata.mobile).then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
         })
       } else {
         this.nameErr = '请输入手机号'

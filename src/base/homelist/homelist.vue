@@ -61,8 +61,8 @@ export default {
     _getBottomBanner () {
       getBottomBanner().then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`底部banner=====`)
-          console.log(res.data)
+          // console.log(`底部banner=====`)
+          // console.log(res.data)
           this.item = res.data
         }
       })
@@ -70,8 +70,8 @@ export default {
     _getIntroduce () {
       getIntroduce().then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`介绍banner=====`)
-          console.log(res.data)
+          // console.log(`介绍banner=====`)
+          // console.log(res.data)
           this.dataList = res.data
         }
       })

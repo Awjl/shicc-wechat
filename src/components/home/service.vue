@@ -58,8 +58,8 @@ export default {
     _getPhone() {
       getPhone().then((res) => {
         if (res.code === ERR_OK) {
-          console.log('电话-----------------------')
-          console.log(res.data)
+          // console.log('电话-----------------------')
+          // console.log(res.data)
           this.phone = `tel:${res.data}`
         }
       })
@@ -67,8 +67,8 @@ export default {
     _getAllHotIssues() {
       getAllHotIssues().then((res) => {
         if (res.code === ERR_OK) {
-          console.log('热门问题=======')
-          console.log(res.data)
+          // console.log('热门问题=======')
+          // console.log(res.data)
           this.dataList = res.data
         }
       })

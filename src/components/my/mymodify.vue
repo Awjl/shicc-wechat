@@ -83,23 +83,23 @@ export default {
     _getUserInfoDetail() {
       getUserInfoDetail(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('查找个人信息============')
-          console.log(res.data)
+          // console.log('查找个人信息============')
+          // console.log(res.data)
           this.user = res.data
-          console.log(this.user.birthday)
+          // console.log(this.user.birthday)
           this.dataTime = this.user.birthday
-          console.log(this.dataTime)
+          // console.log(this.dataTime)
         }
       })
     },
     _editUserInfoDetail() {
       this.user.userId = this.UserID
       this.user.birthDate = this.user.birthday
-      console.log(this.user)
+      // console.log(this.user)
       editUserInfoDetail(this.user).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('修改个人资料============')
-          console.log(res.data)
+          // console.log('修改个人资料============')
+          // console.log(res.data)
           this.$router.push({
             path: '/My'
           })
@@ -143,7 +143,7 @@ export default {
         type: 'datePicker',
         onOk: date => {
           this.user.birthday = date
-          console.log(this.user.birthday)
+          // console.log(this.user.birthday)
           this.dataTime = date.replace(new RegExp(/-/gm), '/')
         }
       })

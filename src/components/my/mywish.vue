@@ -63,8 +63,8 @@ export default {
     _getWishList() {
       getWishList(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('获取心愿单============')
-          console.log(res.data)
+          // console.log('获取心愿单============')
+          // console.log(res.data)
           this.items = res.data
         }
       })

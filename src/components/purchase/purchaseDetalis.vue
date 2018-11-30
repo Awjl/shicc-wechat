@@ -136,14 +136,14 @@ export default {
   },
   methods: {
     _getGoodsDetail(user) {
-      console.log('商品详情===================')
+      // console.log('商品详情===================')
       getGoodsDetail(user, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`商品详情=====`)
-          console.log(res.data)
+          // console.log(`商品详情=====`)
+          // console.log(res.data)
           this.dataList = res.data
           this.dataList.useRule = this.dataList.useRule.split(',')
-          console.log(this.dataList.useRule)
+          // console.log(this.dataList.useRule)
         }
       })
     },
@@ -152,14 +152,14 @@ export default {
         this.dataList.isLove = null
         outLove(this.user, id, 2).then((res) => {
           if (res.code === ERR_OK) {
-            console.log('取消成功')
+            // console.log('取消成功')
           }
         })
       } else {
         this.dataList.isLove = 1
         inLove(this.user, id, 2).then((res) => {
           if (res.code === ERR_OK) {
-            console.log('保存成功')
+            // console.log('保存成功')
           }
         })
       }

@@ -45,8 +45,8 @@ export default {
     _getBar (user) {
       getBar(user, this.$route.params.barid).then((res) => {
         if (res.code === ERR_OK) {
-          console.log(`吧详情banner=====`)
-          console.log(res.data)
+          // console.log(`吧详情banner=====`)
+          // console.log(res.data)
           this.someList = res.data
         }
       })

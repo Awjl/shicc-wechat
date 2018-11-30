@@ -96,7 +96,7 @@ export default {
     _Register() {
       Register(this.user).then((res) => {
         if (res.code === ERR_OK) {
-          console.log(res.data)
+          // console.log(res.data)
           if (res.data.code === ERR_OK) {
             this.$store.commit('SET_USERID', res.data.msg)
             setUserID(res.data.msg)
@@ -110,8 +110,8 @@ export default {
     _getNewbeeCoupon(id) {
       getNewbeeCoupon(id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('新手优惠券================================')
-          console.log(res.data)
+          // console.log('新手优惠券================================')
+          // console.log(res.data)
           this.show = true
           this.items = res.data
         }
@@ -147,7 +147,7 @@ export default {
           }
         }, 1000)
         sendSMS(this.user.iphone).then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
         })
       } else {
         this.nameErr = '请输入手机号'

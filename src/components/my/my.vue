@@ -101,8 +101,8 @@ export default {
     }
   },
   created() {
-    console.log('这里是个人中心=====')
-    console.log(this.UserID)
+    // console.log('这里是个人中心=====')
+    // console.log(this.UserID)
     if (this.UserID) {
       this._getUserInfo()
     }
@@ -116,10 +116,10 @@ export default {
     _getUserInfo() {
       getUserInfo(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('获取全部信息==============')
-          console.log(res.data)
+          // console.log('获取全部信息==============')
+          // console.log(res.data)
           this.usermun = res.data
-          console.log(this.usermun)
+          // console.log(this.usermun)
         }
       })
     },

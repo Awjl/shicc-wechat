@@ -36,7 +36,7 @@ export default {
     goDetails(id) {
       this.notShowbox()
       if (this.UserID) {
-        console.log(id)
+        // console.log(id)
         this.$router.push({
           path: `/PurchaseDetalis/${id}`
         })

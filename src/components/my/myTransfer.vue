@@ -168,8 +168,8 @@ export default {
     _getALLVoucher() {
       getALLVoucher(this.UserID, this.index).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('这是代金券列表=============================')
-          console.log(res.data)
+          // console.log('这是代金券列表=============================')
+          // console.log(res.data)
           this.dataList = res.data
         }
       })
@@ -178,7 +178,7 @@ export default {
       getQRcode(goodsID).then((res) => {
         if (res.code === ERR_OK) {
           this.showTrue = true
-          console.log(res.data)
+          // console.log(res.data)
           this.useCode = res.data
           this.useCode.useRule = this.useCode.useRule.split(',')
         }
@@ -187,7 +187,7 @@ export default {
     _givenToOne() {
       givenToOne(this.giveUser).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('转赠===================')
+          // console.log('转赠===================')
           this.showgive = false
           alert('转赠成功')
           this._getALLVoucher()
@@ -197,8 +197,8 @@ export default {
     _checkMobile() {
       checkMobile(this.giveUser.mobile, this.UserID).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('查询结果===================')
-          console.log(res.data)
+          // console.log('查询结果===================')
+          // console.log(res.data)
           if (res.data.code === 200) {
             this._givenToOne()
           } else {
@@ -237,7 +237,7 @@ export default {
       this._getALLVoucher()
     },
     show(id) {
-      console.log(id)
+      // console.log(id)
       this._getQRcode(id)
     },
     showgi(id) {

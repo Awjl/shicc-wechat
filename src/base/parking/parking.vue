@@ -20,15 +20,18 @@
     <div class="packinglist">
       <div class="packinglistitem">
         <span>入场时间：</span>
-        <span>{{carList.inTime}}</span>
+        <span v-if="carList.state === 1">0</span>
+        <span v-else>{{carList.inTime}}</span>
       </div>
       <div class="packinglistitem">
         <span>停车时长：</span>
-        <span>{{carList.duration | timefliters}}</span>
+        <span v-if="carList.state === 1">0</span>
+        <span v-else>{{carList.duration | timefliters}}</span>
       </div>
       <div class="packinglistitem">
         <span>支付金额：</span>
-        <span class="redcolor">￥{{carList.totalFee/100}}</span>
+        <span class="redcolor" v-if="carList.state === 1">0</span>
+        <span class="redcolor" v-else>￥{{carList.totalFee/100}}</span>
       </div>
       <div class="he20"></div>
       <div class="packingline"></div>
@@ -48,10 +51,10 @@
         <div>小计<span class="redcolor redsum">￥{{carList.due/100}}</span></div>
       </div>
     </div>
-    <div
-      class="packing-btn"
-      @click="goPayPacking"
-    >
+    <div class="packing-btn" v-if="carList.state === 1">
+      暂无订单
+    </div>
+    <div class="packing-btn" @click="goPayPacking" v-else>
       立即支付
     </div>
     <div
@@ -182,8 +185,8 @@ export default {
     _queryParkingCost(yuoID) {
       queryParkingCost(this.carList.userId, this.carList.number, yuoID).then(res => {
         if (res.code === 0) {
-          console.log('费用查询=================================================================')
-          console.log(res.data)
+          // console.log('费用查询=================================================================')
+          // console.log(res.data)
           this.showbox = false
           this.carList = res.data
         }
@@ -192,8 +195,8 @@ export default {
     _getAllCoupon(id) {
       getAllCoupon(id, 1, 2).then((res) => {
         if (res.code === 0) {
-          console.log('查询停车券-----------------------------------------------------------------')
-          console.log(res.data)
+          // console.log('查询停车券-----------------------------------------------------------------')
+          // console.log(res.data)
           if (res.data.length > 0) {
             this.numquan = res.data.length + '个优惠券'
             this.items = res.data
@@ -204,8 +207,8 @@ export default {
     _parkLogin() {
       parkLogin(window.location.href.split('=')[1]).then(res => {
         if (res.code === 0) {
-          console.log("停车----------------------------------")
-          console.log(res.data)
+          // console.log("停车----------------------------------")
+          // console.log(res.data)
           if (res.data.code === 500107) {
             this.$router.push({
               path: '/Register/packing'

@@ -80,8 +80,8 @@ export default {
     _getUserLevel(id) {
       getUserLevel(id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('会员积分=============================')
-          console.log(res.data)
+          // console.log('会员积分=============================')
+          // console.log(res.data)
           this.Levelnum = res.data
           this._getAllPointGoodsOrder()
         }
@@ -90,10 +90,10 @@ export default {
     _getAllPointGoodsOrder() {
       getAllPointGoodsOrder(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('积分兑换列表=============')
-          console.log(res.data)
+          // console.log('积分兑换列表=============')
+          // console.log(res.data)
           this.listData = res.data
-          console.log(this.listData)
+          // console.log(this.listData)
           if (this.listData.length !== 0) {
             this.showover = false
           }

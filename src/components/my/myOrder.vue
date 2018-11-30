@@ -89,8 +89,8 @@ export default {
     _getAllGoodsOrder() {
       getAllGoodsOrder(this.UserID, this.type).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('这是订单中心=============================')
-          console.log(res.data)
+          // console.log('这是订单中心=============================')
+          // console.log(res.data)
           this.dataList = res.data
         }
       })
@@ -98,8 +98,8 @@ export default {
     _deleteOrder(id) {
       deleteOrder(this.UserID, id).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('删除订单=================================')
-          alert('删除成功')
+          // console.log('删除订单=================================')
+          alert('取消成功')
         }
       })
     },
@@ -112,11 +112,11 @@ export default {
       })
     },
     _changeAddressById(id) {
-      console.log(id)
+      // console.log(id)
       createWechatPayOrder(window.location.href.split('#')[0], this.UserID, id).then(res => {
         if (res.code === ERR_OK) {
           var self = this
-          console.log(res)
+          // console.log(res)
           wx.config({
             debug: false,
             appId: res.data.appId,
@@ -168,7 +168,7 @@ export default {
       this._getAllGoodsOrder()
     },
     delorder(id, index) {
-      console.log(id, index)
+      // console.log(id, index)
       this._deleteOrder(id)
       this.dataList.splice(index, 1)
     }

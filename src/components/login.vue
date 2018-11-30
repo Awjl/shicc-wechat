@@ -49,11 +49,11 @@ export default {
     _login() {
       login(this.user).then((res) => {
         if (res.code === ERR_OK) {
-          console.log(res.data)
+          // console.log(res.data)
           if (res.data.code === ERR_OK) {
             this.$store.commit('SET_USERID', res.data.msg)
             setUserID(res.data.msg)
-            console.log(getUserID())
+            // console.log(getUserID())
             this.show = true
             this.$router.push({
               path: '/My'
@@ -99,7 +99,7 @@ export default {
       })
     },
     goLoing() {
-      console.log('登录')
+      // console.log('登录')
       if (this.nameErr == '' && this.passwordeErr == '' && this.user.name != '' && this.user.password != '') {
         this._login()
       }

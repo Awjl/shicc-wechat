@@ -66,13 +66,13 @@ export default {
   methods: {
     _getQRcode() {
       getVoucherInfo(this.$route.params.id).then(res => {
-        console.log(res)
+        // console.log(res)
         this.obj = res.data
       })
     },
     _writeOffVoucher() {
       writeOffVoucher(this.$route.params.id).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.code === 0) {
           if (res.data.code === 200) {
             this.$router.push({

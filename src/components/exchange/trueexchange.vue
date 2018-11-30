@@ -89,9 +89,9 @@ export default {
       if (this.AddresId) {
         getAddressById(this.AddresId).then((res) => {
           if (res.code === ERR_OK) {
-            console.log('获取地址ID===================================================')
+            // console.log('获取地址ID===================================================')
             this.show = false
-            console.log(res.data)
+            // console.log(res.data)
             this.addres = res.data
           }
         })
@@ -106,8 +106,8 @@ export default {
       this.data.point = this.$route.params.point
       getPointGoodsOrderDetail(this.data).then((res) => {
         if (res.code === ERR_OK) {
-          console.log('查询=============================')
-          console.log(res.data)
+          // console.log('查询=============================')
+          // console.log(res.data)
           this.data = res.data
         }
       })
@@ -137,7 +137,7 @@ export default {
       this.data.userId = this.UserID
       this.data.goodsId = this.$route.params.id
       this.data.num = 1
-      console.log(this.data)
+      // console.log(this.data)
       if (!this.data.addressId) {
         return alert('请选择地址')
       }
