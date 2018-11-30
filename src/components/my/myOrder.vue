@@ -263,7 +263,7 @@ img {
   line-height: 36px;
 }
 .orderitem-name .name {
-  font-size: 24px;
+  font-size: 28px;
   color: #161616;
 }
 .orderitem-name > .new,

@@ -176,12 +176,13 @@ export default {
   width: 250px;
   color: #fff;
   line-height: 35px;
+  margin-bottom: 30px;
 }
 .couponitem-name p:nth-child(1) {
-  font-size: 24px;
+  font-size: 28px;
 }
 .couponitem-name p:nth-child(2) {
-  font-size: 18px;
+  font-size: 20px;
 }
 .couponitem-btn {
   width: 130px;
@@ -198,7 +199,7 @@ export default {
   padding-left: 40px;
   height: 50px;
   line-height: 50px;
-  font-size: 18px;
+  font-size: 20px;
   color: #9b9b9b;
   box-sizing: border-box;
 }

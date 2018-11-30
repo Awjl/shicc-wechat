@@ -11,8 +11,8 @@
     <div class="Detalis-title">
       <div class="title-left">
         <p class="leftName">{{dataList.name}}(<span v-if="dataList.isBespeak === 1 ">需要预约</span><span v-else>不需要预约</span>)</p>
-        <p class="leftjiage">代金券：
-          <span>¥{{dataList.oldPrice | formatFee}}</span>
+        <p class="leftjiage">价值：
+          <span>¥{{dataList.oldPrice | formatFee}}</span> &nbsp;&nbsp;代金券
         </p>
       </div>
       <div class="title-right">
@@ -173,25 +173,12 @@ export default {
   components: {
     Swiper
   },
-  // beforeRouteLeave (to, from, next) {
-  //   if (to.name === 'Purchase') {
-  //     to.meta.keepAlive = true
-  //     next()
-  //   } else {
-  //     to.meta.keepAlive = false
-  //     next()
-  //   }
-  // }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .swiper-wrapper {
   height: 650px;
-  /* display: flex; */
-  /* justify-content: center;
-  align-items: center; */
 }
 .swiper-slide {
   width: 100%;
@@ -224,16 +211,16 @@ img {
   line-height: 40px;
 }
 .leftName {
-  font-size: 24px;
+  font-size: 28px;
   color: #4a4a4a;
 }
 .leftjiage {
-  font-size: 18px;
+  font-size: 20px;
   color: #9b9b9b;
   letter-spacing: 1.09px;
 }
 .leftjiage span {
-  font-size: 24px;
+  font-size: 28px;
   color: #ed6969;
   letter-spacing: 1.45px;
 }
@@ -244,7 +231,7 @@ img {
   align-items: center;
 }
 .title-right p {
-  font-size: 16px;
+  font-size: 20px;
   color: #ed6969;
   letter-spacing: 0.97px;
 }
@@ -344,9 +331,9 @@ img {
   width: 100%;
   height: 2px;
   box-sizing: border-box;
-  background: #9b9b9b;
+  background: #acacac;
   transform-origin: bottom center;
-  transform: rotate(9deg);
+  transform: rotate(0deg);
 }
 .footer-over {
   background: #59c2fa;

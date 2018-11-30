@@ -257,8 +257,8 @@ img {
 }
 .modifyItem > span {
   display: block;
-  width: 130px;
-  font-size: 24px;
+  width: 140px;
+  font-size: 28px;
   color: #4a4a4a;
 }
 .modifyItem input {

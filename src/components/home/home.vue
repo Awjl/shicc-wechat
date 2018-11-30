@@ -3,7 +3,7 @@
     <div class="banner-he">
       <Swiper :listImg="listImg" :height="height"></Swiper>
     </div>
-    <div class="he20"></div>
+    <div class="he40"></div>
     <div class="title">
       <div class="title-text">一期一会</div>
     </div>
@@ -11,7 +11,7 @@
     <div class="hall-he">
       <hall :hallList="hallList"></hall>
     </div>
-    <div class="he20"></div>
+    <div class="he40"></div>
     <div class="title">
       <div class="title-text">一隅一食</div>
     </div>

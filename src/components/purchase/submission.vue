@@ -37,7 +37,7 @@
           小计：
         </div>
         <div class="num-jiage">
-          {{sum | formatFee}}
+          ￥{{sum | formatFee}}
         </div>
       </div>
       <div class="line">
@@ -50,13 +50,23 @@
           {{numquan}}
         </div>
       </div>
-    </div>
-    <div class="submission-iph">
-      <div class="iph-title">
-        手机号:
+      <div class="line">
+      </div>
+      <div class="num" @click='showboxtrue'>
+        <div class="iph-title">
+        手机号：
       </div>
       <div class="iph-jiage">
         {{shoping.mobile}}
+      </div>
+      </div>
+    </div>
+    <div class="submission-iph">
+      <div class="iph-title">
+        总计：
+      </div>
+      <div class="num-jiage">
+          ￥{{Allsum | formatFee}}
       </div>
     </div>
     <div class="submission-btn" @click="sumBtn">
@@ -70,18 +80,36 @@
         </div>
         <div class="line"></div>
         <div class="couponlist">
-          <div class="couponitem" v-for="(item, index) in items" :key="index" @click="activetrue(item, index)" :class="{couponitemactive: index == typeindex }">
-            <div class="couponitem-title" :class="{activebg: item.limitPrice > sum }">
-              <div class="couponitem-new">
-                <span>{{item.price/100}}</span>元
+          <div>
+            <div class="couponitem" v-for="(item, index) in items.availableCoupons" :key="index" @click="activetrue(item, index)" :class="{couponitemactive: index == typeindex }">
+              <div class="couponitem-title">
+                <div class="couponitem-new">
+                  <span>{{item.price/100}}</span>元
+                </div>
+                <div class="couponitem-name">
+                  <p>{{item.name}}</p>
+                  <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
+                </div>
               </div>
-              <div class="couponitem-name">
-                <p>{{item.name}}</p>
-                <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
+              <div class="couponitem-footer">
+                {{item.title}}
               </div>
             </div>
-            <div class="couponitem-footer">
-              {{item.title}}
+          </div>
+          <div>
+            <div class="couponitem" v-for="(item, index) in items.disabledCoupons" :key="index">
+              <div class="couponitem-title activebg">
+                <div class="couponitem-new">
+                  <span>{{item.price/100}}</span>元
+                </div>
+                <div class="couponitem-name">
+                  <p>{{item.name}}</p>
+                  <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
+                </div>
+              </div>
+              <div class="couponitem-footer">
+                {{item.title}}
+              </div>
             </div>
           </div>
         </div>
@@ -92,7 +120,7 @@
 
 <script>
 import { getGoodsOrderDetail, changeAddressById } from 'api/shopping'
-import { getAllCoupon, createWechatPayOrder } from 'api/user'
+import { judgeAvailableCoupon, createWechatPayOrder } from 'api/user'
 import { ERR_OK } from 'api/config'
 import { mapGetters } from 'vuex'
 
@@ -100,7 +128,8 @@ export default {
   data() {
     return {
       num: 1,
-      sum: 1,
+      sum: 0,
+      Allsum: 0,
       typeindex: null,
       numquan: '暂无可用',
       img: './static/showImg/submission.png',
@@ -115,7 +144,7 @@ export default {
         userId: '',
         couponId: ''
       },
-      items: [],
+      items: {},
       showbox: false
     }
   },
@@ -129,28 +158,29 @@ export default {
   },
   methods: {
     _getGoodsOrderDetail() {
-      // console.log(this.UserID, this.$route.params.id)
       getGoodsOrderDetail(this.UserID, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
-          // console.log(`提交订单=====`)
-          // console.log(res.data)
+          console.log(res.data)
           this.shoping = res.data
           this.shoping.num = 1
           this.shoping.total = this.shoping.num * this.shoping.newPrice
           this.sum = this.shoping.newPrice
-          this._getAllCoupon()
+          this.Allsum = this.shoping.newPrice
+          this._getAllCoupon(this.shoping.total)
         }
       })
     },
-    _getAllCoupon() {
-      getAllCoupon(this.UserID, 1, this.shoping.type).then((res) => {
+    _getAllCoupon(newPrice) {
+      judgeAvailableCoupon(this.UserID, newPrice).then((res) => {
         if (res.code === ERR_OK) {
-          // console.log('查询')
-          // console.log(res.data)
-          if (res.data.length > 0) {
-            this.numquan = res.data.length + '个优惠券'
-            this.items = res.data
+          console.log('优惠券=========================================')
+          console.log(res.data)
+          if (res.data.availableNumber == 0) {
+            this.numquan = '暂无可用'
+          } else {
+            this.numquan = res.data.availableNumber + '个可用'
           }
+          this.items = res.data
         }
       })
     },
@@ -161,7 +191,6 @@ export default {
           createWechatPayOrder(window.location.href.split('#')[0], this.UserID, res.data).then(res => {
             if (res.code === ERR_OK) {
               var self = this
-              // console.log(res)
               wx.config({
                 debug: false,
                 appId: res.data.appId,
@@ -205,18 +234,15 @@ export default {
     showboxtrue() {
       this.showbox = true
       this.shoping.couponId = ''
-      this.numquan = this.items.length + '个优惠券'
+      this.numquan = this.items.availableNumber + '个可用'
       this.shoping.total = this.shoping.newPrice * this.shoping.num
+      this.typeindex = null
       this.num = this.shoping.num
       this.sum = this.shoping.total
+      this.Allsum = this.shoping.total
     },
     quxiao() {
       this.showbox = false
-      this.shoping.couponId = ''
-      this.numquan = this.items.length + '个优惠券'
-      this.shoping.total = this.shoping.newPrice * this.shoping.num
-      this.num = this.shoping.num
-      this.sum = this.shoping.total
     },
     sumBtn() {
       this._changeAddressById()
@@ -232,68 +258,26 @@ export default {
       this.shoping.total = this.shoping.newPrice * this.shoping.num
       this.num = this.shoping.num
       this.sum = this.shoping.total
+      this.Allsum = this.sum
       this.shoping.couponId = ''
-      this.numquan = this.items.length + '个优惠券'
-      this.shoping.total = this.shoping.newPrice * this.shoping.num
-      this.num = this.shoping.num
-      this.sum = this.shoping.total
+      this._getAllCoupon(this.shoping.total)
     },
     addclick() {
       this.shoping.num = this.shoping.num + 1
       this.shoping.total = this.shoping.newPrice * this.shoping.num
       this.num = this.shoping.num
       this.sum = this.shoping.total
+      this.Allsum = this.sum
       this.shoping.couponId = ''
-      this.numquan = this.items.length + '个优惠券'
-      this.shoping.total = this.shoping.newPrice * this.shoping.num
-      this.num = this.shoping.num
-      this.sum = this.shoping.total
+      this._getAllCoupon(this.shoping.total)
     },
     activetrue(item, index) {
-      // console.log(item.limitPrice <= this.sum)
-      if (this.typeindex === null) {
-        if (item.saleType === 1) {
-          if (item.limitPrice <= this.sum) {
-            this.typeindex = index
-            this.shoping.couponId = item.id
-            this.numquan = item.name
-            this.shoping.total = this.shoping.total - item.price
-            this.sum = this.shoping.total
-          }
-        } else {
-          if (item.limitPrice <= this.sum) {
-            this.typeindex = index
-            this.shoping.couponId = item.id
-            this.numquan = item.name
-            this.shoping.total = this.shoping.total - item.limitPrice
-            this.sum = this.shoping.total
-          }
-        }
-      } else {
-        this.shoping.couponId = ''
-        this.num = this.shoping.num
-        this.shoping.total = this.shoping.newPrice * this.shoping.num
-        this.sum = this.shoping.total
-        // console.log(this.num)
-        // console.log(this.sum)
-        if (item.saleType === 1) {
-          if (item.limitPrice <= this.sum) {
-            this.typeindex = index
-            this.shoping.couponId = item.id
-            this.numquan = item.name
-            this.shoping.total = this.shoping.total - item.price
-            this.sum = this.shoping.total
-          }
-        } else {
-          if (item.limitPrice <= this.sum) {
-            this.typeindex = index
-            this.shoping.couponId = item.id
-            this.numquan = item.name
-            this.shoping.total = this.shoping.total - item.limitPrice
-            this.sum = this.shoping.total
-          }
-        }
-      }
+        this.typeindex = index
+        this.Allsum = this.Allsum - item.price
+        this.shoping.total = this.Allsum
+        this.shoping.couponId = item.id
+        this.numquan = item.name
+        console.log(this.shoping)
     }
   }
 }
@@ -356,7 +340,7 @@ img {
   justify-content: space-between;
 }
 .submission-time p:nth-child(1) {
-  font-size: 24px;
+  font-size: 28px;
   height: 45px;
   line-height: 45px;
   color: #4a4a4a;
@@ -423,7 +407,7 @@ img {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(000, 000, 000, 0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 .box-item {
   width: 100%;
@@ -435,7 +419,8 @@ img {
 .box-title {
   width: 90%;
   margin: 0 auto;
-  height: 80px;
+  /* height: 100px; */
+  padding: 30px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -470,7 +455,7 @@ img {
   border: 1px solid #ddd;
 }
 .couponitemactive {
-  box-shadow: 0 0 10px 10px #fff5f5;
+  box-shadow: 0 0 10px 10px #ed6969;
 }
 .couponitem-title {
   width: 100%;

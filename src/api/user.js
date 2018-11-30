@@ -75,7 +75,18 @@ export function getAllCoupon(userid, state, type) {
     return Promise.resolve(res.data)
   })
 }
-
+// 查优惠券 /coupon/judgeAvailableCoupon
+export function judgeAvailableCoupon(userid,amount) {
+  const url = `${process.env.API_HOST}/sicc/coupon/judgeAvailableCoupon`
+  return axios.get(url, {
+    params: {
+      userId: userid,
+      amount: amount
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
 // 获取用户个人资料
 export function getUserInfoDetail(userid) {
   const url = `${process.env.API_HOST}/sicc/user/getUserInfoDetail`

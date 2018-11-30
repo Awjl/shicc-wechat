@@ -324,9 +324,9 @@ img {
   width: 100%;
   height: 2px;
   box-sizing: border-box;
-  background: #9b9b9b;
+  background: #acacac;
   transform-origin: bottom center;
-  transform: rotate(9deg);
+  transform: rotate(0deg);
 }
 .bottom {
   text-align: center;

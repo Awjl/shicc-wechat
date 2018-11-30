@@ -254,8 +254,8 @@ img {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 50px;
+  line-height: 50px;
   padding: 0 30px;
   color: #fff;
   font-size: 18px;
@@ -289,7 +289,7 @@ img {
   box-sizing: border-box;
 }
 .Price .PriceNew {
-  font-size: 24px;
+  font-size: 28px;
   color: #59c2fa;
   letter-spacing: 1.45px;
   font-weight: bold;
@@ -309,9 +309,9 @@ img {
   width: 100%;
   height: 2px;
   box-sizing: border-box;
-  background: #9b9b9b;
+  background: #acacac;
   transform-origin: bottom center;
-  transform: rotate(9deg);
+  transform: rotate(0deg);
 }
 .bottom {
   text-align: center;

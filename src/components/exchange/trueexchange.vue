@@ -13,9 +13,6 @@
           </div>
           <p>{{addres.city}}{{addres.address}}</p>
         </div>
-        <!-- <div class="list-right">
-          修改<img :src="rightImg" alt="">
-        </div> -->
       </div>
     </div>
     <div class="line"></div>
@@ -235,7 +232,7 @@ img {
 }
 .list-name p:nth-child(1) {
   margin-top: 10px;
-  font-size: 30px;
+  font-size: 28px;
   height: 35px;
   line-height: 35px;
 }
@@ -293,7 +290,7 @@ img {
 }
 .footer div.footer-right {
   background: #59c2fa;
-  font-size: 24px;
+  font-size: 28px;
   color: #ffffff;
   letter-spacing: 0.86px;
 }

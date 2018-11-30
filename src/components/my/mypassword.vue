@@ -221,6 +221,7 @@ export default {
   border-radius: 10px;
   margin-top: 100px;
   color: #fff;
+  font-size: 28px;
 }
 .newpassword input {
   margin-top: 60px;

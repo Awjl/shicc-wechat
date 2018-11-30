@@ -151,8 +151,8 @@ img {
   color: #59c2fa;
 }
 .lvavel {
-  width: 80px;
-  height: 30px;
+  width: 100px;
+  height: 35px;
   line-height: 35px;
   text-align: center;
   border: 1px solid #ed6969;
@@ -161,19 +161,19 @@ img {
   left: 0;
   right: 0;
   margin: auto;
-  font-size: 18px;
+  font-size: 20px;
   color: #ed6969;
 }
 .integral-text {
   width: 140px;
-  height: 30px;
-  margin: 20px 0;
+  height: 40px;
   background: #59c2fa;
   color: #fff;
-  line-height: 30px;
+  line-height: 42px;
   text-align: center;
   border-radius: 0 100px 100px 0;
-  font-size: 20px;
+  font-size: 24px;
+  margin: 20px 0;
 }
 .integralList {
   background: #fff;

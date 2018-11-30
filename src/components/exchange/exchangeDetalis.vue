@@ -253,7 +253,7 @@ img {
   align-items: center;
 }
 .exchangeDetalisname {
-  font-size: 24px;
+  font-size: 28px;
   color: #4a4a4a;
   line-height: 35px;
   letter-spacing: 1px;
@@ -269,7 +269,7 @@ img {
   margin-top: 19px;
 }
 .exchangeDetalistitle-jiage > span {
-  display: block;
+  /* display: block; */
 }
 .exchangeDetalistitle-jiage > .new {
   font-size: 28px;
@@ -289,9 +289,9 @@ img {
   width: 100%;
   height: 2px;
   box-sizing: border-box;
-  background: #9b9b9b;
+  background: #acacac;
   transform-origin: bottom center;
-  transform: rotate(9deg);
+  transform: rotate(0deg);
 }
 .detalis {
   width: 100%;
