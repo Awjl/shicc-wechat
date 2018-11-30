@@ -72,7 +72,7 @@ export default {
   },
   created() {
     this._getTopBanner()
-    this._defaultLogin()
+    // this._defaultLogin()
   },
   computed: {
     ...mapGetters([
