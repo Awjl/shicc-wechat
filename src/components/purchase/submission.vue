@@ -92,7 +92,9 @@
                 </div>
               </div>
               <div class="couponitem-footer">
-                {{item.title}}
+                <span>{{item.title}}</span>
+                <span v-if="index == typeindex"><img src="./iconAct.png" alt=""></span>
+                <span v-else><img src="./icon.png" alt=""></span>
               </div>
             </div>
           </div>
@@ -412,7 +414,7 @@ img {
 .box-item {
   width: 100%;
   height: 70%;
-  background: #fff;
+  background: #f2f2f2;
   position: absolute;
   bottom: 0;
 }
@@ -445,6 +447,7 @@ img {
   width: 100%;
   padding: 30px;
   box-sizing: border-box;
+  background: #f2f2f2;
 }
 .couponitem {
   width: 690px;
@@ -452,10 +455,10 @@ img {
   border-radius: 10px;
   margin-bottom: 22px;
   overflow: hidden;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
 }
 .couponitemactive {
-  box-shadow: 0 0 10px 10px #ed6969;
+  box-shadow: 0 0 11px 0px #b5b5b5;
 }
 .couponitem-title {
   width: 100%;
@@ -505,11 +508,18 @@ img {
   margin-left: 70px;
 }
 .couponitem-footer {
-  padding-left: 40px;
+  padding:0 40px;
   height: 50px;
-  line-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 18px;
   color: #9b9b9b;
   box-sizing: border-box;
+  background: #fff;
+}
+.couponitem-footer img {
+  width: 32px;
+  height: 32px;
 }
 </style>

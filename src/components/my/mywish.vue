@@ -48,7 +48,10 @@ import { ERR_OK } from 'api/config'
 export default {
   data() {
     return {
-      items: []
+      items: {
+        food: [],
+        room: []
+      }
     }
   },
   created() {
@@ -64,7 +67,7 @@ export default {
       getWishList(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
           // console.log('获取心愿单============')
-          // console.log(res.data)
+          console.log(res.data)
           this.items = res.data
         }
       })

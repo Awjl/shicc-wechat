@@ -39,6 +39,14 @@
           </div>
           <div class="he20"></div>
           <div class="from-item">
+            <label>会议时间</label><input
+              type="text"
+              placeholder="格式：2018-08-09"
+              v-model="data.bookDate"
+            >
+          </div>
+          <div class="he20"></div>
+          <div class="from-item">
             <label>会议主题</label><input
               type="text"
               placeholder="请输入会议主题"
@@ -130,7 +138,8 @@ export default {
         userId: '',
         topic: '',
         num: '',
-        email: ''
+        email: '',
+        bookDate: ''
       }
     }
   },
@@ -150,8 +159,11 @@ export default {
     },
     show() {
       this.data.userId = this.UserID
-      // console.log(this.data)
-      this._bookMeeting(this.data)
+      console.log(this.data)
+      if (this.data.mobile && this.data.name && this.data.note && this.data.topic && this.data.num && this.data.email && this.data.bookDate) {
+        console.log("213")
+        this._bookMeeting(this.data)
+      }
     },
     hide() {
       this.showTrue = false
@@ -240,7 +252,7 @@ textarea::-webkit-input-placeholder {
   height: 80px;
   text-align: center;
   line-height: 80px;
-  margin: 100px auto 0;
+  margin: 20px auto 0;
   background: #59c2fa;
   border-radius: 10px;
   font-size: 28px;

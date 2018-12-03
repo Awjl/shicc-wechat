@@ -99,7 +99,7 @@ export default {
       deleteOrder(this.UserID, id).then((res) => {
         if (res.code === ERR_OK) {
           // console.log('删除订单=================================')
-          alert('取消成功')
+          // alert('取消成功')
         }
       })
     },
@@ -169,8 +169,10 @@ export default {
     },
     delorder(id, index) {
       // console.log(id, index)
-      this._deleteOrder(id)
-      this.dataList.splice(index, 1)
+      if (confirm("确定取消该订单么？")) {
+        this._deleteOrder(id)
+        this.dataList.splice(index, 1)
+      }
     }
   }
 }
