@@ -1,44 +1,92 @@
 <template>
   <div class="exchange">
     <div class="exchange-bg">
-      <img :src="bg" alt="" style="vertical-align:middle">
-      <div class="exchange-title" v-if="showLevel">
+      <img
+        :src="bg"
+        alt=""
+        style="vertical-align:middle"
+      >
+      <div
+        class="exchange-title"
+        v-if="showLevel"
+      >
         您现有积分
       </div>
-      <div class="exchange-num" v-if='showLevel'>
+      <div
+        class="exchange-num"
+        v-if='showLevel'
+      >
         {{Levelnum.points}}
       </div>
-      <div class="exchange-btn" v-if='!showLevel' @click="gologin">
+      <div
+        class="exchange-btn"
+        v-if='!showLevel'
+        @click="gologin"
+      >
         去登陆
       </div>
-      <div class="lvavel" v-if='showLevel && Levelnum.level == 1'>
+      <div
+        class="lvavel"
+        v-if='showLevel && Levelnum.level == 1'
+      >
         V1会员
       </div>
-      <div class="lvavel" v-if='showLevel && Levelnum.level == 2'>
+      <div
+        class="lvavel"
+        v-if='showLevel && Levelnum.level == 2'
+      >
         V2会员
       </div>
     </div>
     <div class="purchase-nav">
-      <span :class="{active: show}" @click="tabOne()">V1会员区</span>
-      <span :class="{active: !show}" @click="tabTwo()">V2尊享区</span>
+      <span
+        :class="{active: show}"
+        @click="tabOne()"
+      >V1会员区</span>
+      <span
+        :class="{active: !show}"
+        @click="tabTwo()"
+      >V2尊享区</span>
     </div>
     <div class="exchangelist">
-      <div class="item" v-for="(item, index) in items" :key="index" @click="goDetalis(item.id, type, Levelnum.level)">
+      <div
+        class="item"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="goDetalis(item.id, type, Levelnum.level)"
+      >
         <div class="exchangelist-img">
-          <img :src="item.pictureUrl" alt="">
+          <img
+            :src="item.pictureUrl"
+            alt=""
+          >
         </div>
         <div class="item-title">
           <p>{{item.name}}</p>
           <div class="item-jiage">
-            <span class="new" v-if="show">{{item.v1NewPoint}}积分</span>
-            <span class="new" v-else>{{item.v2NewPoint}}积分</span>
+            <span
+              class="new"
+              v-if="show"
+            >{{item.v1NewPoint}}积分</span>
+            <span
+              class="new"
+              v-else
+            >{{item.v2NewPoint}}积分</span>
             <span class="old">{{item.oldPoint}}积分</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="bottom" v-if="!showover">- 到底了 -</div>
-    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom">
+    <div
+      class="bottom"
+      v-if="!showover"
+    >- 到底了 -</div>
+    <mugen-scroll
+      :handler="fetchData"
+      :should-handle="!loading"
+      v-if="showover"
+      class="bottom"
+    >
       - 加载中 -
     </mugen-scroll>
     <not-logged v-if="notShow"></not-logged>
@@ -302,6 +350,9 @@ img {
   font-size: 24px;
   color: #4a4a4a;
   padding-left: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .item-jiage {
   padding-left: 20px;
@@ -317,7 +368,7 @@ img {
   position: relative;
 }
 .item-jiage .old::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 45%;

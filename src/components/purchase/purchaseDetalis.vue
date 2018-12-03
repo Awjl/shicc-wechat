@@ -3,7 +3,7 @@
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(str, index) in dataList.bannerUrls" :key="index">
-          <img :src="str" @click="goDetails(str.id)" style="vertical-align:middle" />
+          <img :src="str" style="vertical-align:middle" />
         </div>
       </div>
       <div class="swiper-pagination swiper-pagination-white"></div>

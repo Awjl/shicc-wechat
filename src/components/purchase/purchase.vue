@@ -282,6 +282,9 @@ img {
   font-size: 24px;
   color: #4a4a4a;
   letter-spacing: 1.45px;
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .Price {
   width: 100%;

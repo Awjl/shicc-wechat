@@ -190,6 +190,8 @@ export default {
 .yanzhengcode input {
   width: 400px;
   height: 80px;
+  color: #666;
+  font-size: 24px;
   border: 2px solid #979797;
   border-radius: 10px;
   outline: none;
@@ -197,10 +199,20 @@ export default {
   box-shadow:0px 0px 0px rgba(0,0,0,0);
   -webkit-appearance:none;
 }
+.yanzhengcode input::-webkit-input-placeholder {
+  color: #666;
+  font-size: 24px;
+}
 .yanzhengcode-ipn input{
   width: 100%;
+  color: #666;
+  font-size: 24px;
   box-shadow:0px 0px 0px rgba(0,0,0,0);
   -webkit-appearance:none;
+}
+.yanzhengcode-ipn input::-webkit-input-placeholder{
+  color: #666;
+  font-size: 24px;
 }
 .codebtn {
   width: 180px;

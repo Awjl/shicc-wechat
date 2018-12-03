@@ -1,25 +1,49 @@
 <template>
   <div class="addaddres">
     <div class="addaddreslist-inp">
-      <input type="text" placeholder="收货人姓名" v-model="data.name">
-      <span>必填</span>
+      <input
+        type="text"
+        placeholder="收货人姓名"
+        v-model="data.name"
+        @blur="OnBlurName()"
+      >
+      <span>{{nameERR}}</span>
     </div>
     <div class="addaddreslist-inp">
-      <input type="text" placeholder="手机号码" v-model="data.mobile" @blur="OnBlur()">
+      <input
+        type="text"
+        placeholder="手机号码"
+        v-model="data.mobile"
+        @blur="OnBlur()"
+      >
       <span>{{content}}</span>
     </div>
-    <div class="addaddreslist-inp" @click="setAddres()">
+    <div
+      class="addaddreslist-inp"
+      @click="setAddres()"
+    >
       {{data.city}}
-      <span>必填</span>
+      <span>{{addressERR}}</span>
     </div>
     <div class="addaddreslist-inp">
-      <input type="text" placeholder="详细地址（街道、楼牌号等）" v-model="data.address">
-      <span>必填</span>
+      <input
+        type="text"
+        placeholder="详细地址（街道、楼牌号等）"
+        v-model="data.address"
+        @blur="OnBluradd()"
+      >
+      <span>{{addErr}}</span>
     </div>
-    <div class="addaddresbtn" @click="btn">
+    <div
+      class="addaddresbtn"
+      @click="btn"
+    >
       保存
     </div>
-    <Addres :addresStater="addresStater" v-on:Addres="Addres"></Addres>
+    <Addres
+      :addresStater="addresStater"
+      v-on:Addres="Addres"
+    ></Addres>
   </div>
 </template>
 
@@ -32,10 +56,13 @@ import { ERR_OK } from 'api/config'
 let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
 
 export default {
-  data () {
+  data() {
     return {
       addresStater: false,
-      content: '必填',
+      content: '',
+      nameERR: '',
+      addressERR: '',
+      addErr: '',
       data: {
         address: '',
         mobile: '',
@@ -47,7 +74,7 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this._getAddressById()
   },
   computed: {
@@ -56,7 +83,7 @@ export default {
     ])
   },
   methods: {
-    _getAddressById () {
+    _getAddressById() {
       // console.log(this.$route.params.id !== 'null')
       if (this.$route.params.id !== 'null') {
         getAddressById(this.$route.params.id).then((res) => {
@@ -75,7 +102,7 @@ export default {
         }
       }
     },
-    _changeAddressById () {
+    _changeAddressById() {
       this.data.userId = this.UserID
       this.data.id = this.$route.params.id
       changeAddressById(this.data).then((res) => {
@@ -85,7 +112,7 @@ export default {
         }
       })
     },
-    _addAddress () {
+    _addAddress() {
       this.data.userId = this.UserID
       addAddress(this.data).then((res) => {
         if (res.code === ERR_OK) {
@@ -108,8 +135,13 @@ export default {
     },
     setAddres() {
       this.addresStater = true;
+      if (this.data.city == '请选择省份、城市、县区') {
+        this.addressERR = '必填'
+      } else {
+        this.addressERR = ''
+      }
     },
-    OnBlur () {
+    OnBlur() {
       if (this.data.mobile) {
         if (phoneReg.test(this.data.mobile)) {
           this.content = '必填'
@@ -120,13 +152,32 @@ export default {
         this.content = '必填'
       }
     },
-    btn () {
+    OnBlurName() {
+      if (!this.data.name) {
+        this.nameERR = '必填'
+      } else {
+        this.nameERR = ''
+      }
+    },
+    OnBluradd() {
+      if (!this.data.address) {
+        this.addErr = '必填'
+      } else {
+        this.addErr = ''
+      }
+    },
+    btn() {
+      if (this.data.city == '请选择省份、城市、县区') {
+        this.addressERR = '必填'
+      } else {
+        this.addressERR = ''
+      }
       if (this.$route.params.id === 'null') {
-        if (this.content == '必填' && this.data.mobile != '' && this.data.name != '' && this.data.address != '' &&this.data.address != '') {
+        if (this.data.city != '请选择省份、城市、县区' && this.data.mobile != '' && this.data.name != '' && this.data.address != '' && this.data.address != '') {
           this._addAddress()
         }
       } else {
-        if (this.content == '必填' && this.data.mobile != '' && this.data.name != '' && this.data.address != '' &&this.data.address != '') {
+        if (this.data.city != '请选择省份、城市、县区' && this.data.mobile != '' && this.data.name != '' && this.data.address != '' && this.data.address != '') {
           this._changeAddressById()
         }
       }
@@ -155,8 +206,9 @@ export default {
   border-bottom: 1px solid #dcdcdc;
   color: #666;
   position: relative;
+  font-size: 24px;
 }
-.addaddreslist-inp>span{
+.addaddreslist-inp > span {
   position: absolute;
   display: block;
   top: 0;
@@ -168,6 +220,10 @@ export default {
 .addaddreslist-inp input {
   width: 100%;
   outline: none;
+}
+.addaddreslist-inp input::-webkit-input-placeholder {
+  color: #666;
+  font-size: 24px;
 }
 .addaddresbtn {
   width: 690px;

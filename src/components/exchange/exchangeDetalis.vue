@@ -132,7 +132,9 @@ export default {
             // console.log(this.type === '1')
             this.listImg = res.data
             this.listImg.pointGoods.param = JSON.parse(this.listImg.pointGoods.param)
-            this.listImg.pointGoods.kind = this.listImg.pointGoods.kind.split(',')
+            console.log(res.data)
+            console.log(this.listImg)
+            this.listImg.pointGoods.kind = this.listImg.pointGoods.kind.split('/')
             this._isEnoughPoint()
           }
         }
@@ -231,7 +233,7 @@ export default {
   height: 40px;
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   border: 2px solid #ddd;
   font-size: 26px;
   border-radius: 20px;
