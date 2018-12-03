@@ -101,7 +101,8 @@ export function bookMeeting(data) {
     userId: data.userId,
     topic: data.topic,
     num: data.num,  
-    email: data.email
+    email: data.email,
+    bookDate: data.bookDate
   }).then((res) => {
     return Promise.resolve(res.data)
   })

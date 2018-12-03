@@ -163,6 +163,8 @@ export default {
       if (this.data.mobile && this.data.name && this.data.note && this.data.topic && this.data.num && this.data.email && this.data.bookDate) {
         console.log("213")
         this._bookMeeting(this.data)
+      } else {
+        alert("全部为必填项")
       }
     },
     hide() {
