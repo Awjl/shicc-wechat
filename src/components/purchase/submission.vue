@@ -123,7 +123,7 @@
 <script>
 import { getGoodsOrderDetail, changeAddressById } from 'api/shopping'
 import { judgeAvailableCoupon, createWechatPayOrder } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -152,6 +152,8 @@ export default {
   },
   created() {
     this._getGoodsOrderDetail()
+        vxconfig(window.location.href.split('#')[0])
+
   },
   computed: {
     ...mapGetters([
@@ -421,7 +423,6 @@ img {
 .box-title {
   width: 90%;
   margin: 0 auto;
-  /* height: 100px; */
   padding: 30px 0;
   display: flex;
   justify-content: space-between;
@@ -521,5 +522,6 @@ img {
 .couponitem-footer img {
   width: 32px;
   height: 32px;
+  margin-top: 9px;
 }
 </style>

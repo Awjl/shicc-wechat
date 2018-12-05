@@ -45,7 +45,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getUserInfoDetail, editUserInfoDetail, uploadHead, getParam } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { wxChooseImage } from 'api/wxconfig'
 export default {
   data() {
@@ -72,6 +72,7 @@ export default {
     }
   },
   created() {
+    vxconfig(window.location.href.split('#')[0])
     this._getUserInfoDetail()
   },
   computed: {

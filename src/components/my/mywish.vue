@@ -43,7 +43,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getWishList } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 
 export default {
   data() {
@@ -56,6 +56,7 @@ export default {
   },
   created() {
     this._getWishList()
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([

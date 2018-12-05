@@ -31,7 +31,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { getAllAddress, deleteAddressById } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 
 export default {
   data() {
@@ -43,6 +43,7 @@ export default {
     }
   },
   created() {
+    vxconfig(window.location.href.split('#')[0])
     this._getAllAddress()
   },
   computed: {

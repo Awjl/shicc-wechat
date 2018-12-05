@@ -22,7 +22,7 @@
           </div>
           <div class="line">
           </div>
-          <div class="orderitem-conter">
+          <div class="orderitem-conter" @click="toShopping(item.goodsId)">
             <div class="orderitem-img">
               <img :src="item.url" alt="">
             </div>
@@ -64,7 +64,7 @@
 import { mapGetters } from 'vuex'
 import { getAllGoodsOrder, deleteOrder, createWechatPayOrder } from 'api/user'
 import { changeAddressById } from 'api/shopping'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 
 export default {
   data() {
@@ -79,6 +79,8 @@ export default {
   },
   created() {
     this._getAllGoodsOrder()
+        vxconfig(window.location.href.split('#')[0])
+
   },
   computed: {
     ...mapGetters([
@@ -326,35 +328,5 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.box-title {
-  margin-top: 50px;
-  font-size: 24px;
-  color: #161616;
-  height: 35px;
-  line-height: 35px;
-}
-.box-erwei {
-  width: 200px;
-  height: 200px;
-  background: #d8d8d8;
-  margin: 17px 0;
-}
-.box-name,
-.box-text {
-  width: 100%;
-  padding: 0 40px;
-  box-sizing: border-box;
-  line-height: 35px;
-  font-size: 24px;
-  color: #9b9b9b;
-}
-.box-name {
-  color: #4a4a4a;
-}
-.OverBox-img {
-  margin-top: 74px;
-  width: 60px;
-  height: 60px;
 }
 </style>

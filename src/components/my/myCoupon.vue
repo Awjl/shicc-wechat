@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { getAllCoupon } from 'api/user'
 import { mapGetters } from 'vuex'
 
@@ -53,6 +53,7 @@ export default {
     }
   },
   created() {
+    vxconfig(window.location.href.split('#')[0])
     this._getAllCoupon()
   },
   computed: {

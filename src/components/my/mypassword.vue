@@ -38,7 +38,7 @@
 <script>
 import { matchCode, changePwd } from 'api/user'
 import { sendSMS } from 'api/login'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 
 let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
 
@@ -60,6 +60,9 @@ export default {
       nameErr: '',
       passwordeErr: ''
     }
+  },
+  created(){
+    vxconfig(window.location.href.split('#')[0])
   },
   methods: {
     nextPass () {

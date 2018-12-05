@@ -27,7 +27,7 @@
 </template>
 <script>
 import { login } from 'api/login'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { setUserID, getUserID } from 'common/js/auth'
 
 export default {
@@ -44,6 +44,9 @@ export default {
         password: ''
       }
     }
+  },
+  created() {
+    vxconfig(window.location.href.split('#')[0])
   },
   methods: {
     _login() {

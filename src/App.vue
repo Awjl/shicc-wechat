@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import { defaultLogin } from 'api/homeapi'
+import { setUserID } from 'common/js/auth'
+
 export default {
   provide() {
     return {
@@ -15,9 +18,19 @@ export default {
     return {
       isRouterAlive: true
     }
-    
+  },
+  created() {
+    // this._defaultLogin()
   },
   methods: {
+    _defaultLogin() {
+      defaultLogin().then((res) => {
+        if (res.code === 0) {
+          this.$store.commit('SET_USERID', res.data)
+          setUserID(res.data)
+        }
+      })
+    },
     reload() {
       this.isRouterAlive = false
       this.$nextTick(function () {

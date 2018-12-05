@@ -53,7 +53,7 @@ import Food from 'base/food/food'
 import HomeList from 'base/homelist/homelist'
 
 import { getTopBanner, getOneStageBanner, getCornerMealBanner, defaultLogin } from 'api/homeapi'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
 import { setUserID } from 'common/js/auth'
@@ -71,6 +71,7 @@ export default {
     }
   },
   created() {
+    vxconfig(window.location.href.split('#')[0])
     this._getTopBanner()
     // this._defaultLogin()
   },

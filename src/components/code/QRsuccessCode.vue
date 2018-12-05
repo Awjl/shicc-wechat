@@ -43,7 +43,7 @@ export default {
   flex-direction: column;
 }
 .QRsuccess-title {
-  font-size: 50px;
+  font-size: 30px;
   margin: 60px 0;
 }
 .goHome {

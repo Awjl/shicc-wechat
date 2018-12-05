@@ -2,6 +2,10 @@
   <div class="my">
     <div class="my-bg">
       <img :src="imgbg" alt="">
+      <div class="my-notic" @click="goNotice">
+        <img src="./myicon/notic.png" alt="">
+        <span>{{noticeNum}}</span>
+      </div>
       <div class="my-name">
         <div class="my-title" v-if="UserID">
           <div class="my-tou">
@@ -82,8 +86,8 @@
 <script>
 import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
-import { getUserInfo } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { getUserInfo,isVoucherOverdue } from 'api/user'
+import { ERR_OK, vxconfig } from 'api/config'
 
 export default {
   data() {
@@ -91,6 +95,7 @@ export default {
       imgbg: './static/myimg/my-bg.png',
       imgTou: './static/myimg/my-tou.png',
       notShow: false,
+      noticeNum: '0',
       usermun: {
         couponNum: 0,
         loveNum: 0,
@@ -101,10 +106,10 @@ export default {
     }
   },
   created() {
-    // console.log('这里是个人中心=====')
-    // console.log(this.UserID)
+    vxconfig(window.location.href.split('#')[0])
     if (this.UserID) {
       this._getUserInfo()
+      this._isVoucherOverdue()
     }
   },
   computed: {
@@ -112,16 +117,27 @@ export default {
       'UserID'
     ])
   },
-  methods: {
+  methods:{
+    _isVoucherOverdue() {
+      isVoucherOverdue(this.UserID).then(res => {
+        if (res.code === ERR_OK) {
+          this.noticeNum = res.data
+        }
+      })
+    },
     _getUserInfo() {
       getUserInfo(this.UserID).then((res) => {
         if (res.code === ERR_OK) {
-          // console.log('获取全部信息==============')
-          // console.log(res.data)
           this.usermun = res.data
-          // console.log(this.usermun)
         }
       })
+    },
+    goNotice() {
+      if (this.UserID) {
+        this.$router.push({
+          path: '/MyNotice'
+        })
+      }
     },
     notShowbox() {
       if (!this.UserID) {
@@ -221,6 +237,26 @@ img {
   width: 100%;
   height: 400px;
   position: relative;
+}
+.my-notic {
+  position: absolute;
+  right: 34px;
+  top: 34px;
+  width: 40px;
+}
+.my-notic span {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 50%;
+  background: #ED6969;
+  color: #fff;
+  font-size: 18px;
 }
 .my-name {
   padding: 40px;

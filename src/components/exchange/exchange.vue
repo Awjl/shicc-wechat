@@ -72,7 +72,7 @@
               class="new"
               v-else
             >{{item.v2NewPoint}}积分</span>
-            <span class="old">{{item.oldPoint}}积分</span>
+            <span class="old">￥{{item.oldPoint}}元</span>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@
 <script>
 import NotLogged from 'base/notlogin/notlogin'
 import MugenScroll from 'vue-mugen-scroll'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { getUserLevel } from 'api/user'
 import { getV1PointGoods, getV2PointGoods } from 'api/shopping'
 import { mapGetters } from 'vuex'
@@ -121,9 +121,10 @@ export default {
     if (this.UserID) {
       this._getUserLevel(this.UserID)
     } else {
-      this.showLevel = false
+      this.showLevel = false 
     }
     this._getV1PointGoods(this.pn, this.pg)
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([

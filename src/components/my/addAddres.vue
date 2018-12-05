@@ -51,7 +51,7 @@
 import Addres from "base/addres/addres";
 import { mapGetters } from 'vuex'
 import { addAddress, changeAddressById, getAddressById } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 
 let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
 
@@ -76,6 +76,7 @@ export default {
   },
   created() {
     this._getAddressById()
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([

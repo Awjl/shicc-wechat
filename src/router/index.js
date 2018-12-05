@@ -18,6 +18,7 @@ import MyWish from '@/components/my/mywish' // 心愿单
 import MyCoupon from '@/components/my/myCoupon' // 优惠券
 import MyTransfer from '@/components/my/myTransfer' // 我的代金券
 import MyOrder from '@/components/my/myOrder' // 我的订单
+import MyNotice from '@/components/my/myNotice' // 我的通知列表
 import MyModify from '@/components/my/mymodify' // 个人资料修改
 import MyIntegral from '@/components/my/myintegral' // 积分中心
 import MyPassword from '@/components/my/mypassword' // 修改密码
@@ -176,6 +177,14 @@ const router = new Router({
       }
     },
     {
+      path: '/MyNotice',
+      component: MyNotice,
+      name: 'MyNotice',
+      meta: {
+        title: '通知列表'
+      }
+    },
+    {
       path: '/MyCoupon',
       component: MyCoupon,
       name: 'MyCoupon',
@@ -204,7 +213,7 @@ const router = new Router({
       component: Details,
       name: 'Details',
       meta: {
-        title: '商品详情'
+        title: '产品详情'
       }
     },
     {

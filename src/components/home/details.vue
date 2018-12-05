@@ -12,7 +12,7 @@
 import stack from 'base/stack/stack'
 
 import { getBar } from 'api/homeapi'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -28,6 +28,7 @@ export default {
     }
   },
   created () {
+    vxconfig(window.location.href.split('#')[0])
     if (this.UserID) {
       this.user = this.UserID
       this._getBar(this.user)

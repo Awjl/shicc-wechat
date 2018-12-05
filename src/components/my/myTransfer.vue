@@ -32,7 +32,7 @@
           </div>
           <div class="line">
           </div>
-          <div class="orderitem-conter">
+          <div class="orderitem-conter" @click="toShopping(item.goodsId)">
             <div class="orderitem-img">
               <img :src="item.pictureUrl" alt="">
             </div>
@@ -76,11 +76,8 @@
     </div>
     <div class="OverBox" v-if="showTrue">
       <div class="Box-one">
-        <div class="box-title">
-          卡券兑换码
-        </div>
-        <div class="boxTwotitle">
-          券码：{{useCode.couponCode}}
+        <div class="boxCode-title">
+          兑换码：{{useCode.couponCode}}
         </div>
         <div class="box-erwei">
           <img :src="useCode.qrCode" alt="">
@@ -130,7 +127,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getALLVoucher, givenToOne, checkMobile, getQRcode } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 
 export default {
   data() {
@@ -158,6 +155,7 @@ export default {
   },
   created() {
     this._getALLVoucher()
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([
@@ -399,8 +397,8 @@ img {
   align-items: center;
 }
 .Box-one {
-  width: 580px;
-  height: 800px;
+  width: 530px;
+  height: 700px;
   background: #fff;
   border-radius: 10px;
   position: relative;
@@ -409,16 +407,9 @@ img {
   align-items: center;
   overflow-x: auto;
 }
-.box-title {
-  margin-top: 30px;
+.boxCode-title{
+  margin-top: 100px;
   font-size: 28px;
-  color: #161616;
-  height: 35px;
-  line-height: 35px;
-}
-.boxTwotitle {
-  margin-top: 20px;
-  font-size: 22px;
   color: #161616;
   height: 35px;
   line-height: 35px;
@@ -477,11 +468,17 @@ img {
   border-bottom: 1px solid #ddd;
 }
 .giveUser-inp {
-  width: 70%;
+  width: 75%;
   height: 50px;
   line-height: 50px;
   margin: 80px auto;
   display: flex;
+  align-items: center;
+}
+.giveUser-inp label {
+  display: block;
+  width: 150px;
+  text-align: center;
 }
 .giver-time {
   width: 70%;

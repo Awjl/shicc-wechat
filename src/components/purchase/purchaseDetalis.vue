@@ -10,7 +10,7 @@
     </div>
     <div class="Detalis-title">
       <div class="title-left">
-        <p class="leftName">{{dataList.name}}(<span v-if="dataList.isBespeak === 1 ">需要预约</span><span v-else>不需要预约</span>)</p>
+        <p class="leftName">{{dataList.name}}</p>
         <p class="leftjiage">价值：
           <span>¥{{dataList.oldPrice | formatFee}}</span> &nbsp;&nbsp;代金券
         </p>
@@ -88,11 +88,10 @@ import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 import { getGoodsDetail } from 'api/shopping'
 import { inLove, outLove } from 'api/homeapi'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
-  inject: ['reload'],
   data() {
     return {
       xinIcon: './static/icon/xin-icon.png',
@@ -100,7 +99,9 @@ export default {
       detalisImg: './static/showImg/detalis.png',
       show: true,
       user: 0,
-      dataList: {}
+      dataList: {
+        isLove: '1'
+      }
     }
   },
   updated() {
@@ -123,11 +124,10 @@ export default {
     })
   },
   created() {
-    this.reload()
-    if (this.UserID) {
-      this.user = this.UserID
-      this._getGoodsDetail(this.user)
-    }
+    this._getGoodsDetail(this.UserID)
+    this.menu()
+        vxconfig(window.location.href.split('#')[0])
+
   },
   computed: {
     ...mapGetters([
@@ -136,38 +136,48 @@ export default {
   },
   methods: {
     _getGoodsDetail(user) {
-      // console.log('商品详情===================')
       getGoodsDetail(user, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
-          // console.log(`商品详情=====`)
-          // console.log(res.data)
           this.dataList = res.data
           this.dataList.useRule = this.dataList.useRule.split(',')
-          // console.log(this.dataList.useRule)
         }
       })
     },
-    collection(id) {
-      if (this.dataList.isLove === 1) {
-        this.dataList.isLove = null
-        outLove(this.user, id, 2).then((res) => {
-          if (res.code === ERR_OK) {
-            // console.log('取消成功')
-          }
-        })
-      } else {
-        this.dataList.isLove = 1
-        inLove(this.user, id, 2).then((res) => {
-          if (res.code === ERR_OK) {
-            // console.log('保存成功')
-          }
+    menu() {
+      window.scrollTo(0, 0);
+    },
+    notShowbox() {
+      if (!this.UserID) {
+        this.$router.push({
+          path: '/Login'
         })
       }
     },
+    collection(id) {
+      this.notShowbox()
+      if (this.UserID) {
+        if (this.dataList.isLove === 1) {
+          this.dataList.isLove = null
+          outLove(this.user, id, 2).then((res) => {
+            if (res.code === ERR_OK) {
+            }
+          })
+        } else {
+          this.dataList.isLove = 1
+          inLove(this.user, id, 2).then((res) => {
+            if (res.code === ERR_OK) {
+            }
+          })
+        }
+      }
+    },
     goSubmission(id) {
-      this.$router.push({
-        path: `/Submission/${id}`
-      })
+      this.notShowbox()
+        if (this.UserID) {
+        this.$router.push({
+          path: `/Submission/${id}`
+        })
+      }
     }
   },
   components: {
@@ -261,7 +271,7 @@ img {
 .Detalis-line {
   width: 100%;
   height: 2px;
-  background: #dcdcdc;
+  background: #f2f2f2;
 }
 .Detalislist {
   font-size: 24px;

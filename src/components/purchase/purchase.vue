@@ -45,7 +45,7 @@
 <script>
 import MugenScroll from 'vue-mugen-scroll'
 import { getCornerGoods, getMealGoods } from 'api/shopping'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import NotLogged from 'base/notlogin/notlogin'
 import { mapGetters } from 'vuex'
 
@@ -70,6 +70,8 @@ export default {
   },
   created() {
     this._getCornerGoods(this.pn, this.pg)
+        vxconfig(window.location.href.split('#')[0])
+
   },
   computed: {
     ...mapGetters([
@@ -156,12 +158,12 @@ export default {
       this._getMealGoods(this.pn, this.pg)
     },
     goDetalis(id) {
-      this.notShowbox()
-      if (this.UserID) {
+      // this.notShowbox()
+      // if (this.UserID) {
         this.$router.push({
           path: `/PurchaseDetalis/${id}`
         })
-      }
+      // }
     }
   },
   components: {

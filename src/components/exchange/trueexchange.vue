@@ -47,7 +47,7 @@
 <script>
 import { getPointGoodsOrderDetail, createPointOrder } from 'api/shopping'
 import { getAddressById } from 'api/user'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { mapGetters } from 'vuex'
 export default {
   data() {
@@ -74,6 +74,7 @@ export default {
   created() {
     this._getPointGoodsOrderDetail()
     this._getAddressById()
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([

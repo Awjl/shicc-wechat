@@ -65,7 +65,7 @@
 import { Register, sendSMS, getNewbeeCoupon } from 'api/login'
 import { setUserID } from 'common/js/auth'
 
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 
 let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
 
@@ -91,6 +91,9 @@ export default {
       totalTime: 60,
       canClick: true
     }
+  },
+  created() {
+    vxconfig(window.location.href.split('#')[0])
   },
   methods: {
     _Register() {

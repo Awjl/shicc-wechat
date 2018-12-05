@@ -384,7 +384,6 @@ span.redsum {
 .box-title {
   width: 90%;
   margin: 0 auto;
-  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;

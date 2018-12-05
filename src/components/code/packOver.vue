@@ -54,7 +54,7 @@ export default {
   flex-direction: column;
 }
 .QRsuccess-title {
-  font-size: 50px;
+  font-size: 30px;
   margin-bottom: 60px;
 }
 .goHome {

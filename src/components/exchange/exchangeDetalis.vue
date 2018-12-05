@@ -9,7 +9,7 @@
       <div class="exchangeDetalistitle-jiage">
         <span class="new" v-if="type === '1'">{{listImg.pointGoods.v1NewPoint}}积分</span>
         <span class="new" v-else>{{listImg.pointGoods.v2NewPoint}}积分</span>
-        <span class="old">{{listImg.pointGoods.oldPoint}}积分</span>
+        <span class="old">￥{{listImg.pointGoods.oldPoint}}元</span>
       </div>
     </div>
     <div class="line"></div>
@@ -69,7 +69,7 @@
 <script>
 import Swiper from 'base/swiper/swiper'
 import { getPointGoodsDetailById, isEnoughPoint } from 'api/shopping'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig} from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -95,6 +95,7 @@ export default {
   },
   created() {
     this._getPointGoodsDetailById()
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([
@@ -167,16 +168,7 @@ export default {
   },
   components: {
     Swiper
-  },
-  // beforeRouteLeave(to, from, next) {
-  //   if (to.name === 'Exchange') {
-  //     to.meta.keepAlive = true
-  //     next()
-  //   } else {
-  //     to.meta.keepAlive = false
-  //     next()
-  //   }
-  // }
+  }
 }
 </script>
 
@@ -218,7 +210,6 @@ export default {
 }
 .box-title {
   width: 95%;
-  height: 100px;
   margin: 0 auto;
   text-align: center;
   font-size: 30px;

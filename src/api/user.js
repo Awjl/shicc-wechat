@@ -99,6 +99,39 @@ export function getUserInfoDetail(userid) {
   })
 }
 
+// 获取通知数量
+export function isVoucherOverdue(userid) {
+  const url = `${process.env.API_HOST}/sicc/user/isVoucherOverdue`
+  return axios.get(url, {
+    params: {
+      userId: userid
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 获取通知列表 
+export function getAllNotice(userid) {
+  const url = `${process.env.API_HOST}/sicc/notice/getAllNotice`
+  return axios.get(url, {
+    params: {
+      userId: userid
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+// 设置已读
+export function setReadNotice(id) {
+  const url = `${process.env.API_HOST}/sicc/notice/setReadNotice`
+  return axios.get(url, {
+    params: {
+      id: id
+    }
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
 // 查询个人积分以及会员等级
 export function getUserLevel(userid) {
   const url = `${process.env.API_HOST}/sicc/user/getUserLevel`

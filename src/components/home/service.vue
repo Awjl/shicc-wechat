@@ -39,7 +39,7 @@
 
 <script>
 import { getAllHotIssues, getPhone } from 'api/homeapi'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig} from 'api/config'
 
 export default {
   data() {
@@ -53,6 +53,7 @@ export default {
   created() {
     this._getAllHotIssues()
     this._getPhone()
+    vxconfig(window.location.href.split('#')[0])
   },
   methods: {
     _getPhone() {

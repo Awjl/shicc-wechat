@@ -4,7 +4,7 @@
       <div>
         <img :src="TrueImg" alt="">
       </div>
-      <div class="QRsuccess-title">{{dataListName}}</div>
+      <div class="QRsuccess-title">{{dataList}}</div>
       <div class="goHome" @click="closeWx()">
         关闭页面
       </div>
@@ -18,21 +18,7 @@ export default {
   data() {
     return {
       TrueImg: './static/loginimg/logo.png',
-      dataListName: '',
       dataList: window.location.href.split('=')[1]
-    }
-  },
-  created() {
-    if (this.dataList == "501") {
-      this.dataListName = "优惠券已领取完"
-    } else if (this.dataList == "502") {
-      this.dataListName = "获取优惠券失败"
-    } else if (this.dataList == "503") {
-      this.dataListName = "不存在该用户"
-    } else if (this.dataList == "504") {
-      this.dataListName = "不能重复领用"
-    } else {
-      this.dataListName = "优惠券领取成功"
     }
   },
   methods: {
@@ -57,7 +43,7 @@ export default {
   flex-direction: column;
 }
 .QRsuccess-title {
-  font-size: 50px;
+  font-size: 30px;
   margin: 60px 0;
 }
 .goHome {

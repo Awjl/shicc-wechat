@@ -120,7 +120,7 @@
 
 <script>
 import { bookMeeting } from 'api/homeapi'
-import { ERR_OK } from 'api/config'
+import { ERR_OK, vxconfig } from 'api/config'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -142,6 +142,9 @@ export default {
         bookDate: ''
       }
     }
+  },
+  created() {
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([
@@ -192,8 +195,12 @@ img {
   top: 0;
   left: 0;
 }
+.reserveLogoImg {
+  width: 200px;
+}
 .reserve-box > img {
   height: 100%;
+  width: 100%;
 }
 
 .reserve-title {
