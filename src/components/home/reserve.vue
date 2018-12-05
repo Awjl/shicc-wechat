@@ -282,10 +282,10 @@ textarea::-webkit-input-placeholder {
 .Box-one {
   width: 550px;
   height: 700px;
-  background: url(static/myimg/listBg1.png) no-repeat 50% 50%;
+  background: url(http://www.shiccs.net/pictures/scan/listBg1.png) no-repeat 50% 50%;
   background-size: cover;
   border-radius: 10px;
-  position: relative;
+  position: relative; 
   display: flex;
   flex-direction: column;
   justify-content: center;

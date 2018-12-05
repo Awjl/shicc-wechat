@@ -63,7 +63,7 @@
         <img src="./myicon/myitem5.png" alt=""> 我的优惠券
       </div>
     </div>
-    <div class="myall" @click="gotransfer">
+    <div class="myall" @click="gotransfer" style="border:none;">
       <div class="my-item">
         <img src="./myicon/myitem8.png" alt=""> 我的代金券
       </div>

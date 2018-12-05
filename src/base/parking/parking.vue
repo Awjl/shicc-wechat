@@ -384,6 +384,7 @@ span.redsum {
 .box-title {
   width: 90%;
   margin: 0 auto;
+  padding: 30px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -412,9 +413,9 @@ span.redsum {
 .couponlist {
   width: 100%;
   height: 718px;
+  overflow-y: auto;
   padding: 30px;
   box-sizing: border-box;
-  overflow-x: auto;
 }
 .couponitem {
   width: 690px;

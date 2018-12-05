@@ -11,8 +11,8 @@
     <div class="Detalis-title">
       <div class="title-left">
         <p class="leftName">{{dataList.name}}</p>
-        <p class="leftjiage">价值：
-          <span>¥{{dataList.oldPrice | formatFee}}</span> &nbsp;&nbsp;代金券
+        <p class="leftjiage">
+          <span>¥{{dataList.oldPrice | formatFee}}</span> &nbsp;代金券
         </p>
       </div>
       <div class="title-right">
@@ -139,7 +139,7 @@ export default {
       getGoodsDetail(user, this.$route.params.id).then((res) => {
         if (res.code === ERR_OK) {
           this.dataList = res.data
-          this.dataList.useRule = this.dataList.useRule.split(',')
+          this.dataList.useRule = this.dataList.useRule.split('/')
         }
       })
     },

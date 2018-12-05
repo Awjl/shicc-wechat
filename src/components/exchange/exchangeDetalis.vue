@@ -209,15 +209,16 @@ export default {
   color: #fff;
 }
 .box-title {
-  width: 95%;
+  width: 90%;
   margin: 0 auto;
-  text-align: center;
-  font-size: 30px;
-  color: #4a4a4a;
-  border-bottom: 1px solid #dddd;
+  padding: 30px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 30px;
+  text-align: center;
+  color: #4a4a4a;
+  border-bottom: 1px solid #dcdcdc;
 }
 .box-title span {
   width: 100px;
@@ -243,14 +244,21 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 .exchangeDetalisname {
   font-size: 28px;
   color: #4a4a4a;
   line-height: 35px;
   letter-spacing: 1px;
-  text-align: center;
+  text-align: left;
+  padding: 0 30px;
+
+}
+.exchangeDetalisname >p {
+  font-size: 24px;
+    color: #9b9b9b;
+
 }
 .name p {
   font-size: 20px;
@@ -260,10 +268,9 @@ img {
 }
 .exchangeDetalistitle-jiage {
   margin-top: 19px;
+  padding: 0 30px;
 }
-.exchangeDetalistitle-jiage > span {
-  /* display: block; */
-}
+
 .exchangeDetalistitle-jiage > .new {
   font-size: 28px;
   color: #ed6969;
@@ -306,7 +313,7 @@ img {
 }
 .detalisLine {
   width: 100%;
-  height: 2px;
+  height: 1px;
   background: #dcdcdc;
   margin-top: 20px;
 }

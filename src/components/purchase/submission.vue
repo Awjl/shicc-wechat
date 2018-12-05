@@ -93,8 +93,8 @@
               </div>
               <div class="couponitem-footer">
                 <span>{{item.title}}</span>
-                <span v-if="index == typeindex"><img src="./iconAct.png" alt=""></span>
-                <span v-else><img src="./icon.png" alt=""></span>
+                <img src="./iconAct.png" alt="" v-if="index == typeindex">
+                <img src="./icon.png" alt="" v-else>
               </div>
             </div>
           </div>
@@ -144,7 +144,8 @@ export default {
         num: 1,
         total: 1,
         userId: '',
-        couponId: ''
+        couponId: '',
+        count: ''
       },
       items: {},
       showbox: false
@@ -166,6 +167,7 @@ export default {
         if (res.code === ERR_OK) {
           console.log(res.data)
           this.shoping = res.data
+          this.shoping.count = res.data.newPrice
           this.shoping.num = 1
           this.shoping.total = this.shoping.num * this.shoping.newPrice
           this.sum = this.shoping.newPrice
@@ -190,6 +192,7 @@ export default {
     },
     _changeAddressById() {
       this.shoping.userId = this.UserID
+      console.log(this.shoping)
       changeAddressById(this.shoping).then((res) => {
         if (res.code === ERR_OK) {
           createWechatPayOrder(window.location.href.split('#')[0], this.UserID, res.data).then(res => {
@@ -415,7 +418,7 @@ img {
 }
 .box-item {
   width: 100%;
-  height: 70%;
+  height: 800px;
   background: #f2f2f2;
   position: absolute;
   bottom: 0;
@@ -446,6 +449,8 @@ img {
 }
 .couponlist {
   width: 100%;
+  height: 718px;
+  overflow-y: auto;
   padding: 30px;
   box-sizing: border-box;
   background: #f2f2f2;
@@ -455,7 +460,7 @@ img {
   height: 200px;
   border-radius: 10px;
   margin-bottom: 22px;
-  overflow: hidden;
+  overflow-y: auto;
   /* border: 1px solid #ddd; */
 }
 .couponitemactive {
@@ -522,6 +527,5 @@ img {
 .couponitem-footer img {
   width: 32px;
   height: 32px;
-  margin-top: 9px;
 }
 </style>

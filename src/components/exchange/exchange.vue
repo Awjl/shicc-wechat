@@ -384,5 +384,6 @@ img {
   text-align: center;
   height: 40px;
   line-height: 40px;
+  color: #ddd;
 }
 </style>

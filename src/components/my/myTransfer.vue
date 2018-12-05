@@ -74,8 +74,8 @@
     <div class="wishNone" v-if="dataList.length == 0">
       - 暂无代金券信息 -
     </div>
-    <div class="OverBox" v-if="showTrue">
-      <div class="Box-one">
+    <div class="TOverBox" v-if="showTrue">
+      <div class="TBox-one">
         <div class="boxCode-title">
           兑换码：{{useCode.couponCode}}
         </div>
@@ -178,7 +178,7 @@ export default {
           this.showTrue = true
           // console.log(res.data)
           this.useCode = res.data
-          this.useCode.useRule = this.useCode.useRule.split(',')
+          this.useCode.useRule = this.useCode.useRule.split('/')
         }
       })
     },
@@ -269,12 +269,12 @@ img {
 }
 .line {
   width: 100%;
-  height: 2px;
+  height: 1px;
   background: #dcdcdc;
 }
 .line5 {
   width: 100%;
-  height: 2px;
+  height: 1px;
   background: #dcdcdc;
 }
 .order-nav {
@@ -384,7 +384,7 @@ img {
   border: 2px solid #59c2fa;
   color: #59c2fa;
 }
-.OverBox {
+.TOverBox {
   position: fixed;
   top: 0;
   left: 0;
@@ -396,7 +396,7 @@ img {
   justify-content: center;
   align-items: center;
 }
-.Box-one {
+.TBox-one {
   width: 530px;
   height: 700px;
   background: #fff;

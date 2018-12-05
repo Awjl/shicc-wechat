@@ -284,7 +284,7 @@ img {
   font-size: 24px;
   color: #4a4a4a;
   letter-spacing: 1.45px;
-    overflow: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -322,5 +322,6 @@ img {
   text-align: center;
   height: 40px;
   line-height: 40px;
+  color: #ddd;
 }
 </style>

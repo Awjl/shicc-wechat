@@ -79,7 +79,7 @@ export default {
   },
   created() {
     this._getAllGoodsOrder()
-        vxconfig(window.location.href.split('#')[0])
+    vxconfig(window.location.href.split('#')[0])
 
   },
   computed: {
@@ -118,7 +118,11 @@ export default {
       createWechatPayOrder(window.location.href.split('#')[0], this.UserID, id).then(res => {
         if (res.code === ERR_OK) {
           var self = this
-          // console.log(res)
+          if (res.data.msg != "") {
+            this._getAllGoodsOrder()
+            alert(res.data.msg)
+            return
+          }
           wx.config({
             debug: false,
             appId: res.data.appId,
@@ -307,26 +311,5 @@ img {
   border: 2px solid #59c2fa;
   color: #59c2fa;
 }
-.OverBox {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(000, 000, 000, 0.5);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.Box-one {
-  width: 580px;
-  height: 800px;
-  background: #fff;
-  border-radius: 10px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 </style>

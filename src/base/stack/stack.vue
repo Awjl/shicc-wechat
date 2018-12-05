@@ -285,7 +285,7 @@ export default {
       }
       if (this.inStack(index, currentPage)) {
         let perIndex = index - currentPage > 0 ? index - currentPage : index - currentPage + length
-        style['opacity'] = '0.7'
+        style['opacity'] = '0.8'
         style['transform'] = 'translate3D(0,0,' + -1 * 50 * (perIndex - this.offsetRatio) + 'px' + ')'
         style['zIndex'] = visible - perIndex
         // style['box-shadow'] = '0px 5px 0px #fff'
@@ -373,7 +373,7 @@ export default {
   justify-content: space-between;
 }
 .stackTitle {
-  font-size: 24px;
+  font-size: 28px;
   color: #4a4a4a;
   letter-spacing: 1.45px;
   margin-bottom: 10px;
@@ -381,7 +381,7 @@ export default {
 .stackleft {
   text-align: left;
   line-height: 35px;
-  font-size: 18px;
+  font-size: 20px;
   color: #9b9b9b;
   letter-spacing: 1.09px;
 }
@@ -396,9 +396,8 @@ export default {
   height: 40px;
 }
 .stackRight p {
-  font-size: 14px;
+  font-size: 20px;
   color: #ed6969;
-  letter-spacing: 0.85px;
 }
 .stack-container li.move-back {
   /* http://matthewlein.com/ceaser/ */

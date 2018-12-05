@@ -20,7 +20,7 @@ export default {
     }
   },
   created() {
-    // this._defaultLogin()
+    this._defaultLogin()
   },
   methods: {
     _defaultLogin() {

@@ -5,7 +5,6 @@
         type="text"
         placeholder="收货人姓名"
         v-model="data.name"
-        @blur="OnBlurName()"
       >
       <span>{{nameERR}}</span>
     </div>
@@ -30,7 +29,6 @@
         type="text"
         placeholder="详细地址（街道、楼牌号等）"
         v-model="data.address"
-        @blur="OnBluradd()"
       >
       <span>{{addErr}}</span>
     </div>
@@ -59,10 +57,10 @@ export default {
   data() {
     return {
       addresStater: false,
-      content: '',
-      nameERR: '',
-      addressERR: '',
-      addErr: '',
+      content: '必填',
+      nameERR: '必填',
+      addressERR: '必填',
+      addErr: '必填',
       data: {
         address: '',
         mobile: '',
@@ -149,8 +147,6 @@ export default {
         } else {
           this.content = '格式不正确'
         }
-      } else {
-        this.content = '必填'
       }
     },
     OnBlurName() {
@@ -168,11 +164,11 @@ export default {
       }
     },
     btn() {
-      if (this.data.city == '请选择省份、城市、县区') {
-        this.addressERR = '必填'
-      } else {
-        this.addressERR = ''
-      }
+      // if (this.data.city == '请选择省份、城市、县区') {
+      //   this.addressERR = '必填'
+      // } else {
+      //   this.addressERR = ''
+      // }
       if (this.$route.params.id === 'null') {
         if (this.data.city != '请选择省份、城市、县区' && this.data.mobile != '' && this.data.name != '' && this.data.address != '' && this.data.address != '') {
           this._addAddress()
@@ -216,7 +212,7 @@ export default {
   right: 0;
   height: 93px;
   line-height: 93px;
-  color: red;
+  color: #C6C6C6;
 }
 .addaddreslist-inp input {
   width: 100%;
