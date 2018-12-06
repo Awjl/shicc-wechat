@@ -148,7 +148,8 @@ export default {
         count: ''
       },
       items: {},
-      showbox: false
+      showbox: false,
+      quanprice: ''
     }
   },
   created() {
@@ -217,7 +218,7 @@ export default {
                   success: function (res) {
                     if (res.errMsg == "chooseWXPay:ok") {
                       self.$router.push({
-                        path: '/My/MyOrder'
+                        path: '/My/MyTransfer'
                       })
                     }
                   },
@@ -241,7 +242,11 @@ export default {
     showboxtrue() {
       this.showbox = true
       this.shoping.couponId = ''
-      this.numquan = this.items.availableNumber + '个可用'
+      if ( this.items.availableNumber === 0) {
+        this.numquan = '暂无可用'
+      } else {
+        this.numquan = this.items.availableNumber + '个可用'
+      }
       this.shoping.total = this.shoping.newPrice * this.shoping.num
       this.typeindex = null
       this.num = this.shoping.num
@@ -256,6 +261,8 @@ export default {
     },
     trueover() {
       this.showbox = false
+      this.Allsum = this.Allsum - this.quanprice
+      this.shoping.total = this.Allsum
     },
     subclick() {
       if (this.shoping.num === 1) {
@@ -279,12 +286,10 @@ export default {
       this._getAllCoupon(this.shoping.total)
     },
     activetrue(item, index) {
-        this.typeindex = index
-        this.Allsum = this.Allsum - item.price
-        this.shoping.total = this.Allsum
-        this.shoping.couponId = item.id
-        this.numquan = item.name
-        console.log(this.shoping)
+      this.numquan = `- ${item.price/100}元`
+      this.quanprice = item.price
+      this.typeindex = index
+      this.shoping.couponId = item.id
     }
   }
 }
@@ -432,16 +437,16 @@ img {
   align-items: center;
   font-size: 30px;
 }
-.box-title span {
-  display: block;
+.box-title>span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100px;
-  height: 40px;
   font-size: 20px;
-  text-align: center;
-  line-height: 40px;
   border: 2px solid #59c2fa;
   color: #59c2fa;
   border-radius: 10px;
+  box-sizing: border-box;
 }
 .box-title span.box-true {
   background: #59c2fa;

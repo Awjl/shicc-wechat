@@ -164,7 +164,6 @@ export default {
       this.data.userId = this.UserID
       console.log(this.data)
       if (this.data.mobile && this.data.name && this.data.note && this.data.topic && this.data.num && this.data.email && this.data.bookDate) {
-        console.log("213")
         this._bookMeeting(this.data)
       } else {
         alert("全部为必填项")
@@ -225,6 +224,7 @@ img {
 .from-item {
   display: flex;
   justify-content: space-between;
+  /* align-items: center; */
 }
 .from-item input,
 .from-item textarea {
@@ -245,9 +245,9 @@ textarea::-webkit-input-placeholder {
   font-size: 20px;
 }
 .from-item label {
-  padding-top: 10px;
   font-size: 24px;
   color: #9b9b9b;
+  padding-top: 5px;
 }
 .from-item input {
   height: 50px;

@@ -185,10 +185,9 @@ export default {
     _queryParkingCost(yuoID) {
       queryParkingCost(this.carList.userId, this.carList.number, yuoID).then(res => {
         if (res.code === 0) {
-          // console.log('费用查询=================================================================')
-          // console.log(res.data)
           this.showbox = false
           this.carList = res.data
+          console.log(res.data)
         }
       })
     },

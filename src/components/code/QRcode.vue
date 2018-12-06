@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="goQRover()">手动核销</div>
+    <!-- <div @click="goQRover()">手动核销</div> -->
   </div>
 </template>
 <script>

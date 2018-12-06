@@ -9,7 +9,7 @@
       <div class="exchangeDetalistitle-jiage">
         <span class="new" v-if="type === '1'">{{listImg.pointGoods.v1NewPoint}}积分</span>
         <span class="new" v-else>{{listImg.pointGoods.v2NewPoint}}积分</span>
-        <span class="old">￥{{listImg.pointGoods.oldPoint}}元</span>
+        <span class="old">￥{{listImg.pointGoods.oldPoint}}</span>
       </div>
     </div>
     <div class="line"></div>
@@ -203,6 +203,7 @@ export default {
   border: 2px solid #59c2fa;
   border-radius: 10px;
   margin-right: 20px;
+  color: #59c2fa;
 }
 .box-width ul li.active {
   background: #59c2fa;
@@ -227,8 +228,9 @@ export default {
   justify-content: center;
   align-items: center;
   border: 2px solid #ddd;
-  font-size: 26px;
   border-radius: 20px;
+  box-sizing: border-box;
+  font-size: 20px;
 }
 img {
   width: 100%;
@@ -309,7 +311,7 @@ img {
 }
 .iph-title {
   font-size: 24px;
-  color: #222222;
+  color: #4a4a4a;
 }
 .detalisLine {
   width: 100%;

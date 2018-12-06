@@ -142,7 +142,7 @@ export default {
               success: function (res) {
                 if (res.errMsg == "chooseWXPay:ok") {
                   self.$router.push({
-                    path: '/My/MyOrder'
+                    path: '/My/MyTransfer'
                   })
                 }
               },
@@ -192,6 +192,9 @@ img {
   width: 100%;
   height: 2px;
   background: #dcdcdc;
+}
+.order {
+  padding-bottom: 110px;
 }
 .line5 {
   width: 100%;

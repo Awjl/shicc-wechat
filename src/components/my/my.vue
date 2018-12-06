@@ -2,9 +2,9 @@
   <div class="my">
     <div class="my-bg">
       <img :src="imgbg" alt="">
-      <div class="my-notic" @click="goNotice">
+      <div class="my-notic" @click="goNotice" >
         <img src="./myicon/notic.png" alt="">
-        <span>{{noticeNum}}</span>
+        <span v-if="noticeNum != 0">{{noticeNum}}</span>
       </div>
       <div class="my-name">
         <div class="my-title" v-if="UserID">

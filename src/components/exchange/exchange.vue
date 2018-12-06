@@ -72,7 +72,7 @@
               class="new"
               v-else
             >{{item.v2NewPoint}}积分</span>
-            <span class="old">￥{{item.oldPoint}}元</span>
+            <span class="old">￥{{item.oldPoint}}</span>
           </div>
         </div>
       </div>

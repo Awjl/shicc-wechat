@@ -27,6 +27,9 @@
         确定
       </div>
     </div>
+    <div class="integralListbox" v-show='!noticeList'>
+      - 暂无通知记录 -
+    </div>
   </div>
 </template>
 
@@ -126,6 +129,14 @@ export default {
   height: 80px;
   line-height: 80px;
   text-align: center;
+}
+.integralListbox {
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  height: 200px;
+  line-height: 200px;
+  color: #ddd;
 }
 .NoticeItemState span{
   font-size: 20px;

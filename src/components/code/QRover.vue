@@ -3,34 +3,47 @@
     <div class="QRover-box">
       <div class="QRover-tile">核销代金券</div>
       <div class="QRitem">
-        <span>订&nbsp;&nbsp;&nbsp;单&nbsp;&nbsp;&nbsp;&nbsp;号：</span>{{obj.orderCode}}
+        <span>订&nbsp;&nbsp;&nbsp;&nbsp;单&nbsp;&nbsp;&nbsp;&nbsp;号：</span>
+        <p>{{obj.orderCode}}</p>
       </div>
       <div class="QRitem">
-        <span>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>{{obj.name}}
+        <span>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
+        <p>{{obj.name}}</p>
       </div>
       <div class="QRitem">
-        <span>券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span>{{obj.couponCode}}
+        <span>券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span>
+        <p>{{obj.couponCode}}</p>
       </div>
       <div class="QRitem">
-        <span>用户手机号：</span>{{obj.mobile}}
+        <span>用户手机号&nbsp;：</span>
+        <p>{{obj.mobile}}</p>
       </div>
       <div class="QRitem">
-        <span>原&nbsp;&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;&nbsp;格：</span>{{obj.oldPrice}}
+        <span>原&nbsp;&nbsp;&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;&nbsp;格：</span>
+        <p>{{obj.oldPrice}}</p>
       </div>
       <div class="QRitem">
-        <span>现&nbsp;&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;&nbsp;格：</span>{{obj.newPrice}}
+        <span>现&nbsp;&nbsp;&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;&nbsp;格：</span>
+        <p>{{obj.newPrice}}</p>
       </div>
       <div class="QRitem">
-        <span>有&nbsp;&nbsp;&nbsp;效&nbsp;&nbsp;&nbsp;&nbsp;期：</span>{{obj.termOfValidity}}
+        <span>有&nbsp;&nbsp;&nbsp;&nbsp;效&nbsp;&nbsp;&nbsp;&nbsp;期：</span>
+        <p>{{obj.termOfValidity}}
+        </p>
       </div>
       <div class="QRitem">
-        <span>规&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则：</span>{{obj.useRule}}
+        <span>规&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则：</span>
+        <p>{{obj.useRule}}</p>
       </div>
       <div class="QRitem">
-        <span>使&nbsp;用&nbsp;&nbsp;时&nbsp;间：</span>{{obj.useTime}}
+        <span>使&nbsp;用&nbsp;&nbsp;&nbsp;时&nbsp;间：</span>
+        <p>{{obj.useTime}}</p>
       </div>
       <div class="QRbtn">
-        <div class="true" @click="_writeOffVoucher()">
+        <div
+          class="true"
+          @click="_writeOffVoucher()"
+        >
           确认
         </div>
         <div @click="closeWx">
@@ -112,13 +125,16 @@ export default {
   display: flex;
   margin: 20px 0;
   font-size: 30px;
-  /* justify-content: center; */
   align-items: center;
+  width: 690px;
 }
 .QRitem span {
   display: block;
-  width: 30%;
+  width: 200px;
   font-size: 26px;
+}
+.QRitem> p {
+  width: 450px;
 }
 .QRbtn {
   display: flex;

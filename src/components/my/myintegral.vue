@@ -15,9 +15,8 @@
         V2会员
       </div>
     </div>
-    <div class="title">
+    <div class="integraltitleAll">
       <div class="integral-text">兑换记录</div>
-      <div class="he20"></div>
     </div>
     <div class="integralList" v-for="(item, index) in listData" :key="index">
       <div class="integralItem">
@@ -44,7 +43,7 @@
           快递单号 {{item.courierNumber}}
         </div>
         <div class="kuaidi" v-else>
-          暂无信息
+          暂无物流信息
         </div>
       </div>
     </div>
@@ -165,6 +164,9 @@ img {
   font-size: 20px;
   color: #ed6969;
 }
+.integraltitleAll {
+  padding: 20px 0;
+}
 .integral-text {
   width: 140px;
   height: 40px;
@@ -174,7 +176,7 @@ img {
   text-align: center;
   border-radius: 0 100px 100px 0;
   font-size: 24px;
-  margin: 20px 0;
+  /* margin: 20px 0; */
 }
 .integralList {
   background: #fff;
@@ -187,9 +189,9 @@ img {
   width: 100%;
   text-align: center;
   background: #fff;
-  height: 100px;
-  line-height: 100px;
-  color: #999;
+  height: 200px;
+  line-height: 200px;
+  color: #ddd;
 }
 .integralTitle {
   width: 100%;

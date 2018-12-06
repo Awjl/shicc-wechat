@@ -28,7 +28,7 @@
             {{data.point}}积分
           </div>
           <div class="num">
-            <span>X{{num}}</span>
+            <span>x{{num}}</span>
           </div>
         </div>
       </div>
@@ -167,7 +167,9 @@ img {
   width: 100%;
   height: 136px;
   text-align: center;
-  background: #dcdcdc;
+  background: #f2f2f2;
+  font-size: 24px;
+  color: #9d9d9d;
 }
 .addresactive {
   line-height: 136px;

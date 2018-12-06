@@ -9,7 +9,7 @@
     </div>
     <div class="modifyList">
       <div class="modifyItem">
-        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span> <input type="text" placeholder="请输入昵称" v-model="user.nickname">
+        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span> <input type="text" placeholder="请输入昵称" v-model="user.nickname">
       </div>
       <div class="line"></div>
       <div class="modifyItem">
@@ -17,7 +17,7 @@
       </div>
       <div class="line"></div>
       <div class="modifyItem">
-        <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+        <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
         <div class="sex">
           <span @click="sexgentlemen"><img :src="trueiocn" v-if="user.sex == 1"> <img :src="weiiocn" v-else>男</span>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -265,6 +265,8 @@ img {
 .modifyItem input {
   width: 500px;
   outline: none;
+  color: #4a4a4a;
+  font-size: 28px;
 }
 .sex {
   display: flex;
@@ -277,6 +279,8 @@ img {
 .sex span {
   display: flex;
   align-items: center;
+  font-size: 28px;
+  color: #4a4a4a;
 }
 .submission-btn {
   position: fixed;

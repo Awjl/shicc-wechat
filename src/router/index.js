@@ -94,6 +94,14 @@ const router = new Router({
             title: '个人积分'
           }
         },
+        {
+          path: '/My/MyTransfer',
+          component: MyTransfer,
+          name: 'MyTransfer',
+          meta: {
+            title: '代金券'
+          }
+        },
       ]
     },
     {
@@ -166,14 +174,6 @@ const router = new Router({
       name: 'MyWish',
       meta: {
         title: '心愿单'
-      }
-    },
-    {
-      path: '/MyTransfer',
-      component: MyTransfer,
-      name: 'MyTransfer',
-      meta: {
-        title: '代金券'
       }
     },
     {

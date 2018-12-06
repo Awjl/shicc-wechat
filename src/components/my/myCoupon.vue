@@ -11,7 +11,7 @@
         已过期
       </div>
     </div>
-    <div class="couponlist">
+    <div class="couponlistAll">
       <div class="couponitem" v-for="(item, index) in items" :key="index">
         <div class="couponitem-title" :class="{activebg: item.state == 2 || item.state == 3}">
           <div class="couponitem-new" v-if="item.type === 1">
@@ -136,7 +136,7 @@ export default {
   color: #59c2fa;
   box-sizing: border-box;
 }
-.couponlist {
+.couponlistAll {
   width: 100%;
   padding: 30px;
   box-sizing: border-box;

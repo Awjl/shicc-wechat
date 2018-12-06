@@ -408,7 +408,7 @@ img {
   overflow-x: auto;
 }
 .boxCode-title{
-  margin-top: 100px;
+  margin-top: 50px;
   font-size: 28px;
   color: #161616;
   height: 35px;
@@ -468,7 +468,7 @@ img {
   border-bottom: 1px solid #ddd;
 }
 .giveUser-inp {
-  width: 75%;
+  width: 480px;
   height: 50px;
   line-height: 50px;
   margin: 80px auto;
@@ -477,8 +477,8 @@ img {
 }
 .giveUser-inp label {
   display: block;
-  width: 150px;
-  text-align: center;
+  font-size: 24px;
+  width: 100px;
 }
 .giver-time {
   width: 70%;
@@ -487,10 +487,12 @@ img {
   line-height: 50px;
   margin: 80px auto;
 }
-.giveUser-inp input {
+.giveUser-inp>input {
   height: 60px;
   border-bottom: 1px solid #ddd;
   outline: none;
+  font-size: 24px;
+  width:380px;
 }
 .give-btn {
   width: 70%;

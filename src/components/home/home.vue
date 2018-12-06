@@ -62,7 +62,7 @@ import { setUserID } from 'common/js/auth'
 export default {
   data() {
     return {
-      img: './static/icon/service-icon.png',
+      img: './static/icon/service-i.png',
       listImg: [],
       hallList: [],
       footList: [],

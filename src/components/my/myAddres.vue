@@ -249,16 +249,8 @@ ul {
   line-height: 136px;
   text-align: center;
   background: #fff;
-  font-size: 22px;
-  color: #000000;
+  font-size: 24px;
+  color: #9d9d9d;
   letter-spacing: 0.61px;
 }
-/* .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 120px;
-  background: #f2f2f2;
-} */
 </style>
