@@ -121,7 +121,7 @@ export default {
     if (this.UserID) {
       this._getUserLevel(this.UserID)
     } else {
-      this.showLevel = false 
+      this.showLevel = false
     }
     this._getV1PointGoods(this.pn, this.pg)
     vxconfig(window.location.href.split('#')[0])
@@ -323,9 +323,10 @@ img {
   border-bottom: 4px solid #59c2fa;
   box-sizing: border-box;
 }
+
 .exchangelist {
   width: 100%;
-  padding: 40px;
+  padding:0 40px 40px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
