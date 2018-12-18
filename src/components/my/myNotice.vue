@@ -27,7 +27,7 @@
         确定
       </div>
     </div>
-    <div class="integralListbox" v-show='!noticeList'>
+    <div class="integralListbox" v-if='noticeList.length == 0'>
       - 暂无通知记录 -
     </div>
   </div>
@@ -133,7 +133,6 @@ export default {
 .integralListbox {
   width: 100%;
   text-align: center;
-  background: #fff;
   height: 200px;
   line-height: 200px;
   color: #ddd;

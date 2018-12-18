@@ -26,10 +26,10 @@ export default {
     _defaultLogin() {
       defaultLogin().then((res) => {
         if (res.code === 0) {
-          // this.$store.commit('SET_USERID', res.data)
-          // setUserID(res.data)
-          this.$store.commit('SET_USERID', 51)
-          setUserID(51)
+          this.$store.commit('SET_USERID', res.data)
+          setUserID(res.data)
+          // this.$store.commit('SET_USERID', 53)
+          // setUserID(53)
         }
       })
     },
