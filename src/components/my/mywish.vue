@@ -9,7 +9,7 @@
           <p>{{item.name}}</p>
           <p>{{item.useTime}} <span v-if="item.isBespeak === 1">需要预约</span> <span v-else>无需预约</span></p>
           <div class="new">
-            <div>￥{{item.newPrice}}</div>
+            <div>￥{{item.newPrice/100}}</div>
             <div class="newDetalis" @click="goDetalis(item.goodsId)">查看详情</div>
           </div>
         </div>

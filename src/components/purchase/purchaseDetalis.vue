@@ -65,8 +65,7 @@
     <div class="text-title">
       {{dataList.name}}
     </div>
-    <div class="text-center">
-      {{dataList.introduce}}
+    <div class="text-center" v-html="dataList.introduce">
     </div>
     <div class="text-img">
       <img :src="str" alt="" v-for="(str, index) in dataList.introduceUrls" :key="index">
