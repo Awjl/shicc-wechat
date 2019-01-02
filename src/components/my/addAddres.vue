@@ -170,11 +170,11 @@ export default {
       //   this.addressERR = ''
       // }
       if (this.$route.params.id === 'null') {
-        if (this.data.city != '请选择省份、城市、县区' && this.data.mobile != '' && this.data.name != '' && this.data.address != '' && this.data.address != '') {
+        if (this.data.city != '请选择省份、城市、县区' && this.nameERR == '必填' && this.data.name != '' && this.content == '必填' && this.data.mobile != '' && this.addErr == '必填' &&  this.data.address != '') {
           this._addAddress()
         }
       } else {
-        if (this.data.city != '请选择省份、城市、县区' && this.data.mobile != '' && this.data.name != '' && this.data.address != '' && this.data.address != '') {
+        if (this.data.city != '请选择省份、城市、县区' && this.nameERR == '必填' && this.data.name != '' && this.content == '必填' && this.data.mobile != '' && this.addErr == '必填' &&  this.data.address != '') {
           this._changeAddressById()
         }
       }

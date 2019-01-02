@@ -1,20 +1,10 @@
 <template>
   <div class="packing">
     <div class="bg">
-      <img
-        src="./pack.png"
-        alt=""
-      >
+      <img src="./pack.png" alt>
       <div class="bg-text">
-        <input
-          type="text"
-          placeholder="请输入车牌号"
-          v-model="carList.number"
-          disabled="disabled"
-        >
-        <div class="packingtext">
-          上海国际会议中心停车场
-        </div>
+        <input type="text" placeholder="请输入车牌号" v-model="carList.number" disabled="disabled">
+        <div class="packingtext">上海国际会议中心停车场</div>
       </div>
     </div>
     <div class="packinglist">
@@ -36,10 +26,7 @@
       <div class="he20"></div>
       <div class="packingline"></div>
       <div class="he20"></div>
-      <div
-        class="packinglistitem"
-        @click="showBoxStata"
-      >
+      <div class="packinglistitem" @click="showBoxStata">
         <span>抵用券：</span>
         <span>{{numquan}}</span>
       </div>
@@ -48,47 +35,28 @@
       <div class="he20"></div>
       <div class="he20"></div>
       <div class="sumpacking">
-        <div>小计<span class="redcolor redsum">￥{{carList.due/100}}</span></div>
+        <div>
+          小计
+          <span class="redcolor redsum">￥{{carList.due/100}}</span>
+        </div>
       </div>
     </div>
-    <div class="packing-btn" v-if="carList.state === 1">
-      暂无订单
-    </div>
-    <div class="packing-btn" @click="goPayPacking" v-else>
-      立即支付
-    </div>
-    <div
-      class="packingBox"
-      v-if="showPacking"
-    >
+    <div class="packing-btn" v-if="carList.state === 1">暂无订单</div>
+    <div class="packing-btn" @click="goPayPacking" v-else>立即支付</div>
+    <div class="packingBox" v-if="showPacking">
       <div class="packingBoxBind">
         <div class="packingBoxBindTitle">绑定车牌号</div>
         <div class="packingBoxBindInp">
-          <input
-            type="text"
-            placeholder="请输入车牌号"
-            v-model="carList.number"
-          >
+          <input type="text" placeholder="请输入车牌号" v-model="carList.number">
         </div>
-        <div
-          class="packingBoxBindBtn"
-          @click="_bindPlateNumber"
-        >
-          绑定
-        </div>
+        <div class="packingBoxBindBtn" @click="_bindPlateNumber">绑定</div>
       </div>
     </div>
-    <div
-      class="box"
-      v-if='showbox'
-    >
+    <div class="box" v-if="showbox">
       <div class="box-item">
         <div class="box-title">
-          <span @click='quxiao'>取消</span> 选择优惠券
-          <span
-            class="box-true"
-            @click='trueover'
-          >确定</span>
+          <span @click="quxiao">取消</span> 选择优惠券
+          <span class="box-true" @click="trueover">确定</span>
         </div>
         <div class="line"></div>
         <div class="couponlist">
@@ -100,20 +68,19 @@
             :class="{couponitemactive: index == typeindex }"
           >
             <div class="couponitem-title">
-              <div
-                class="couponitem-new"
-                v-if="item.type === 2"
-              >
+              <div class="couponitem-new" v-if="item.type === 2">
                 <span>P</span>停车券
               </div>
               <div class="couponitem-name">
                 <p>{{item.name}}</p>
-                <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
+                <p>{{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
               </div>
             </div>
             <div class="couponitem-footer">
-              {{item.title}}
-            </div>
+              <span>{{item.title}}</span>
+                <img src="./iconAct.png" alt="" v-if="index == typeindex">
+                <img src="./icon.png" alt="" v-else>
+              </div>
           </div>
         </div>
       </div>
@@ -122,8 +89,13 @@
 </template>
 
 <script>
-import { getAllCoupon } from 'api/user'
-import { parkLogin, bindPlateNumber, queryParkingCost, payCost } from 'api/login'
+import { getAllCoupon } from "api/user";
+import {
+  parkLogin,
+  bindPlateNumber,
+  queryParkingCost,
+  payCost
+} from "api/login";
 export default {
   data() {
     return {
@@ -132,7 +104,7 @@ export default {
       items: [],
       typeindex: null,
       numquan: "暂无优惠券",
-      youhuiId: '',
+      youhuiId: "",
       carList: {
         billId: null,
         billState: null,
@@ -152,89 +124,93 @@ export default {
         unpaid: null,
         userId: null
       }
-    }
+    };
   },
   created() {
-    this._parkLogin()
+    this._parkLogin();
   },
   methods: {
     activetrue(item, index, name) {
-      this.typeindex = index
-      this.youhuiId = item
-      this.numquan = name
+      this.typeindex = index;
+      this.youhuiId = item;
+      this.numquan = name;
     },
     showBoxStata() {
-      this.showbox = true
+      this.showbox = true;
     },
     quxiao() {
       this.showbox = false
-      this.youhuiId = ''
-      this.numquan = ''
+      this.youhuiId = ""
+      this.numquan = this.items.length + "个优惠券"
+      this.typeindex = 0
       this._queryParkingCost(this.youhuiId)
     },
     trueover() {
-      this._queryParkingCost(this.youhuiId)
+      if (this.youhuiId) {
+        this._queryParkingCost(this.youhuiId);
+      } else {
+        this.showbox = false;
+      }
     },
     goPayPacking() {
       payCost(this.carList.userId).then(res => {
         if (res.code === 0) {
-          window.location.href = res.data
+          window.location.href = res.data;
         }
-      })
+      });
     },
     _queryParkingCost(yuoID) {
-      queryParkingCost(this.carList.userId, this.carList.number, yuoID).then(res => {
-        if (res.code === 0) {
-          this.showbox = false
-          this.carList = res.data
-          console.log(res.data)
+      queryParkingCost(this.carList.userId, this.carList.number, yuoID).then(
+        res => {
+          if (res.code === 0) {
+            this.showbox = false;
+            this.carList = res.data;
+            console.log(res.data);
+          }
         }
-      })
+      );
     },
     _getAllCoupon(id) {
-      getAllCoupon(id, 1, 2).then((res) => {
+      getAllCoupon(id, 1, 2).then(res => {
         if (res.code === 0) {
-          // console.log('查询停车券-----------------------------------------------------------------')
-          // console.log(res.data)
           if (res.data.length > 0) {
-            this.numquan = res.data.length + '个优惠券'
-            this.items = res.data
+            this.numquan = res.data.length + "个优惠券";
+            this.items = res.data;
           }
         }
-      })
+      });
     },
     _parkLogin() {
-      parkLogin(window.location.href.split('=')[1]).then(res => {
+      //oWneGjsKZqi9nLceVHYeF1Y1qGSI
+      parkLogin(window.location.href.split("=")[1]).then(res => {
+      // parkLogin('oWneGjj6FXnD30ZcPCdpbDLAKLl0').then(res => {
         if (res.code === 0) {
-          // console.log("停车----------------------------------")
-          // console.log(res.data)
           if (res.data.code === 500107) {
             this.$router.push({
-              path: '/Register/packing'
-            })
+              path: "/Register/packing"
+            });
           }
           if (res.data.code === 201) {
-            this.showPacking = true
-            this.carList = res.data.msg
+            this.showPacking = true;
+            this.carList = res.data.msg;
           }
           if (res.data.code === 202) {
-            this.carList = res.data.msg
-            this._getAllCoupon(this.carList.userId)
+            this.carList = res.data.msg;
+            this._getAllCoupon(this.carList.userId);
           }
         }
-      })
+      });
     },
     _bindPlateNumber() {
-      // console.log()
       bindPlateNumber(this.carList.userId, this.carList.number).then(res => {
         if (res.code === 0) {
-          this.showPacking = false
-          this._parkLogin()
+          this.showPacking = false;
+          this._parkLogin();
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style>
@@ -425,7 +401,7 @@ span.redsum {
   border: 1px solid #ddd;
 }
 .couponitemactive {
-  box-shadow: 0 0 10px 10px #ed6969;
+  box-shadow: 0 0 11px 0px #b5b5b5;
 }
 .couponitem-title {
   width: 100%;
@@ -475,11 +451,18 @@ span.redsum {
   margin-left: 70px;
 }
 .couponitem-footer {
-  padding-left: 40px;
+  padding:0 40px;
   height: 50px;
-  line-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 18px;
   color: #9b9b9b;
   box-sizing: border-box;
+  background: #fff;
+}
+.couponitem-footer img {
+  width: 32px;
+  height: 32px;
 }
 </style>

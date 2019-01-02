@@ -154,8 +154,7 @@ export default {
   },
   created() {
     this._getGoodsOrderDetail()
-        vxconfig(window.location.href.split('#')[0])
-
+    vxconfig(window.location.href.split('#')[0])
   },
   computed: {
     ...mapGetters([
@@ -255,6 +254,7 @@ export default {
     },
     quxiao() {
       this.showbox = false
+      this.numquan = '暂无可用'
     },
     sumBtn() {
       this._changeAddressById()

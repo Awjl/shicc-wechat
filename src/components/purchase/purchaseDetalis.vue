@@ -157,13 +157,13 @@ export default {
       if (this.UserID) {
         if (this.dataList.isLove === 1) {
           this.dataList.isLove = null
-          outLove(this.user, id, 2).then((res) => {
+          outLove(this.UserID, id, 2).then((res) => {
             if (res.code === ERR_OK) {
             }
           })
         } else {
           this.dataList.isLove = 1
-          inLove(this.user, id, 2).then((res) => {
+          inLove(this.UserID, id, 2).then((res) => {
             if (res.code === ERR_OK) {
             }
           })
