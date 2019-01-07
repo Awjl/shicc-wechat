@@ -6,7 +6,7 @@
 
 <script>
 import { defaultLogin } from 'api/homeapi'
-import { setUserID } from 'common/js/auth'
+import { setUserID, setOpen, getUserID } from 'common/js/auth'
 
 export default {
   provide() {
@@ -16,15 +16,17 @@ export default {
   },
   data() {
     return {
-      isRouterAlive: true
+      isRouterAlive: true,
+      open: window.location.href.split("=")[1]
     }
   },
   created() {
     this._defaultLogin()
+    setOpen(this.open)
   },
   methods: {
     _defaultLogin() {
-      defaultLogin().then((res) => {
+      defaultLogin(this.open).then((res) => {
         if (res.code === 0) {
           this.$store.commit('SET_USERID', res.data)
           setUserID(res.data)

@@ -4,7 +4,8 @@ export function login(data) {
   const url = `${process.env.API_HOST}/sicc/user/login`
   return axios.post(url, {
     mobile: data.name,
-    password: data.password
+    password: data.password,
+    openId: data.openId
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -15,7 +16,8 @@ export function Register(data) {
   return axios.post(url, {
     identifyingCode: data.code,
     mobile: data.iphone,
-    password: data.password
+    password: data.password,
+    openId: data.openId
   }).then((res) => {
     return Promise.resolve(res.data)
   })

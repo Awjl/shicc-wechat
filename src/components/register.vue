@@ -63,7 +63,7 @@
 </template>
 <script>
 import { Register, sendSMS, getNewbeeCoupon } from 'api/login'
-import { setUserID } from 'common/js/auth'
+import { setUserID, getOpen} from 'common/js/auth'
 
 import { ERR_OK, vxconfig } from 'api/config'
 
@@ -83,7 +83,8 @@ export default {
       user: {
         iphone: '',
         code: '',
-        password: ''
+        password: '',
+        openId: ''
       },
       nameErr: '',
       passwordeErr: '',
@@ -94,6 +95,7 @@ export default {
   },
   created() {
     vxconfig(window.location.href.split('#')[0])
+    this.user.openId = getOpen()
   },
   methods: {
     _Register() {

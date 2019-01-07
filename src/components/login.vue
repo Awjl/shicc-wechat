@@ -28,7 +28,7 @@
 <script>
 import { login } from 'api/login'
 import { ERR_OK, vxconfig } from 'api/config'
-import { setUserID, getUserID } from 'common/js/auth'
+import { setUserID, getUserID, getOpen } from 'common/js/auth'
 
 export default {
   data() {
@@ -41,12 +41,15 @@ export default {
       passwordeErr: '',
       user: {
         name: '',
-        password: ''
+        password: '',
+        openId: ''
       }
     }
   },
   created() {
     vxconfig(window.location.href.split('#')[0])
+    console.log(getOpen())
+    this.user.openId = getOpen()
   },
   methods: {
     _login() {
