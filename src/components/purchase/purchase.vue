@@ -1,31 +1,30 @@
 <template>
   <div class="purchase">
     <div class="purchase-banner">
-      <img :src="dataList.picture.url" alt="" style="vertical-align:middle">
-      <div class="banner-text">
-        {{dataList.picture.title}}
-      </div>
+      <img :src="dataList.picture.url" alt style="vertical-align:middle">
+      <div class="banner-text">{{dataList.picture.title}}</div>
     </div>
     <div class="purchase-nav">
       <span :class="{active: show}" @click="tabOne()">一 隅</span>
       <span :class="{active: !show}" @click="tabTwo()">一 食</span>
     </div>
     <div class="purchase-list">
-      <div class="purchase-item" v-for="(item, index) in dataArr" :key="index" @click="goDetalis(item.goodsId)">
+      <div
+        class="purchase-item"
+        v-for="(item, index) in dataArr"
+        :key="index"
+        @click="goDetalis(item.goodsId)"
+      >
         <div class="purchase-img">
-          <img :src="item.pictureUrl" alt="" style="vertical-align:middle">
-          <div class="purchase-name">
-            {{item.title}}
-          </div>
+          <img :src="item.pictureUrl" alt style="vertical-align:middle">
+          <div class="purchase-name">{{item.title}}</div>
         </div>
         <div class="purchase-title">
           <div class="titleItem">
             <span>
-              <img :src="hotIcon" alt="" v-if="item.isCommend == 1">
+              <img :src="hotIcon" alt v-if="item.isCommend == 1">
             </span>
-            <div class="title-name">
-              {{item.name}}
-            </div>
+            <div class="title-name">{{item.name}}</div>
           </div>
           <div class="Price">
             <span class="PriceNew">￥{{item.newPrice | formatFee}}</span>
@@ -35,30 +34,33 @@
       </div>
     </div>
     <div class="bottom" v-if="!showover">- 到底了 -</div>
-    <mugen-scroll :handler="fetchData" :should-handle="!loading" v-if="showover" class="bottom">
-      - 加载中 -
-    </mugen-scroll>
+    <mugen-scroll
+      :handler="fetchData"
+      :should-handle="!loading"
+      v-if="showover"
+      class="bottom"
+    >- 加载中 -</mugen-scroll>
     <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
 <script>
-import MugenScroll from 'vue-mugen-scroll'
-import { getCornerGoods, getMealGoods } from 'api/shopping'
-import { ERR_OK, vxconfig } from 'api/config'
-import NotLogged from 'base/notlogin/notlogin'
-import { mapGetters } from 'vuex'
+import MugenScroll from "vue-mugen-scroll";
+import { getCornerGoods, getMealGoods } from "api/shopping";
+import { ERR_OK, vxconfig } from "api/config";
+import NotLogged from "base/notlogin/notlogin";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
       dataList: {
         picture: {
-          url: '',
-          title: ''
+          url: "",
+          title: ""
         }
       },
-      hotIcon: './static/icon/hot-icon.png',
+      hotIcon: "./static/icon/hot-icon.png",
       show: true,
       loading: false,
       pn: 1,
@@ -66,103 +68,100 @@ export default {
       dataArr: [],
       showover: true,
       notShow: false
-    }
+    };
   },
   created() {
-    this._getCornerGoods(this.pn, this.pg)
-        vxconfig(window.location.href.split('#')[0])
-
+    this._getCornerGoods(this.pn, this.pg);
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getCornerGoods(pn, pg) {
-      getCornerGoods(pn, pg).then((res) => {
+      getCornerGoods(pn, pg).then(res => {
         if (res.code === ERR_OK) {
           // console.log(`商品列表banner=====`)
           // console.log(res.data)
-          this.dataList = res.data
-          let vm = this
+          this.dataList = res.data;
+          let vm = this;
           if (res.data.goodsOuts.length === 0) {
-            this.showover = false
+            this.showover = false;
           } else {
-            res.data.goodsOuts.forEach(function (value, index, array) {
-              vm.dataArr.push(value)
-            })
-            this.loading = false
+            res.data.goodsOuts.forEach(function(value, index, array) {
+              vm.dataArr.push(value);
+            });
+            this.loading = false;
           }
         }
-      })
+      });
     },
     _getMealGoods(pn, pg) {
-      getMealGoods(pn, pg).then((res) => {
+      getMealGoods(pn, pg).then(res => {
         if (res.code === ERR_OK) {
           // console.log(`商品列表banner=====`)
           // console.log(res.data)
-          this.dataList = res.data
-          let vm = this
+          this.dataList = res.data;
+          let vm = this;
           if (res.data.goodsOuts.length === 0) {
-            this.showover = false
+            this.showover = false;
           } else {
-            res.data.goodsOuts.forEach(function (value, index, array) {
-              vm.dataArr.push(value)
-            })
-            this.loading = false
+            res.data.goodsOuts.forEach(function(value, index, array) {
+              vm.dataArr.push(value);
+            });
+            this.loading = false;
           }
         }
-      })
+      });
     },
     notShowbox() {
       if (!this.UserID) {
         this.$router.push({
-          path: '/Login'
-        })
+          path: "/Login"
+        });
       }
     },
     fetchData() {
-      this.loading = true
-      this.pn++
+      this.loading = true;
+      this.pn++;
       if (this.show) {
-        this._getCornerGoods(this.pn, this.pg)
+        this._getCornerGoods(this.pn, this.pg);
       } else {
-        this._getMealGoods(this.pn, this.pg)
+        this._getMealGoods(this.pn, this.pg);
       }
     },
     tabOne() {
-      this.showover = true
-      this.show = true
-      this.pn = 1
-      this.dataArr = []
+      this.showover = true;
+      this.show = true;
+      this.pn = 1;
+      this.dataArr = [];
       this.dataList = {
         picture: {
-          url: '',
-          title: ''
+          url: "",
+          title: ""
         }
-      }
-      this._getCornerGoods(this.pn, this.pg)
+      };
+      this._getCornerGoods(this.pn, this.pg);
     },
     tabTwo() {
-      this.showover = true
-      this.show = false
-      this.pn = 1
-      this.dataArr = []
+      this.showover = true;
+      this.show = false;
+      this.pn = 1;
+      this.dataArr = [];
       this.dataList = {
         picture: {
-          url: '',
-          title: ''
+          url: "",
+          title: ""
         }
-      }
-      this._getMealGoods(this.pn, this.pg)
+      };
+      this._getMealGoods(this.pn, this.pg);
     },
     goDetalis(id) {
       // this.notShowbox()
       // if (this.UserID) {
-        this.$router.push({
-          path: `/PurchaseDetalis/${id}`
-        })
+      this.$router.push({
+        path: `/PurchaseDetalis/${id}`
+      });
       // }
     }
   },
@@ -170,7 +169,7 @@ export default {
     MugenScroll,
     NotLogged
   }
-}
+};
 </script>
 <style scoped>
 img {
@@ -307,7 +306,7 @@ img {
   overflow: hidden;
 }
 .Price .PriceOld::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 45%;

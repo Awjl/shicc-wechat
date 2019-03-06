@@ -1,31 +1,35 @@
 <template>
   <div class="login">
-    <img :src="imgbg" alt="">
+    <img :src="imgbg" alt>
     <div class="login-conter">
       <div class="logoimg">
-        <img :src="logo" alt="">
+        <img :src="logo" alt>
       </div>
       <div class="inp">
-        <img :src="iconOne" alt=""><input type="text" placeholder="请输入手机号" v-model="user.iphone" @blur="OnBlur()">
+        <img :src="iconOne" alt>
+        <input type="text" placeholder="请输入手机号" v-model="user.iphone" @blur="OnBlur()">
         <span>{{nameErr}}</span>
       </div>
       <div class="line"></div>
       <div class="inp">
-        <img :src="iconThree" alt=""><input type="text" placeholder="请输入验证码" v-model="user.code">
+        <img :src="iconThree" alt>
+        <input type="text" placeholder="请输入验证码" v-model="user.code">
         <span class="yan" @click="yanzheng()">{{content}}</span>
       </div>
       <div class="line"></div>
       <div class="inp">
-        <img :src="iconTwo" alt=""><input type="password" placeholder="请输入8-15位，中英文混合密码" v-model="user.password" @blur="OnPassWord()">
+        <img :src="iconTwo" alt>
+        <input
+          type="password"
+          placeholder="请输入8-15位，中英文混合密码"
+          v-model="user.password"
+          @blur="OnPassWord()"
+        >
         <span>{{passwordeErr}}</span>
       </div>
       <div class="line"></div>
-      <div class="loginbtn" @click="register">
-        注册
-      </div>
-      <div class="btnlogin" @click="gologin">
-        已有账号？
-      </div>
+      <div class="loginbtn" @click="register">注册</div>
+      <div class="btnlogin" @click="gologin">已有账号？</div>
     </div>
     <div class="box" v-if="show">
       <p>新人专享礼包</p>
@@ -41,170 +45,169 @@
             </div>
             <div class="couponitem-name">
               <p>{{item.name}}</p>
-              <p>
-                {{item.startTime | formatDate}} - {{item.endTime | formatDate}}
-              </p>
+              <p>{{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
             </div>
-            <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping(item.type )">
-              立即使用
-            </div>
+            <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping(item.type )">立即使用</div>
           </div>
-          <div class="couponitem-footer">
-            {{item.title}}
-          </div>
+          <div class="couponitem-footer">{{item.title}}</div>
           <div class="he20"></div>
         </div>
       </div>
       <div class="boxImg" @click="tohome">
-        <img :src="overImg" alt="">
+        <img :src="overImg" alt>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { Register, sendSMS, getNewbeeCoupon } from 'api/login'
-import { setUserID, getOpen} from 'common/js/auth'
+import { Register, sendSMS, getNewbeeCoupon } from "api/login";
+import { setUserID, getOpen } from "common/js/auth";
 
-import { ERR_OK, vxconfig } from 'api/config'
+import { ERR_OK, vxconfig } from "api/config";
 
-let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
+let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
 
 export default {
   data() {
     return {
-      overImg: './static/icon/done.png',
-      imgbg: './static/loginimg/bg.png',
-      logo: './static/loginimg/logo.png',
-      iconOne: './static/loginimg/phone.png',
-      iconTwo: './static/loginimg/password.png',
-      iconThree: './static/loginimg/ma.png',
+      overImg: "./static/icon/done.png",
+      imgbg: "./static/loginimg/bg.png",
+      logo: "./static/loginimg/logo.png",
+      iconOne: "./static/loginimg/phone.png",
+      iconTwo: "./static/loginimg/password.png",
+      iconThree: "./static/loginimg/ma.png",
       items: [],
       show: false,
       user: {
-        iphone: '',
-        code: '',
-        password: '',
-        openId: ''
+        iphone: "",
+        code: "",
+        password: "",
+        openId: ""
       },
-      nameErr: '',
-      passwordeErr: '',
-      content: '获取验证码',
+      nameErr: "",
+      passwordeErr: "",
+      content: "获取验证码",
       totalTime: 60,
       canClick: true
-    }
+    };
   },
   created() {
-    vxconfig(window.location.href.split('#')[0])
-    this.user.openId = getOpen()
+    vxconfig(window.location.href.split("#")[0]);
+    this.user.openId = getOpen();
   },
   methods: {
     _Register() {
-      Register(this.user).then((res) => {
+      Register(this.user).then(res => {
         if (res.code === ERR_OK) {
           // console.log(res.data)
           if (res.data.code === ERR_OK) {
-            this.$store.commit('SET_USERID', res.data.msg)
-            setUserID(res.data.msg)
-            this._getNewbeeCoupon(res.data.msg)
+            this.$store.commit("SET_USERID", res.data.msg);
+            setUserID(res.data.msg);
+            this._getNewbeeCoupon(res.data.msg);
           } else {
-            alert(res.data.msg)
+            alert(res.data.msg);
           }
         }
-      })
+      });
     },
     _getNewbeeCoupon(id) {
-      getNewbeeCoupon(id).then((res) => {
+      getNewbeeCoupon(id).then(res => {
         if (res.code === ERR_OK) {
           // console.log('新手优惠券================================')
           // console.log(res.data)
-          this.show = true
-          this.items = res.data
+          this.show = true;
+          this.items = res.data;
         }
-      })
+      });
     },
     goShopping(id) {
       if (id === 1) {
         this.$router.push({
           path: `/Purchase`
-        })
+        });
       } else {
         this.$router.push({
           path: `/packing`
-        })
+        });
       }
     },
     yanzheng() {
       if (this.user.iphone) {
         if (!phoneReg.test(this.user.iphone)) {
-          return
+          return;
         }
-        if (!this.canClick) return // 改动的是这两行代码
-        this.canClick = false
-        this.content = this.totalTime + 's后重新发送'
+        if (!this.canClick) return; // 改动的是这两行代码
+        this.canClick = false;
+        this.content = this.totalTime + "s后重新发送";
         let clock = window.setInterval(() => {
-          this.totalTime--
-          this.content = this.totalTime + 's后重新发送'
+          this.totalTime--;
+          this.content = this.totalTime + "s后重新发送";
           if (this.totalTime < 0) {
-            window.clearInterval(clock)
-            this.content = '重新发送'
-            this.totalTime = 10
-            this.canClick = true // 这里重新开启
+            window.clearInterval(clock);
+            this.content = "重新发送";
+            this.totalTime = 10;
+            this.canClick = true; // 这里重新开启
           }
-        }, 1000)
-        sendSMS(this.user.iphone).then((res) => {
+        }, 1000);
+        sendSMS(this.user.iphone).then(res => {
           // console.log(res.data)
-        })
+        });
       } else {
-        this.nameErr = '请输入手机号'
+        this.nameErr = "请输入手机号";
       }
     },
     OnBlur() {
       if (this.user.iphone) {
         if (phoneReg.test(this.user.iphone)) {
-          this.nameErr = ''
+          this.nameErr = "";
         } else {
-          this.nameErr = '格式不正确'
+          this.nameErr = "格式不正确";
         }
       } else {
-        this.nameErr = '请输入手机号'
+        this.nameErr = "请输入手机号";
       }
     },
     OnPassWord() {
-      let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/
+      let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/;
       if (this.user.password) {
         if (password.test(this.user.password)) {
-          this.passwordeErr = ''
+          this.passwordeErr = "";
         } else {
-          this.passwordeErr = '格式不正确'
+          this.passwordeErr = "格式不正确";
         }
       } else {
-        this.passwordeErr = '请输入密码'
+        this.passwordeErr = "请输入密码";
       }
     },
     gologin() {
       this.$router.push({
-        path: '/Login'
-      })
+        path: "/Login"
+      });
     },
     tohome() {
-      this.show = false
-      if (this.$route.params.id == 'login') {
+      this.show = false;
+      if (this.$route.params.id == "login") {
         this.$router.push({
-          path: '/My'
-        })
-      } else if (this.$route.params.id == 'packing') {
+          path: "/My"
+        });
+      } else if (this.$route.params.id == "packing") {
         this.$router.push({
-          path: '/packing'
-        })
+          path: "/packing"
+        });
       }
     },
     register() {
-      if (this.nameErr == '' && this.user.code != '' && this.passwordeErr == '' && this.user.password != '') {
-        this._Register()
+      if (
+        this.nameErr == "" &&
+        this.user.code != "" &&
+        this.passwordeErr == "" &&
+        this.user.password != ""
+      ) {
+        this._Register();
       }
     }
   }
-}
+};
 </script>
 
 <style>

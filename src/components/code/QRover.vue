@@ -28,8 +28,7 @@
       </div>
       <div class="QRitem">
         <span>有&nbsp;&nbsp;&nbsp;&nbsp;效&nbsp;&nbsp;&nbsp;&nbsp;期：</span>
-        <p>{{obj.termOfValidity}}
-        </p>
+        <p>{{obj.termOfValidity}}</p>
       </div>
       <div class="QRitem">
         <span>规&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;则：</span>
@@ -40,48 +39,41 @@
         <p>{{obj.useTime}}</p>
       </div>
       <div class="QRbtn">
-        <div
-          class="true"
-          @click="_writeOffVoucher()"
-        >
-          确认
-        </div>
-        <div @click="closeWx">
-          取消
-        </div>
+        <div class="true" @click="_writeOffVoucher()">确认</div>
+        <div @click="closeWx">取消</div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { getVoucherInfo, writeOffVoucher } from 'api/shopping'
+import { getVoucherInfo, writeOffVoucher } from "api/shopping";
 export default {
   data() {
     return {
       obj: {
-        couponCode: '',
-        id: '',
+        couponCode: "",
+        id: "",
         mobile: "",
         name: "",
-        newPrice: '',
-        oldPrice: '',
-        orderCode: '',
-        state: '',
+        newPrice: "",
+        oldPrice: "",
+        orderCode: "",
+        state: "",
         termOfValidity: "",
         useRule: "",
-        useTime: "",
+        useTime: ""
       }
-    }
+    };
   },
   created() {
-    this._getQRcode()
+    this._getQRcode();
   },
   methods: {
     _getQRcode() {
       getVoucherInfo(this.$route.params.id).then(res => {
         // console.log(res)
-        this.obj = res.data
-      })
+        this.obj = res.data;
+      });
     },
     _writeOffVoucher() {
       writeOffVoucher(this.$route.params.id).then(res => {
@@ -90,18 +82,18 @@ export default {
           if (res.data.code === 200) {
             this.$router.push({
               path: "/QRsuccessCode"
-            })
+            });
           } else {
-            alert(res.data.message)
+            alert(res.data.message);
           }
         }
-      })
+      });
     },
     closeWx() {
-      WeixinJSBridge.call('closeWindow');
+      WeixinJSBridge.call("closeWindow");
     }
   }
-}
+};
 </script>
 
 <style>
@@ -133,7 +125,7 @@ export default {
   width: 200px;
   font-size: 26px;
 }
-.QRitem> p {
+.QRitem > p {
   width: 450px;
 }
 .QRbtn {

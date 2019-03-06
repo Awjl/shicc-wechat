@@ -1,9 +1,7 @@
 <template>
   <div class="trueexchange">
     <div class="he30"></div>
-    <div class="addres addresactive" @click="goAddres(1)" v-if="show">
-      + 添加收货信息
-    </div>
+    <div class="addres addresactive" @click="goAddres(1)" v-if="show">+ 添加收货信息</div>
     <div class="addres" v-else @click="goAddres(1)">
       <div class="addreslist-content">
         <div class="addreslist-left">
@@ -18,15 +16,13 @@
     <div class="line"></div>
     <div class="list">
       <div class="list-img">
-        <img :src="data.pictureUrl" alt="">
+        <img :src="data.pictureUrl" alt>
       </div>
       <div class="list-name">
         <p>{{data.name}}</p>
         <p>{{data.kind}}</p>
         <div class="list-jiage">
-          <div class="new">
-            {{data.point}}积分
-          </div>
+          <div class="new">{{data.point}}积分</div>
           <div class="num">
             <span>x{{num}}</span>
           </div>
@@ -34,115 +30,108 @@
       </div>
     </div>
     <div class="footer">
-      <div class="footer-left">
-        兑换积分：{{data.point}}
-      </div>
-      <div class="footer-right" @click="trueorder">
-        确定兑换
-      </div>
+      <div class="footer-left">兑换积分：{{data.point}}</div>
+      <div class="footer-right" @click="trueorder">确定兑换</div>
     </div>
   </div>
 </template>
 
 <script>
-import { getPointGoodsOrderDetail, createPointOrder } from 'api/shopping'
-import { getAddressById } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
-import { mapGetters } from 'vuex'
+import { getPointGoodsOrderDetail, createPointOrder } from "api/shopping";
+import { getAddressById } from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      rightImg: './static/icon/addres.png',
-      img: './static/showImg/address.png',
+      rightImg: "./static/icon/addres.png",
+      img: "./static/showImg/address.png",
       num: 1,
       show: true,
       data: {
-        userId: '',
-        goodsId: '',
-        kind: '',
-        point: '',
-        pictureUrl: '',
-        mobile: '',
+        userId: "",
+        goodsId: "",
+        kind: "",
+        point: "",
+        pictureUrl: "",
+        mobile: "",
         num: 1,
-        total: '',
-        addressId: '',
-        goodsKind: ''
+        total: "",
+        addressId: "",
+        goodsKind: ""
       },
       addres: {}
-    }
+    };
   },
   created() {
-    this._getPointGoodsOrderDetail()
-    this._getAddressById()
-    vxconfig(window.location.href.split('#')[0])
+    this._getPointGoodsOrderDetail();
+    this._getAddressById();
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID',
-      'AddresId'
-    ])
+    ...mapGetters(["UserID", "AddresId"])
   },
   methods: {
     _getAddressById() {
       if (this.AddresId) {
-        getAddressById(this.AddresId).then((res) => {
+        getAddressById(this.AddresId).then(res => {
           if (res.code === ERR_OK) {
             // console.log('获取地址ID===================================================')
-            this.show = false
+            this.show = false;
             // console.log(res.data)
-            this.addres = res.data
+            this.addres = res.data;
           }
-        })
+        });
       } else {
-        this.show = true
+        this.show = true;
       }
     },
     _getPointGoodsOrderDetail() {
-      this.data.userId = this.UserID
-      this.data.goodsId = this.$route.params.id
-      this.data.kind = this.$route.params.kind
-      this.data.point = this.$route.params.point
-      getPointGoodsOrderDetail(this.data).then((res) => {
+      this.data.userId = this.UserID;
+      this.data.goodsId = this.$route.params.id;
+      this.data.kind = this.$route.params.kind;
+      this.data.point = this.$route.params.point;
+      getPointGoodsOrderDetail(this.data).then(res => {
         if (res.code === ERR_OK) {
           // console.log('查询=============================')
           // console.log(res.data)
-          this.data = res.data
+          this.data = res.data;
         }
-      })
+      });
     },
     _createPointOrder(data) {
-      createPointOrder(data).then((res) => {
+      createPointOrder(data).then(res => {
         if (res.code === ERR_OK) {
           if (res.data.code === 500206) {
-            alert('库存不足')
+            alert("库存不足");
           } else {
             this.$router.push({
               path: `/My/MyIntegral`
-            })
+            });
           }
         }
-      })
+      });
     },
     goAddres(tyep) {
       this.$router.push({
         path: `/MyAddres/${tyep}`
-      })
+      });
     },
     trueorder() {
-      this.data.addressId = this.AddresId
-      this.data.goodsKind = this.data.kind
-      this.data.total = this.data.point
-      this.data.userId = this.UserID
-      this.data.goodsId = this.$route.params.id
-      this.data.num = 1
+      this.data.addressId = this.AddresId;
+      this.data.goodsKind = this.data.kind;
+      this.data.total = this.data.point;
+      this.data.userId = this.UserID;
+      this.data.goodsId = this.$route.params.id;
+      this.data.num = 1;
       // console.log(this.data)
       if (!this.data.addressId) {
-        return alert('请选择地址')
+        return alert("请选择地址");
       }
-      this._createPointOrder(this.data)
+      this._createPointOrder(this.data);
     }
   }
-}
+};
 </script>
 
 <style scoped>

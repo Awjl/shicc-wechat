@@ -1,127 +1,108 @@
 <template>
   <div class="order">
     <div class="order-nav">
-      <div class="nav-item " :class="{active: index == 1}" @click="notused">
-        进行中
-      </div>
-      <div class="nav-item" :class="{active: index == 2}" @click="alreadyused">
-        已完成
-      </div>
+      <div class="nav-item" :class="{active: index == 1}" @click="notused">进行中</div>
+      <div class="nav-item" :class="{active: index == 2}" @click="alreadyused">已完成</div>
     </div>
     <div class="orderList">
       <div class="list" v-for="(item, index) in dataList" :key="index">
         <div class="orderitem">
           <div class="orderitem-id">
-            <div class="idnum">
-              订单号：{{item.code}}
-            </div>
+            <div class="idnum">订单号：{{item.code}}</div>
             <div class="state">
               <span v-if="item.state == 1">待付款</span>
               <span v-if="item.state == 2">已完成</span>
             </div>
           </div>
-          <div class="line">
-          </div>
+          <div class="line"></div>
           <div class="orderitem-conter" @click="toShopping(item.goodsId)">
             <div class="orderitem-img">
-              <img :src="item.url" alt="">
+              <img :src="item.url" alt>
             </div>
             <div class="orderitem-name">
-              <div class="name">
-                {{item.name}}
-              </div>
-              <div class="new">
-                ￥{{item.newPrice | formatFee}}
-              </div>
-              <div class="num">
-                x {{item.num}}
-              </div>
-              <div class="sum">
-                总计：￥{{item.total | formatFee}}
-              </div>
+              <div class="name">{{item.name}}</div>
+              <div class="new">￥{{item.newPrice | formatFee}}</div>
+              <div class="num">x {{item.num}}</div>
+              <div class="sum">总计：￥{{item.total | formatFee}}</div>
             </div>
           </div>
-          <div class="line">
-          </div>
+          <div class="line"></div>
           <div class="btn">
             <span class="true-btn" v-if="item.state == 1" @click="sumBtn(item.id)">立即付款</span>
             <span class="over-btn" v-if="item.state == 2" @click="toShopping(item.goodsId)">再来一单</span>
             <span class="del-btn" @click="delorder(item.id, index)" v-if="item.state == 1">取消订单</span>
           </div>
         </div>
-        <div class="line5">
-
-        </div>
+        <div class="line5"></div>
       </div>
     </div>
-    <div class="orderNone" v-if="dataList.length == 0">
-      - 暂无订单 -
-    </div>
+    <div class="orderNone" v-if="dataList.length == 0">- 暂无订单 -</div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getAllGoodsOrder, deleteOrder, createWechatPayOrder } from 'api/user'
-import { changeAddressById } from 'api/shopping'
-import { ERR_OK, vxconfig } from 'api/config'
+import { mapGetters } from "vuex";
+import { getAllGoodsOrder, deleteOrder, createWechatPayOrder } from "api/user";
+import { changeAddressById } from "api/shopping";
+import { ERR_OK, vxconfig } from "api/config";
 
 export default {
   data() {
     return {
       index: 1,
-      TrueImg: './static/icon/true-iocn.png',
-      overImg: './static/icon/done.png',
+      TrueImg: "./static/icon/true-iocn.png",
+      overImg: "./static/icon/done.png",
       type: 1,
       showTrue: false,
       dataList: []
-    }
+    };
   },
   created() {
-    this._getAllGoodsOrder()
-    vxconfig(window.location.href.split('#')[0])
-
+    this._getAllGoodsOrder();
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getAllGoodsOrder() {
-      getAllGoodsOrder(this.UserID, this.type).then((res) => {
+      getAllGoodsOrder(this.UserID, this.type).then(res => {
         if (res.code === ERR_OK) {
           // console.log('这是订单中心=============================')
           // console.log(res.data)
-          this.dataList = res.data
+          this.dataList = res.data;
         }
-      })
+      });
     },
     _deleteOrder(id) {
-      deleteOrder(this.UserID, id).then((res) => {
+      deleteOrder(this.UserID, id).then(res => {
         if (res.code === ERR_OK) {
           // console.log('删除订单=================================')
           // alert('取消成功')
         }
-      })
+      });
     },
     sumBtn(id) {
-      this._changeAddressById(id)
+      this._changeAddressById(id);
     },
     toShopping(id) {
       this.$router.push({
         path: `/PurchaseDetalis/${id}`
-      })
+      });
     },
     _changeAddressById(id) {
       // console.log(id)
-      createWechatPayOrder(window.location.href.split('#')[0], this.UserID, id).then(res => {
+      createWechatPayOrder(
+        window.location.href.split("#")[0],
+        this.UserID,
+        id
+      ).then(res => {
         if (res.code === ERR_OK) {
-          var self = this
+          var self = this;
           if (res.data.msg != "") {
-            this._getAllGoodsOrder()
-            alert(res.data.msg)
-            return
+            this._getAllGoodsOrder();
+            alert(res.data.msg);
+            return;
           }
           wx.config({
             debug: false,
@@ -129,59 +110,59 @@ export default {
             timestamp: res.data.timeStamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signature,
-            jsApiList: ['chooseWXPay'],
-          })
-          wx.ready(function () {
+            jsApiList: ["chooseWXPay"]
+          });
+          wx.ready(function() {
             wx.chooseWXPay({
               appId: res.data.appId,
               timestamp: res.data.timeStamp,
               nonceStr: res.data.nonceStr,
               package: res.data.package,
-              signType: 'MD5',
+              signType: "MD5",
               paySign: res.data.paySign,
-              success: function (res) {
+              success: function(res) {
                 if (res.errMsg == "chooseWXPay:ok") {
                   self.$router.push({
-                    path: '/My/MyTransfer'
-                  })
+                    path: "/My/MyTransfer"
+                  });
                 }
               },
-              cancel: function (res) {
+              cancel: function(res) {
                 self.$router.push({
-                  path: '/My/MyOrder'
-                })
+                  path: "/My/MyOrder"
+                });
               },
-              fail: function (res) {
+              fail: function(res) {
                 self.$router.push({
-                  path: '/My/MyOrder'
-                })
+                  path: "/My/MyOrder"
+                });
               }
             });
-          })
+          });
         }
-      })
+      });
     },
     notused() {
-      this.index = 1
-      this.type = 1
-      this.dataList = []
-      this._getAllGoodsOrder()
+      this.index = 1;
+      this.type = 1;
+      this.dataList = [];
+      this._getAllGoodsOrder();
     },
     alreadyused() {
-      this.index = 2
-      this.type = 2
-      this.dataList = []
-      this._getAllGoodsOrder()
+      this.index = 2;
+      this.type = 2;
+      this.dataList = [];
+      this._getAllGoodsOrder();
     },
     delorder(id, index) {
       // console.log(id, index)
       if (confirm("确定取消该订单么？")) {
-        this._deleteOrder(id)
-        this.dataList.splice(index, 1)
+        this._deleteOrder(id);
+        this.dataList.splice(index, 1);
       }
     }
   }
-}
+};
 </script>
 
 <style>
@@ -314,5 +295,4 @@ img {
   border: 2px solid #59c2fa;
   color: #59c2fa;
 }
-
 </style>

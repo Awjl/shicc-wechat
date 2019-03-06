@@ -1,15 +1,9 @@
 <template>
   <div class="coupon">
     <div class="coupon-nav">
-      <div class="nav-item " :class="{active: index == 1}" @click="notused">
-        未使用
-      </div>
-      <div class="nav-item" :class="{active: index == 2}" @click="alreadyused">
-        已使用
-      </div>
-      <div class="nav-item" :class="{active: index == 3}" @click="expired">
-        已过期
-      </div>
+      <div class="nav-item" :class="{active: index == 1}" @click="notused">未使用</div>
+      <div class="nav-item" :class="{active: index == 2}" @click="alreadyused">已使用</div>
+      <div class="nav-item" :class="{active: index == 3}" @click="expired">已过期</div>
     </div>
     <div class="couponlistAll">
       <div class="couponitem" v-for="(item, index) in items" :key="index">
@@ -22,27 +16,21 @@
           </div>
           <div class="couponitem-name">
             <p>{{item.name}}</p>
-            <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
+            <p>{{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
           </div>
-          <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping(item.type)">
-            立即使用
-          </div>
+          <div class="couponitem-btn" v-if="item.state == 1" @click="goShopping(item.type)">立即使用</div>
         </div>
-        <div class="couponitem-footer">
-          {{item.title}}
-        </div>
+        <div class="couponitem-footer">{{item.title}}</div>
       </div>
     </div>
-    <div class="wishNone" v-if="items.length == 0">
-      - 暂无优惠券信息 -
-    </div>
+    <div class="wishNone" v-if="items.length == 0">- 暂无优惠券信息 -</div>
   </div>
 </template>
 
 <script>
-import { ERR_OK, vxconfig } from 'api/config'
-import { getAllCoupon } from 'api/user'
-import { mapGetters } from 'vuex'
+import { ERR_OK, vxconfig } from "api/config";
+import { getAllCoupon } from "api/user";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -50,56 +38,54 @@ export default {
       index: 1,
       type: 0,
       items: []
-    }
+    };
   },
   created() {
-    vxconfig(window.location.href.split('#')[0])
-    this._getAllCoupon()
+    vxconfig(window.location.href.split("#")[0]);
+    this._getAllCoupon();
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getAllCoupon() {
-      getAllCoupon(this.UserID, this.index, this.type).then((res) => {
+      getAllCoupon(this.UserID, this.index, this.type).then(res => {
         if (res.code === ERR_OK) {
           // console.log('获取优惠券列表========================')
           // console.log(res.data)
-          this.items = res.data
+          this.items = res.data;
         }
-      })
+      });
     },
     goShopping(id) {
       if (id === 1) {
         this.$router.push({
           path: `/Purchase`
-        })
+        });
       } else {
         // this.$router.push({
         //   path: `/parking`
         // })
-        window.location.href = 'http://www.shiccs.net/sicc/park/index';
+        window.location.href = "http://www.shiccs.net/sicc/park/index";
       }
     },
     notused() {
-      this.index = 1
-      this.items = []
-      this._getAllCoupon()
+      this.index = 1;
+      this.items = [];
+      this._getAllCoupon();
     },
     alreadyused() {
-      this.index = 2
-      this.items = []
-      this._getAllCoupon()
+      this.index = 2;
+      this.items = [];
+      this._getAllCoupon();
     },
     expired() {
-      this.index = 3
-      this.items = []
-      this._getAllCoupon()
+      this.index = 3;
+      this.items = [];
+      this._getAllCoupon();
     }
   }
-}
+};
 </script>
 
 <style>

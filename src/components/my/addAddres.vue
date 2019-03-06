@@ -1,166 +1,138 @@
 <template>
   <div class="addaddres">
     <div class="addaddreslist-inp">
-      <input
-        type="text"
-        placeholder="收货人姓名"
-        v-model="data.name"
-      >
+      <input type="text" placeholder="收货人姓名" v-model="data.name">
       <span>{{nameERR}}</span>
     </div>
     <div class="addaddreslist-inp">
-      <input
-        type="text"
-        placeholder="手机号码"
-        v-model="data.mobile"
-        @blur="OnBlur()"
-      >
+      <input type="text" placeholder="手机号码" v-model="data.mobile" @blur="OnBlur()">
       <span>{{content}}</span>
     </div>
-    <div
-      class="addaddreslist-inp"
-      @click="setAddres()"
-    >
+    <div class="addaddreslist-inp" @click="setAddres()">
       {{data.city}}
       <span>{{addressERR}}</span>
     </div>
     <div class="addaddreslist-inp">
-      <input
-        type="text"
-        placeholder="详细地址（街道、楼牌号等）"
-        v-model="data.address"
-      >
+      <input type="text" placeholder="详细地址（街道、楼牌号等）" v-model="data.address">
       <span>{{addErr}}</span>
     </div>
-    <div
-      class="addaddresbtn"
-      @click="btn"
-    >
-      保存
-    </div>
-    <Addres
-      :addresStater="addresStater"
-      v-on:Addres="Addres"
-    ></Addres>
+    <div class="addaddresbtn" @click="btn">保存</div>
+    <Addres :addresStater="addresStater" v-on:Addres="Addres"></Addres>
   </div>
 </template>
 
 <script>
 import Addres from "base/addres/addres";
-import { mapGetters } from 'vuex'
-import { addAddress, changeAddressById, getAddressById } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
+import { mapGetters } from "vuex";
+import { addAddress, changeAddressById, getAddressById } from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
 
-let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
+let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
 
 export default {
   data() {
     return {
       addresStater: false,
-      content: '必填',
-      nameERR: '必填',
-      addressERR: '必填',
-      addErr: '必填',
+      content: "必填",
+      nameERR: "必填",
+      addressERR: "必填",
+      addErr: "必填",
       data: {
-        address: '',
-        mobile: '',
-        name: '',
-        userId: '',
+        address: "",
+        mobile: "",
+        name: "",
+        userId: "",
         zipCode: 0,
-        city: '请选择省份、城市、县区',
-        id: ''
+        city: "请选择省份、城市、县区",
+        id: ""
       }
-    }
+    };
   },
   created() {
-    this._getAddressById()
-    vxconfig(window.location.href.split('#')[0])
+    this._getAddressById();
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getAddressById() {
       // console.log(this.$route.params.id !== 'null')
-      if (this.$route.params.id !== 'null') {
-        getAddressById(this.$route.params.id).then((res) => {
+      if (this.$route.params.id !== "null") {
+        getAddressById(this.$route.params.id).then(res => {
           if (res.code === ERR_OK) {
-            this.data = res.data
+            this.data = res.data;
           }
-        })
+        });
       } else {
         this.data = {
-          address: '',
-          mobile: '',
-          name: '',
-          userId: '',
+          address: "",
+          mobile: "",
+          name: "",
+          userId: "",
           zipCode: 0,
-          city: '请选择省份、城市、县区',
-        }
+          city: "请选择省份、城市、县区"
+        };
       }
     },
     _changeAddressById() {
-      this.data.userId = this.UserID
-      this.data.id = this.$route.params.id
-      changeAddressById(this.data).then((res) => {
+      this.data.userId = this.UserID;
+      this.data.id = this.$route.params.id;
+      changeAddressById(this.data).then(res => {
         if (res.code === ERR_OK) {
-          alert('修改完成')
-          this.$router.back(-1)
+          alert("修改完成");
+          this.$router.back(-1);
         }
-      })
+      });
     },
     _addAddress() {
-      this.data.userId = this.UserID
-      addAddress(this.data).then((res) => {
+      this.data.userId = this.UserID;
+      addAddress(this.data).then(res => {
         if (res.code === ERR_OK) {
-          alert('保存成功')
-          this.$router.back(-1)
+          alert("保存成功");
+          this.$router.back(-1);
         }
-      })
+      });
     },
-    Addres: function (Addres) {
+    Addres: function(Addres) {
       // childValue就是子组件传过来的值
       this.addresStater = false;
       if (!Addres) {
-        this.data.city = '请选择省份、城市、县区'
+        this.data.city = "请选择省份、城市、县区";
       } else {
-        this.data.city = `${Addres.Province}-${Addres.City}-${
-          Addres.District
-          }`;
+        this.data.city = `${Addres.Province}-${Addres.City}-${Addres.District}`;
       }
       // this.myList = childValue
     },
     setAddres() {
       this.addresStater = true;
-      if (this.data.city == '请选择省份、城市、县区') {
-        this.addressERR = '必填'
+      if (this.data.city == "请选择省份、城市、县区") {
+        this.addressERR = "必填";
       } else {
-        this.addressERR = ''
+        this.addressERR = "";
       }
     },
     OnBlur() {
       if (this.data.mobile) {
         if (phoneReg.test(this.data.mobile)) {
-          this.content = '必填'
+          this.content = "必填";
         } else {
-          this.content = '格式不正确'
+          this.content = "格式不正确";
         }
       }
     },
     OnBlurName() {
       if (!this.data.name) {
-        this.nameERR = '必填'
+        this.nameERR = "必填";
       } else {
-        this.nameERR = ''
+        this.nameERR = "";
       }
     },
     OnBluradd() {
       if (!this.data.address) {
-        this.addErr = '必填'
+        this.addErr = "必填";
       } else {
-        this.addErr = ''
+        this.addErr = "";
       }
     },
     btn() {
@@ -169,25 +141,41 @@ export default {
       // } else {
       //   this.addressERR = ''
       // }
-      if (this.$route.params.id === 'null') {
-        if (this.data.city != '请选择省份、城市、县区' && this.nameERR == '必填' && this.data.name != '' && this.content == '必填' && this.data.mobile != '' && this.addErr == '必填' &&  this.data.address != '') {
-          this._addAddress()
+      if (this.$route.params.id === "null") {
+        if (
+          this.data.city != "请选择省份、城市、县区" &&
+          this.nameERR == "必填" &&
+          this.data.name != "" &&
+          this.content == "必填" &&
+          this.data.mobile != "" &&
+          this.addErr == "必填" &&
+          this.data.address != ""
+        ) {
+          this._addAddress();
         }
       } else {
-        if (this.data.city != '请选择省份、城市、县区' && this.nameERR == '必填' && this.data.name != '' && this.content == '必填' && this.data.mobile != '' && this.addErr == '必填' &&  this.data.address != '') {
-          this._changeAddressById()
+        if (
+          this.data.city != "请选择省份、城市、县区" &&
+          this.nameERR == "必填" &&
+          this.data.name != "" &&
+          this.content == "必填" &&
+          this.data.mobile != "" &&
+          this.addErr == "必填" &&
+          this.data.address != ""
+        ) {
+          this._changeAddressById();
         }
       }
     }
   },
   components: {
     Addres
-  },
+  }
   // beforeRouteLeave (to, from, next) {
   //   to.meta.keepAlive = false
   //   next()
   // }
-}
+};
 </script>
 
 <style scoped>
@@ -212,7 +200,7 @@ export default {
   right: 0;
   height: 93px;
   line-height: 93px;
-  color: #C6C6C6;
+  color: #c6c6c6;
 }
 .addaddreslist-inp input {
   width: 100%;

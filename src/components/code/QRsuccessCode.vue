@@ -2,32 +2,28 @@
   <div class="QRsuccess-box">
     <div class="QRsuccess">
       <div>
-        <img :src="TrueImg" alt="">
+        <img :src="TrueImg" alt>
       </div>
       <div class="QRsuccess-title">{{dataList}}</div>
-      <div class="goHome" @click="closeWx">
-        关闭页面
-      </div>
+      <div class="goHome" @click="closeWx">关闭页面</div>
     </div>
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
-      TrueImg: './static/loginimg/logo.png',
-      dataList: window.location.href.split('=')[1]
-    }
+      TrueImg: "./static/loginimg/logo.png",
+      dataList: window.location.href.split("=")[1]
+    };
   },
-  created() {
-  },
+  created() {},
   methods: {
     closeWx() {
-      WeixinJSBridge.call('closeWindow');
+      WeixinJSBridge.call("closeWindow");
     }
   }
-}
+};
 </script>
 
 <style>

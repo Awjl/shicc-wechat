@@ -26,119 +26,110 @@
     <div class="he20"></div>
     <HomeList></HomeList>
     <div class="he30"></div>
-    <div
-      class="reserve"
-      @click="goReserve"
-    >
-      会议预定
-    </div>
+    <div class="reserve" @click="goReserve">会议预定</div>
     <div class="he20"></div>
-    <div
-      class="homebtn"
-      @click="goSrver"
-    >
-      <img
-        :src="img"
-        alt=""
-      >
+    <div class="homebtn" @click="goSrver">
+      <img :src="img" alt>
     </div>
     <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
 <script>
-import Swiper from 'base/swiper/swiper'
-import Hall from 'base/hall/hall'
-import Food from 'base/food/food'
-import HomeList from 'base/homelist/homelist'
+import Swiper from "base/swiper/swiper";
+import Hall from "base/hall/hall";
+import Food from "base/food/food";
+import HomeList from "base/homelist/homelist";
 
-import { getTopBanner, getOneStageBanner, getCornerMealBanner, defaultLogin } from 'api/homeapi'
-import { ERR_OK, vxconfig } from 'api/config'
-import NotLogged from 'base/notlogin/notlogin'
-import { mapGetters } from 'vuex'
-import { setUserID } from 'common/js/auth'
-
+import {
+  getTopBanner,
+  getOneStageBanner,
+  getCornerMealBanner,
+  defaultLogin
+} from "api/homeapi";
+import { ERR_OK, vxconfig } from "api/config";
+import NotLogged from "base/notlogin/notlogin";
+import { mapGetters } from "vuex";
+import { setUserID } from "common/js/auth";
 
 export default {
   data() {
     return {
-      img: './static/icon/service-i.png',
+      img: "./static/icon/service-i.png",
       listImg: [],
       hallList: [],
       footList: [],
-      height: '161',
+      height: "161",
       notShow: false
-    }
+    };
   },
   created() {
-    vxconfig(window.location.href.split('#')[0])
-    this._getTopBanner()
+    vxconfig(window.location.href.split("#")[0]);
+    this._getTopBanner();
     // this._defaultLogin()
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _defaultLogin() {
-      defaultLogin().then((res) => {
+      defaultLogin().then(res => {
         if (res.code === ERR_OK) {
           // console.log('获取UserId-------------------------------------')
           // console.log(res.data)
-          this.$store.commit('SET_USERID', res.data)
-          setUserID(res.data)
+          this.$store.commit("SET_USERID", res.data);
+          setUserID(res.data);
         }
-      })
+      });
     },
     _getTopBanner() {
-      getTopBanner().then((res) => {
+      getTopBanner().then(res => {
         if (res.code === ERR_OK) {
           // console.log(`顶部banner=====`)
           // console.log(res.data)
-          this.listImg = res.data
-          this._getOneStageBanner()
+          this.listImg = res.data;
+          this._getOneStageBanner();
         }
-      })
+      });
     },
     _getOneStageBanner() {
-      getOneStageBanner().then((res) => {
+      getOneStageBanner().then(res => {
         if (res.code === ERR_OK) {
           // console.log(`一期一会banner=====`)
           // console.log(res.data)
-          this.hallList = res.data
-          this._getCornerMealBanner()
+          this.hallList = res.data;
+          this._getCornerMealBanner();
         }
-      })
+      });
     },
     _getCornerMealBanner() {
-      getCornerMealBanner().then((res) => {
+      getCornerMealBanner().then(res => {
         if (res.code === ERR_OK) {
           // console.log(`一隅一食banner=====`)
           // console.log(res.data)
-          this.footList = res.data
+          this.footList = res.data;
         }
-      })
+      });
     },
     notShowbox() {
       if (!this.UserID) {
         this.$router.push({
-          path: '/Login'
-        })
+          path: "/Login"
+        });
       }
     },
     goReserve() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
           path: `/Reserve`
-        })
+        });
       }
     },
     goSrver() {
       this.$router.push({
         path: `/Service`
-      })
+      });
     }
   },
   components: {
@@ -148,7 +139,7 @@ export default {
     HomeList,
     NotLogged
   }
-}
+};
 </script>
 
 <style scoped>

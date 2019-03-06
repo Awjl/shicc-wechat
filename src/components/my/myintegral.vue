@@ -1,107 +1,87 @@
 <template>
   <div class="integral">
     <div class="exchange-bg">
-      <img :src="bg" alt="">
-      <div class="exchange-title">
-        您现有积分
-      </div>
-      <div class="exchange-num">
-        {{Levelnum.points}}
-      </div>
-      <div class="lvavel" v-if='Levelnum.level == 1'>
-        V1会员
-      </div>
-      <div class="lvavel" v-if='Levelnum.level == 2'>
-        V2会员
-      </div>
+      <img :src="bg" alt>
+      <div class="exchange-title">您现有积分</div>
+      <div class="exchange-num">{{Levelnum.points}}</div>
+      <div class="lvavel" v-if="Levelnum.level == 1">V1会员</div>
+      <div class="lvavel" v-if="Levelnum.level == 2">V2会员</div>
     </div>
     <div class="integraltitleAll">
       <div class="integral-text">兑换记录</div>
     </div>
     <div class="integralList" v-for="(item, index) in listData" :key="index">
       <div class="integralItem">
-        <div class="integralTitle">
-          {{item.createDate | formatDate}}-{{item.createDate | formatDate}}
-        </div>
+        <div class="integralTitle">{{item.createDate | formatDate}}-{{item.createDate | formatDate}}</div>
         <div class="line"></div>
         <div class="integral-conter">
           <div class="integral-img">
-            <img :src="item.url" alt="">
+            <img :src="item.url" alt>
           </div>
           <div class="integral-name">
             <div class="integralnum">
               <span>{{item.name}} {{item.goodsKind}}</span>
               <span>x{{item.num}}</span>
             </div>
-            <div class="subintegral">
-              -{{item.total}}积分
-            </div>
+            <div class="subintegral">-{{item.total}}积分</div>
           </div>
         </div>
         <div class="line"></div>
-        <div class="kuaidi" v-if="item.courierNumber !== null">
-          快递单号 {{item.courierNumber}}
-        </div>
-        <div class="kuaidi" v-else>
-          暂无物流信息
-        </div>
+        <div class="kuaidi" v-if="item.courierNumber !== null">快递单号 {{item.courierNumber}}</div>
+        <div class="kuaidi" v-else>暂无物流信息</div>
       </div>
     </div>
-    <div class="integralListbox" v-show='showover'>
-      - 暂无兑换记录 -
-    </div>
+    <div class="integralListbox" v-show="showover">- 暂无兑换记录 -</div>
   </div>
 </template>
 
 <script>
-import { ERR_OK, vxconfig } from 'api/config'
-import { getUserLevel, getAllPointGoodsOrder } from 'api/user'
-import { mapGetters } from 'vuex'
+import { ERR_OK, vxconfig } from "api/config";
+import { getUserLevel, getAllPointGoodsOrder } from "api/user";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      bg: './static/exchangeImg/bg.png',
+      bg: "./static/exchangeImg/bg.png",
       Levelnum: {},
       listData: [],
       showover: true
-    }
+    };
   },
   created() {
-    vxconfig(window.location.href.split('#')[0])
-    this._getUserLevel(this.UserID)
+    vxconfig(window.location.href.split("#")[0]);
+    this._getUserLevel(this.UserID);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getUserLevel(id) {
-      getUserLevel(id).then((res) => {
+      getUserLevel(id).then(res => {
         if (res.code === ERR_OK) {
           // console.log('会员积分=============================')
           // console.log(res.data)
-          this.Levelnum = res.data
-          this._getAllPointGoodsOrder()
+          this.Levelnum = res.data;
+          this._getAllPointGoodsOrder();
         }
-      })
+      });
     },
     _getAllPointGoodsOrder() {
-      getAllPointGoodsOrder(this.UserID).then((res) => {
+      getAllPointGoodsOrder(this.UserID).then(res => {
         if (res.code === ERR_OK) {
           // console.log('积分兑换列表=============')
           // console.log(res.data)
-          this.listData = res.data
+          this.listData = res.data;
           // console.log(this.listData)
           if (this.listData.length !== 0) {
-            this.showover = false
+            this.showover = false;
           }
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style>

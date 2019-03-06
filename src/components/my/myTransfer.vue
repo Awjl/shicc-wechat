@@ -1,58 +1,36 @@
 <template>
   <div class="order">
     <div class="order-nav">
-      <div class="nav-item " :class="{active: index == 0}" @click="notused">
-        全部
-      </div>
-      <div class="nav-item" :class="{active: index == 1}" @click="alreadyused">
-        未使用
-      </div>
-      <div class="nav-item" :class="{active: index == 2}" @click="over">
-        已使用
-      </div>
-      <div class="nav-item" :class="{active: index == 3}" @click="transfer">
-        已转赠
-      </div>
+      <div class="nav-item" :class="{active: index == 0}" @click="notused">全部</div>
+      <div class="nav-item" :class="{active: index == 1}" @click="alreadyused">未使用</div>
+      <div class="nav-item" :class="{active: index == 2}" @click="over">已使用</div>
+      <div class="nav-item" :class="{active: index == 3}" @click="transfer">已转赠</div>
     </div>
     <div class="orderList">
       <div class="list" v-for="(item, index) in dataList" :key="index">
         <div class="orderitem">
           <div class="orderitem-id">
-            <div class="idnum" v-if="item.orderCode">
-              订单号：{{item.orderCode}}
-            </div>
-            <div class="idnum" v-else>
-              订单号：无
-            </div>
+            <div class="idnum" v-if="item.orderCode">订单号：{{item.orderCode}}</div>
+            <div class="idnum" v-else>订单号：无</div>
             <div class="state">
               <span v-if="item.state == 1">未使用</span>
               <span v-if="item.state == 2">已使用</span>
               <span v-if="item.state == 3">已转赠</span>
             </div>
           </div>
-          <div class="line">
-          </div>
+          <div class="line"></div>
           <div class="orderitem-conter" @click="toShopping(item.goodsId)">
             <div class="orderitem-img">
-              <img :src="item.pictureUrl" alt="">
+              <img :src="item.pictureUrl" alt>
             </div>
             <div class="orderitem-name">
-              <div class="name">
-                {{item.name}}
-              </div>
-              <div class="new">
-                ￥{{item.newPrice | formatFee}}
-              </div>
-              <div class="num">
-                x 1
-              </div>
-              <div class="sum">
-                总计：￥{{item.newPrice | formatFee}}
-              </div>
+              <div class="name">{{item.name}}</div>
+              <div class="new">￥{{item.newPrice | formatFee}}</div>
+              <div class="num">x 1</div>
+              <div class="sum">总计：￥{{item.newPrice | formatFee}}</div>
             </div>
           </div>
-          <div class="line">
-          </div>
+          <div class="line"></div>
           <div class="orderitembtn">
             <div v-if="item.deliverer || item.consignee">
               <p v-if="item.deliverer && item.consignee == null">来自{{item.deliverer}}转赠</p>
@@ -66,57 +44,40 @@
             </div>
           </div>
         </div>
-        <div class="line5">
-
-        </div>
+        <div class="line5"></div>
       </div>
     </div>
-    <div class="wishNone" v-if="dataList.length == 0">
-      - 暂无代金券信息 -
-    </div>
+    <div class="wishNone" v-if="dataList.length == 0">- 暂无代金券信息 -</div>
     <div class="TOverBox" v-if="showTrue">
       <div class="TBox-one">
-        <div class="boxCode-title">
-          兑换码：{{useCode.couponCode}}
-        </div>
+        <div class="boxCode-title">兑换码：{{useCode.couponCode}}</div>
         <div class="box-erwei">
-          <img :src="useCode.qrCode" alt="">
+          <img :src="useCode.qrCode" alt>
         </div>
-        <div class="box-name">
-          有效期：
-        </div>
+        <div class="box-name">有效期：</div>
+        <div class="box-text">{{useCode.termOfValidity}}</div>
+        <div class="box-name">使用时间：</div>
+        <div class="box-text">{{useCode.useTime}}</div>
+        <div class="box-name">使用规则：</div>
         <div class="box-text">
-          {{useCode.termOfValidity}}
-        </div>
-        <div class="box-name">
-          使用时间：
-        </div>
-        <div class="box-text">
-          {{useCode.useTime}}
-        </div>
-        <div class="box-name">
-          使用规则：
-        </div>
-        <div class="box-text">
-          <p v-for="(item, index) in useCode.useRule" :key="index">{{item}} </p>
+          <p v-for="(item, index) in useCode.useRule" :key="index">{{item}}</p>
         </div>
       </div>
       <div class="OverBox-img" @click="hide">
-        <img :src="overImg" alt="">
+        <img :src="overImg" alt>
       </div>
     </div>
     <div class="giveUser" v-if="showgive">
       <div class="giveUser-box">
         <div class="giveUser-title">转赠</div>
-        <div class="giveUser-inp" v-if='!time'>
-          <label>手机号：</label><input type="text" placeholder="请输入手机号" v-model="giveUser.mobile">
+        <div class="giveUser-inp" v-if="!time">
+          <label>手机号：</label>
+          <input type="text" placeholder="请输入手机号" v-model="giveUser.mobile">
         </div>
-        <div class="giver-time" v-else>
-          {{time}}
-        </div>
+        <div class="giver-time" v-else>{{time}}</div>
         <div class="give-btn">
           <span @click="givequxiao">取消</span>
-          <span class="give-true" @click="givetrue" v-if='!time'>确定</span>
+          <span class="give-true" @click="givetrue" v-if="!time">确定</span>
           <span class="give-true" @click="giveargin" v-else>重新输入</span>
         </div>
       </div>
@@ -125,136 +86,134 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getALLVoucher, givenToOne, checkMobile, getQRcode } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
+import { mapGetters } from "vuex";
+import { getALLVoucher, givenToOne, checkMobile, getQRcode } from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
 
 export default {
   data() {
     return {
       index: 0,
-      TrueImg: './static/icon/true-iocn.png',
-      overImg: './static/icon/done.png',
+      TrueImg: "./static/icon/true-iocn.png",
+      overImg: "./static/icon/done.png",
       showTrue: false,
       showgive: false,
       useCode: {
-        couponCode: '',
-        qrCode: '',
-        termOfValidity: '',
-        useRule: '',
-        useTime: ''
+        couponCode: "",
+        qrCode: "",
+        termOfValidity: "",
+        useRule: "",
+        useTime: ""
       },
       dataList: [],
       giveUser: {
-        mobile: '',
-        deliverer: '',
-        couponId: ''
+        mobile: "",
+        deliverer: "",
+        couponId: ""
       },
-      time: ''
-    }
+      time: ""
+    };
   },
   created() {
-    this._getALLVoucher()
-    vxconfig(window.location.href.split('#')[0])
+    this._getALLVoucher();
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getALLVoucher() {
-      getALLVoucher(this.UserID, this.index).then((res) => {
+      getALLVoucher(this.UserID, this.index).then(res => {
         if (res.code === ERR_OK) {
           // console.log('这是代金券列表=============================')
           // console.log(res.data)
-          this.dataList = res.data
+          this.dataList = res.data;
         }
-      })
+      });
     },
     _getQRcode(goodsID) {
-      getQRcode(goodsID).then((res) => {
+      getQRcode(goodsID).then(res => {
         if (res.code === ERR_OK) {
-          this.showTrue = true
+          this.showTrue = true;
           // console.log(res.data)
-          this.useCode = res.data
-          this.useCode.useRule = this.useCode.useRule.split('/')
+          this.useCode = res.data;
+          this.useCode.useRule = this.useCode.useRule.split("/");
         }
-      })
+      });
     },
     _givenToOne() {
-      givenToOne(this.giveUser).then((res) => {
+      givenToOne(this.giveUser).then(res => {
         if (res.code === ERR_OK) {
           // console.log('转赠===================')
-          this.showgive = false
-          alert('转赠成功')
-          this._getALLVoucher()
+          this.showgive = false;
+          alert("转赠成功");
+          this._getALLVoucher();
         }
-      })
+      });
     },
     _checkMobile() {
-      checkMobile(this.giveUser.mobile, this.UserID).then((res) => {
+      checkMobile(this.giveUser.mobile, this.UserID).then(res => {
         if (res.code === ERR_OK) {
           // console.log('查询结果===================')
           // console.log(res.data)
           if (res.data.code === 200) {
-            this._givenToOne()
+            this._givenToOne();
           } else {
-            this.time = res.data.msg
+            this.time = res.data.msg;
           }
         }
-      })
+      });
     },
     toShopping(id) {
       this.$router.push({
         path: `/PurchaseDetalis/${id}`
-      })
+      });
     },
     notused() {
-      this.index = 0
-      this.dataList = []
-      this._getALLVoucher()
+      this.index = 0;
+      this.dataList = [];
+      this._getALLVoucher();
     },
     alreadyused() {
-      this.index = 1
-      this.dataList = []
-      this._getALLVoucher()
+      this.index = 1;
+      this.dataList = [];
+      this._getALLVoucher();
     },
     over() {
-      this.index = 2
-      this.dataList = []
-      this._getALLVoucher()
+      this.index = 2;
+      this.dataList = [];
+      this._getALLVoucher();
     },
     transfer() {
-      this.index = 3
-      this.dataList = []
-      this._getALLVoucher()
+      this.index = 3;
+      this.dataList = [];
+      this._getALLVoucher();
     },
     hide() {
-      this.showTrue = false
-      this._getALLVoucher()
+      this.showTrue = false;
+      this._getALLVoucher();
     },
     show(id) {
       // console.log(id)
-      this._getQRcode(id)
+      this._getQRcode(id);
     },
     showgi(id) {
-      this.giveUser.deliverer = this.UserID
-      this.giveUser.couponId = id
-      this.showgive = true
+      this.giveUser.deliverer = this.UserID;
+      this.giveUser.couponId = id;
+      this.showgive = true;
     },
     givetrue() {
-      this.time = '请稍后'
-      this._checkMobile()
+      this.time = "请稍后";
+      this._checkMobile();
     },
     giveargin() {
-      this.time = ''
+      this.time = "";
     },
     givequxiao() {
-      this.showgive = false
+      this.showgive = false;
     }
   }
-}
+};
 </script>
 
 <style>
@@ -407,7 +366,7 @@ img {
   align-items: center;
   overflow-x: auto;
 }
-.boxCode-title{
+.boxCode-title {
   margin-top: 50px;
   font-size: 28px;
   color: #161616;
@@ -487,12 +446,12 @@ img {
   line-height: 50px;
   margin: 80px auto;
 }
-.giveUser-inp>input {
+.giveUser-inp > input {
   height: 60px;
   border-bottom: 1px solid #ddd;
   outline: none;
   font-size: 24px;
-  width:380px;
+  width: 380px;
 }
 .give-btn {
   width: 70%;

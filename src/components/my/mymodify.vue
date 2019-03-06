@@ -2,173 +2,182 @@
   <div class="modify">
     <div class="modify-tou">
       <div class="tou" @click="uplode">
-        <img :src="user.url" alt="" v-if="!serverId">
-        <img :src="wxImg" alt="" v-else>
+        <img :src="user.url" alt v-if="!serverId">
+        <img :src="wxImg" alt v-else>
       </div>
       <div class="tou-btn" @click="uplode">点击修改头像</div>
     </div>
     <div class="modifyList">
       <div class="modifyItem">
-        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span> <input type="text" placeholder="请输入昵称" v-model="user.nickname">
+        <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
+        <input type="text" placeholder="请输入昵称" v-model="user.nickname">
       </div>
       <div class="line"></div>
       <div class="modifyItem">
-        <span>个性签名：</span><input type="text" placeholder="请输入个性签名" v-model="user.sign">
+        <span>个性签名：</span>
+        <input type="text" placeholder="请输入个性签名" v-model="user.sign">
       </div>
       <div class="line"></div>
       <div class="modifyItem">
         <span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
         <div class="sex">
-          <span @click="sexgentlemen"><img :src="trueiocn" v-if="user.sex == 1"> <img :src="weiiocn" v-else>男</span>
+          <span @click="sexgentlemen">
+            <img :src="trueiocn" v-if="user.sex == 1">
+            <img :src="weiiocn" v-else>男
+          </span>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span @click="sexLadies"><img :src="trueiocn" v-if="user.sex == 2"> <img :src="weiiocn" v-else>女</span>
+          <span @click="sexLadies">
+            <img :src="trueiocn" v-if="user.sex == 2">
+            <img :src="weiiocn" v-else>女
+          </span>
         </div>
       </div>
       <div class="line"></div>
       <div class="modifyItem" @click="setDate()">
         <span>出生日期：</span>
-        <span v-if="user.birthday !== null">{{dataTime | formatDate}} </span>
+        <span v-if="user.birthday !== null">{{dataTime | formatDate}}</span>
       </div>
     </div>
-    <div class="submission-btn" @click="_editUserInfoDetail">
-      保存
-    </div>
+    <div class="submission-btn" @click="_editUserInfoDetail">保存</div>
     <!-- <div class="MyMoDifyBox" v-if="showMyMoDifyBox">
       <div class="MoDifyBox">
         <p>修改成功</p>
         <div @click="toMy">返回个人中心</div>
       </div>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getUserInfoDetail, editUserInfoDetail, uploadHead, getParam } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
-import { wxChooseImage } from 'api/wxconfig'
+import { mapGetters } from "vuex";
+import {
+  getUserInfoDetail,
+  editUserInfoDetail,
+  uploadHead,
+  getParam
+} from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
+import { wxChooseImage } from "api/wxconfig";
 export default {
   data() {
     return {
-      imgTou: './static/myimg/my-tou.png',
-      weiiocn: './static/myimg/wei.png',
-      trueiocn: './static/myimg/true.png',
+      imgTou: "./static/myimg/my-tou.png",
+      weiiocn: "./static/myimg/wei.png",
+      trueiocn: "./static/myimg/true.png",
       sexMen: true,
       showMyMoDifyBox: false,
-      date: '',
+      date: "",
       user: {
         birthday: null,
-        nickname: '',
-        sex: '',
-        sign: '',
-        url: '',
-        userId: '',
-        birthDate: '',
-        pictureId: ''
+        nickname: "",
+        sex: "",
+        sign: "",
+        url: "",
+        userId: "",
+        birthDate: "",
+        pictureId: ""
       },
-      dataTime: '',
-      wxImg: '',
-      serverId: ''
-    }
+      dataTime: "",
+      wxImg: "",
+      serverId: ""
+    };
   },
   created() {
-    vxconfig(window.location.href.split('#')[0])
-    this._getUserInfoDetail()
+    vxconfig(window.location.href.split("#")[0]);
+    this._getUserInfoDetail();
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getUserInfoDetail() {
-      getUserInfoDetail(this.UserID).then((res) => {
+      getUserInfoDetail(this.UserID).then(res => {
         if (res.code === ERR_OK) {
           // console.log('查找个人信息============')
           // console.log(res.data)
-          this.user = res.data
+          this.user = res.data;
           // console.log(this.user.birthday)
-          this.dataTime = this.user.birthday
+          this.dataTime = this.user.birthday;
           // console.log(this.dataTime)
         }
-      })
+      });
     },
     _editUserInfoDetail() {
-      this.user.userId = this.UserID
-      this.user.birthDate = this.user.birthday
+      this.user.userId = this.UserID;
+      this.user.birthDate = this.user.birthday;
       // console.log(this.user)
-      editUserInfoDetail(this.user).then((res) => {
+      editUserInfoDetail(this.user).then(res => {
         if (res.code === ERR_OK) {
           // console.log('修改个人资料============')
           // console.log(res.data)
           this.$router.push({
-            path: '/My'
-          })
+            path: "/My"
+          });
         }
-      })
+      });
     },
     uplode() {
-      getParam(window.location.href.split('#')[0]).then(res => {
+      getParam(window.location.href.split("#")[0]).then(res => {
         if (res.code === ERR_OK) {
-          var self = this
+          var self = this;
           wx.config({
             debug: false,
             appId: res.data.appid,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signature,
-            jsApiList: ['chooseImage', 'uploadImage']
-          })
-          wx.ready(function () {
+            jsApiList: ["chooseImage", "uploadImage"]
+          });
+          wx.ready(function() {
             wx.chooseImage({
               count: 1, // 默认9
-              sizeType: ['original', 'compressed'],
-              sourceType: ['album', 'camera'],
-              success: function (res) {
+              sizeType: ["original", "compressed"],
+              sourceType: ["album", "camera"],
+              success: function(res) {
                 self.wxImg = res.localIds[0].toString();
                 wx.uploadImage({
                   localId: self.wxImg,
                   isShowProgressTips: 1,
-                  success: function (res) {
-                    self.serverId = res.serverId
+                  success: function(res) {
+                    self.serverId = res.serverId;
                   }
                 });
               }
             });
-          })
+          });
         }
-      })
+      });
     },
     setDate() {
       this.$picker.show({
-        type: 'datePicker',
+        type: "datePicker",
         onOk: date => {
-          this.user.birthday = date
+          this.user.birthday = date;
           // console.log(this.user.birthday)
-          this.dataTime = date.replace(new RegExp(/-/gm), '/')
+          this.dataTime = date.replace(new RegExp(/-/gm), "/");
         }
-      })
+      });
     },
     sexgentlemen() {
-      this.user.sex = 1
+      this.user.sex = 1;
     },
     sexLadies() {
-      this.user.sex = 2
+      this.user.sex = 2;
     }
   },
   watch: {
-    serverId: function () {
-      uploadHead(this.user.pictureId, this.serverId).then((res) => {
+    serverId: function() {
+      uploadHead(this.user.pictureId, this.serverId).then(res => {
         if (res.data) {
           // alert('保存成功')
         } else {
-          alert('保存失败')
-          this.wxImg = ''
+          alert("保存失败");
+          this.wxImg = "";
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style>

@@ -3,98 +3,79 @@
     <div class="submission-list">
       <div class="submission-title">
         <div class="submission-img">
-          <img :src="shoping.pictureUrl" alt="">
+          <img :src="shoping.pictureUrl" alt>
         </div>
         <div class="submission-name">
           <div class="submission-time">
             <p>{{shoping.name}}</p>
-            <p>{{shoping.termOfValidity}} |
+            <p>
+              {{shoping.termOfValidity}} |
               <span v-if="shoping.isBespeak === 1">需预约</span>
               <span v-else>不需预约</span>
             </p>
           </div>
-          <div class="new">
-            ¥{{shoping.newPrice | formatFee}}
-          </div>
+          <div class="new">¥{{shoping.newPrice | formatFee}}</div>
         </div>
       </div>
-      <div class="line">
-      </div>
+      <div class="line"></div>
       <div class="num">
-        <div class="num-title">
-          数量：
-        </div>
+        <div class="num-title">数量：</div>
         <div class="num-add">
-          <img :src="subIcon" alt="" @click="subclick">
+          <img :src="subIcon" alt @click="subclick">
           <span>{{num}}</span>
-          <img :src="addIcon" alt="" @click="addclick">
+          <img :src="addIcon" alt @click="addclick">
         </div>
       </div>
-      <div class="line">
-      </div>
+      <div class="line"></div>
       <div class="num">
-        <div class="num-title">
-          小计：
-        </div>
-        <div class="num-jiage">
-          ￥{{sum | formatFee}}
-        </div>
+        <div class="num-title">小计：</div>
+        <div class="num-jiage">￥{{sum | formatFee}}</div>
       </div>
-      <div class="line">
+      <div class="line"></div>
+      <div class="num" @click="showboxtrue">
+        <div class="num-title">优惠券：</div>
+        <div class="num-jiage">{{numquan}}</div>
       </div>
-      <div class="num" @click='showboxtrue'>
-        <div class="num-title">
-          优惠券：
-        </div>
-        <div class="num-jiage">
-          {{numquan}}
-        </div>
-      </div>
-      <div class="line">
-      </div>
-      <div class="num" @click='showboxtrue'>
-        <div class="iph-title">
-        手机号：
-      </div>
-      <div class="iph-jiage">
-        {{shoping.mobile}}
-      </div>
+      <div class="line"></div>
+      <div class="num" @click="showboxtrue">
+        <div class="iph-title">手机号：</div>
+        <div class="iph-jiage">{{shoping.mobile}}</div>
       </div>
     </div>
     <div class="submission-iph">
-      <div class="iph-title">
-        总计：
-      </div>
-      <div class="num-jiage">
-          ￥{{Allsum | formatFee}}
-      </div>
+      <div class="iph-title">总计：</div>
+      <div class="num-jiage">￥{{Allsum | formatFee}}</div>
     </div>
-    <div class="submission-btn" @click="sumBtn">
-      提交订单
-    </div>
-    <div class="box" v-if='showbox'>
+    <div class="submission-btn" @click="sumBtn">提交订单</div>
+    <div class="box" v-if="showbox">
       <div class="box-item">
         <div class="box-title">
-          <span @click='quxiao'>取消</span> 选择优惠券
-          <span class="box-true" @click='trueover'>确定</span>
+          <span @click="quxiao">取消</span> 选择优惠券
+          <span class="box-true" @click="trueover">确定</span>
         </div>
         <div class="line"></div>
         <div class="couponlist">
           <div>
-            <div class="couponitem" v-for="(item, index) in items.availableCoupons" :key="index" @click="activetrue(item, index)" :class="{couponitemactive: index == typeindex }">
+            <div
+              class="couponitem"
+              v-for="(item, index) in items.availableCoupons"
+              :key="index"
+              @click="activetrue(item, index)"
+              :class="{couponitemactive: index == typeindex }"
+            >
               <div class="couponitem-title">
                 <div class="couponitem-new">
                   <span>{{item.price/100}}</span>元
                 </div>
                 <div class="couponitem-name">
                   <p>{{item.name}}</p>
-                  <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
+                  <p>{{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
                 </div>
               </div>
               <div class="couponitem-footer">
                 <span>{{item.title}}</span>
-                <img src="./iconAct.png" alt="" v-if="index == typeindex">
-                <img src="./icon.png" alt="" v-else>
+                <img src="./iconAct.png" alt v-if="index == typeindex">
+                <img src="./icon.png" alt v-else>
               </div>
             </div>
           </div>
@@ -106,12 +87,10 @@
                 </div>
                 <div class="couponitem-name">
                   <p>{{item.name}}</p>
-                  <p> {{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
+                  <p>{{item.startTime | formatDate}} - {{item.endTime | formatDate}}</p>
                 </div>
               </div>
-              <div class="couponitem-footer">
-                {{item.title}}
-              </div>
+              <div class="couponitem-footer">{{item.title}}</div>
             </div>
           </div>
         </div>
@@ -121,10 +100,10 @@
 </template>
 
 <script>
-import { getGoodsOrderDetail, changeAddressById } from 'api/shopping'
-import { judgeAvailableCoupon, createWechatPayOrder } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
-import { mapGetters } from 'vuex'
+import { getGoodsOrderDetail, changeAddressById } from "api/shopping";
+import { judgeAvailableCoupon, createWechatPayOrder } from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -133,166 +112,168 @@ export default {
       sum: 0,
       Allsum: 0,
       typeindex: null,
-      numquan: '暂无可用',
-      img: './static/showImg/submission.png',
-      addIcon: './static/icon/add-icon.png',
-      subIcon: './static/icon/sub-icon.png',
-      imgRight: './static/icon/ic_back.png',
+      numquan: "暂无可用",
+      img: "./static/showImg/submission.png",
+      addIcon: "./static/icon/add-icon.png",
+      subIcon: "./static/icon/sub-icon.png",
+      imgRight: "./static/icon/ic_back.png",
       shoping: {
-        goodsId: '',
-        mobile: '',
+        goodsId: "",
+        mobile: "",
         num: 1,
         total: 1,
-        userId: '',
-        couponId: '',
-        count: ''
+        userId: "",
+        couponId: "",
+        count: ""
       },
       items: {},
       showbox: false,
-      quanprice: ''
-    }
+      quanprice: ""
+    };
   },
   created() {
-    this._getGoodsOrderDetail()
-    vxconfig(window.location.href.split('#')[0])
+    this._getGoodsOrderDetail();
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getGoodsOrderDetail() {
-      getGoodsOrderDetail(this.UserID, this.$route.params.id).then((res) => {
+      getGoodsOrderDetail(this.UserID, this.$route.params.id).then(res => {
         if (res.code === ERR_OK) {
-          console.log(res.data)
-          this.shoping = res.data
-          this.shoping.count = res.data.newPrice
-          this.shoping.num = 1
-          this.shoping.total = this.shoping.num * this.shoping.newPrice
-          this.sum = this.shoping.newPrice
-          this.Allsum = this.shoping.newPrice
-          this._getAllCoupon(this.shoping.total)
+          console.log(res.data);
+          this.shoping = res.data;
+          this.shoping.count = res.data.newPrice;
+          this.shoping.num = 1;
+          this.shoping.total = this.shoping.num * this.shoping.newPrice;
+          this.sum = this.shoping.newPrice;
+          this.Allsum = this.shoping.newPrice;
+          this._getAllCoupon(this.shoping.total);
         }
-      })
+      });
     },
     _getAllCoupon(newPrice) {
-      judgeAvailableCoupon(this.UserID, newPrice).then((res) => {
+      judgeAvailableCoupon(this.UserID, newPrice).then(res => {
         if (res.code === ERR_OK) {
-          console.log('优惠券=========================================')
-          console.log(res.data)
+          console.log("优惠券=========================================");
+          console.log(res.data);
           if (res.data.availableNumber == 0) {
-            this.numquan = '暂无可用'
+            this.numquan = "暂无可用";
           } else {
-            this.numquan = res.data.availableNumber + '个可用'
+            this.numquan = res.data.availableNumber + "个可用";
           }
-          this.items = res.data
+          this.items = res.data;
         }
-      })
+      });
     },
     _changeAddressById() {
-      this.shoping.userId = this.UserID
-      console.log(this.shoping)
-      changeAddressById(this.shoping).then((res) => {
+      this.shoping.userId = this.UserID;
+      console.log(this.shoping);
+      changeAddressById(this.shoping).then(res => {
         if (res.code === ERR_OK) {
-          createWechatPayOrder(window.location.href.split('#')[0], this.UserID, res.data).then(res => {
+          createWechatPayOrder(
+            window.location.href.split("#")[0],
+            this.UserID,
+            res.data
+          ).then(res => {
             if (res.code === ERR_OK) {
-              var self = this
+              var self = this;
               wx.config({
                 debug: false,
                 appId: res.data.appId,
                 timestamp: res.data.timeStamp,
                 nonceStr: res.data.nonceStr,
                 signature: res.data.signature,
-                jsApiList: ['chooseWXPay'],
-              })
-              wx.ready(function () {
+                jsApiList: ["chooseWXPay"]
+              });
+              wx.ready(function() {
                 wx.chooseWXPay({
                   appId: res.data.appId,
                   timestamp: res.data.timeStamp,
                   nonceStr: res.data.nonceStr,
                   package: res.data.package,
-                  signType: 'MD5',
+                  signType: "MD5",
                   paySign: res.data.paySign,
-                  success: function (res) {
+                  success: function(res) {
                     if (res.errMsg == "chooseWXPay:ok") {
                       self.$router.push({
-                        path: '/My/MyTransfer'
-                      })
+                        path: "/My/MyTransfer"
+                      });
                     }
                   },
-                  cancel: function (res) {
+                  cancel: function(res) {
                     self.$router.push({
-                      path: '/My/MyOrder'
-                    })
+                      path: "/My/MyOrder"
+                    });
                   },
-                  fail: function (res) {
+                  fail: function(res) {
                     self.$router.push({
-                      path: '/My/MyOrder'
-                    })
+                      path: "/My/MyOrder"
+                    });
                   }
                 });
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     },
     showboxtrue() {
-      this.showbox = true
-      this.shoping.couponId = ''
-      if ( this.items.availableNumber === 0) {
-        this.numquan = '暂无可用'
+      this.showbox = true;
+      this.shoping.couponId = "";
+      if (this.items.availableNumber === 0) {
+        this.numquan = "暂无可用";
       } else {
-        this.numquan = this.items.availableNumber + '个可用'
+        this.numquan = this.items.availableNumber + "个可用";
       }
-      this.shoping.total = this.shoping.newPrice * this.shoping.num
-      this.typeindex = null
-      this.num = this.shoping.num
-      this.sum = this.shoping.total
-      this.Allsum = this.shoping.total
+      this.shoping.total = this.shoping.newPrice * this.shoping.num;
+      this.typeindex = null;
+      this.num = this.shoping.num;
+      this.sum = this.shoping.total;
+      this.Allsum = this.shoping.total;
     },
     quxiao() {
-      this.showbox = false
-      this.numquan = '暂无可用'
+      this.showbox = false;
+      this.numquan = "暂无可用";
     },
     sumBtn() {
-      this._changeAddressById()
+      this._changeAddressById();
     },
     trueover() {
-      this.showbox = false
-      this.Allsum = this.Allsum - this.quanprice
-      this.shoping.total = this.Allsum
+      this.showbox = false;
+      this.Allsum = this.Allsum - this.quanprice;
+      this.shoping.total = this.Allsum;
     },
     subclick() {
       if (this.shoping.num === 1) {
-        return
+        return;
       }
-      this.shoping.num = this.shoping.num - 1
-      this.shoping.total = this.shoping.newPrice * this.shoping.num
-      this.num = this.shoping.num
-      this.sum = this.shoping.total
-      this.Allsum = this.sum
-      this.shoping.couponId = ''
-      this._getAllCoupon(this.shoping.total)
+      this.shoping.num = this.shoping.num - 1;
+      this.shoping.total = this.shoping.newPrice * this.shoping.num;
+      this.num = this.shoping.num;
+      this.sum = this.shoping.total;
+      this.Allsum = this.sum;
+      this.shoping.couponId = "";
+      this._getAllCoupon(this.shoping.total);
     },
     addclick() {
-      this.shoping.num = this.shoping.num + 1
-      this.shoping.total = this.shoping.newPrice * this.shoping.num
-      this.num = this.shoping.num
-      this.sum = this.shoping.total
-      this.Allsum = this.sum
-      this.shoping.couponId = ''
-      this._getAllCoupon(this.shoping.total)
+      this.shoping.num = this.shoping.num + 1;
+      this.shoping.total = this.shoping.newPrice * this.shoping.num;
+      this.num = this.shoping.num;
+      this.sum = this.shoping.total;
+      this.Allsum = this.sum;
+      this.shoping.couponId = "";
+      this._getAllCoupon(this.shoping.total);
     },
     activetrue(item, index) {
-      this.numquan = `- ${item.price/100}元`
-      this.quanprice = item.price
-      this.typeindex = index
-      this.shoping.couponId = item.id
+      this.numquan = `- ${item.price / 100}元`;
+      this.quanprice = item.price;
+      this.typeindex = index;
+      this.shoping.couponId = item.id;
     }
   }
-}
+};
 </script>
 <style scoped>
 img {
@@ -437,7 +418,7 @@ img {
   align-items: center;
   font-size: 30px;
 }
-.box-title>span {
+.box-title > span {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -519,7 +500,7 @@ img {
   margin-left: 70px;
 }
 .couponitem-footer {
-  padding:0 40px;
+  padding: 0 40px;
   height: 50px;
   display: flex;
   justify-content: space-between;

@@ -1,26 +1,29 @@
 <template>
   <div class="wish">
-    <div v-for="item in items.room">
+    <div v-for="(item, index) in items.room" :key="index">
       <div class="wish-title">
         <div class="wish-img">
-          <img :src="item.url" alt="">
+          <img :src="item.url" alt>
         </div>
         <div class="wish-name">
           <p>{{item.name}}</p>
-          <p>{{item.useTime}} <span v-if="item.isBespeak === 1">需要预约</span> <span v-else>无需预约</span></p>
+          <p>
+            {{item.useTime}}
+            <span v-if="item.isBespeak === 1">需要预约</span>
+            <span v-else>无需预约</span>
+          </p>
           <div class="new">
             <div>￥{{item.newPrice/100}}</div>
             <div class="newDetalis" @click="goDetalis(item.goodsId)">查看详情</div>
           </div>
         </div>
       </div>
-      <div class="line">
-      </div>
+      <div class="line"></div>
     </div>
-    <div v-for="item in items.food">
+    <div v-for="(item, index) in items.food" :key="index">
       <div class="wish-title">
         <div class="wish-img">
-          <img :src="item.url" alt="">
+          <img :src="item.url" alt>
         </div>
         <div class="wish-name">
           <p>{{item.name}}</p>
@@ -30,20 +33,16 @@
           </div>
         </div>
       </div>
-      <div class="line">
-      </div>
+      <div class="line"></div>
     </div>
-    <div class="wishNone" v-if="items.room.length == 0 && items.food.length == 0">
-      - 暂无信息 -
-    </div>
+    <div class="wishNone" v-if="items.room.length == 0 && items.food.length == 0">- 暂无信息 -</div>
   </div>
-
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getWishList } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
+import { mapGetters } from "vuex";
+import { getWishList } from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
 
 export default {
   data() {
@@ -52,34 +51,32 @@ export default {
         food: [],
         room: []
       }
-    }
+    };
   },
   created() {
-    this._getWishList()
-    vxconfig(window.location.href.split('#')[0])
+    this._getWishList();
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _getWishList() {
-      getWishList(this.UserID).then((res) => {
+      getWishList(this.UserID).then(res => {
         if (res.code === ERR_OK) {
           // console.log('获取心愿单============')
-          console.log(res.data)
-          this.items = res.data
+          console.log(res.data);
+          this.items = res.data;
         }
-      })
+      });
     },
     goDetalis(id) {
       this.$router.push({
         path: `/PurchaseDetalis/${id}`
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style>

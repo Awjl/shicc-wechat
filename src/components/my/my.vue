@@ -1,15 +1,15 @@
 <template>
   <div class="my">
     <div class="my-bg">
-      <img :src="imgbg" alt="">
-      <div class="my-notic" @click="goNotice" >
-        <img src="./myicon/notic.png" alt="">
+      <img :src="imgbg" alt>
+      <div class="my-notic" @click="goNotice">
+        <img src="./myicon/notic.png" alt>
         <span v-if="noticeNum != 0">{{noticeNum}}</span>
       </div>
       <div class="my-name">
         <div class="my-title" v-if="UserID">
           <div class="my-tou">
-            <img :src="usermun.url" alt="">
+            <img :src="usermun.url" alt>
           </div>
           <div class="title-name">
             <p>{{usermun.user.nickname}}</p>
@@ -37,46 +37,46 @@
     </div>
     <div class="mydetalis" @click="goOrder">
       <div class="my-item">
-        <img src="./myicon/myitem1.png" alt=""> 我的订单
+        <img src="./myicon/myitem1.png" alt> 我的订单
       </div>
-      <div class="one">
-        查看<img src="./myicon/my-right.png" alt="">
+      <div class="one">查看
+        <img src="./myicon/my-right.png" alt>
       </div>
     </div>
     <div class="myall" @click="gomodify">
       <div class="my-item">
-        <img src="./myicon/myitem2.png" alt=""> 资料修改
+        <img src="./myicon/myitem2.png" alt> 资料修改
       </div>
     </div>
     <div class="myall" @click="gowish">
       <div class="my-item">
-        <img src="./myicon/myitem3.png" alt=""> 我的心愿单
+        <img src="./myicon/myitem3.png" alt> 我的心愿单
       </div>
     </div>
     <div class="myall" @click="gointegral">
       <div class="my-item">
-        <img src="./myicon/myitem4.png" alt=""> 积分兑换
+        <img src="./myicon/myitem4.png" alt> 积分兑换
       </div>
     </div>
     <div class="myall" @click="gocoupon">
       <div class="my-item">
-        <img src="./myicon/myitem5.png" alt=""> 我的优惠券
+        <img src="./myicon/myitem5.png" alt> 我的优惠券
       </div>
     </div>
     <div class="myall" @click="gotransfer" style="border:none;">
       <div class="my-item">
-        <img src="./myicon/myitem8.png" alt=""> 我的代金券
+        <img src="./myicon/myitem8.png" alt> 我的代金券
       </div>
     </div>
     <div class="he10"></div>
     <div class="myall" @click="goaddres(2)">
       <div class="my-item">
-        <img src="./myicon/myitem6.png" alt=""> 收货地址
+        <img src="./myicon/myitem6.png" alt> 收货地址
       </div>
     </div>
     <div class="myall" @click="gopassword">
       <div class="my-item">
-        <img src="./myicon/myitem7.png" alt=""> 修改密码
+        <img src="./myicon/myitem7.png" alt> 修改密码
       </div>
     </div>
     <not-logged v-if="notShow"></not-logged>
@@ -84,18 +84,18 @@
 </template>
 
 <script>
-import NotLogged from 'base/notlogin/notlogin'
-import { mapGetters } from 'vuex'
-import { getUserInfo,isVoucherOverdue } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
+import NotLogged from "base/notlogin/notlogin";
+import { mapGetters } from "vuex";
+import { getUserInfo, isVoucherOverdue } from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
 
 export default {
   data() {
     return {
-      imgbg: './static/myimg/my-bg.png',
-      imgTou: './static/myimg/my-tou.png',
+      imgbg: "./static/myimg/my-bg.png",
+      imgTou: "./static/myimg/my-tou.png",
       notShow: false,
-      noticeNum: '0',
+      noticeNum: "0",
       usermun: {
         couponNum: 0,
         loveNum: 0,
@@ -103,123 +103,121 @@ export default {
           points: 0
         }
       }
-    }
+    };
   },
   created() {
-    vxconfig(window.location.href.split('#')[0])
+    vxconfig(window.location.href.split("#")[0]);
     if (this.UserID) {
-      this._getUserInfo()
-      this._isVoucherOverdue()
+      this._getUserInfo();
+      this._isVoucherOverdue();
     }
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
-  methods:{
+  methods: {
     _isVoucherOverdue() {
       isVoucherOverdue(this.UserID).then(res => {
         if (res.code === ERR_OK) {
-          this.noticeNum = res.data
+          this.noticeNum = res.data;
         }
-      })
+      });
     },
     _getUserInfo() {
-      getUserInfo(this.UserID).then((res) => {
+      getUserInfo(this.UserID).then(res => {
         if (res.code === ERR_OK) {
-          this.usermun = res.data
+          this.usermun = res.data;
         }
-      })
+      });
     },
     goNotice() {
       if (this.UserID) {
         this.$router.push({
-          path: '/MyNotice'
-        })
+          path: "/MyNotice"
+        });
       }
     },
     notShowbox() {
       if (!this.UserID) {
         this.$router.push({
-          path: '/Login'
-        })
+          path: "/Login"
+        });
       }
     },
     gowish() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
-          path: '/MyWish'
-        })
+          path: "/MyWish"
+        });
       }
     },
     gocoupon() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
-          path: '/MyCoupon'
-        })
+          path: "/MyCoupon"
+        });
       }
     },
     goOrder() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
-          path: '/My/MyOrder'
-        })
+          path: "/My/MyOrder"
+        });
       }
     },
     gotransfer() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
-          path: '/My/MyTransfer'
-        })
+          path: "/My/MyTransfer"
+        });
       }
     },
     gomodify() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
-          path: '/MyModify'
-        })
+          path: "/MyModify"
+        });
       }
     },
     goaddres(type) {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
           path: `/MyAddres/${type}`
-        })
+        });
       }
     },
     gointegral() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
-          path: '/My/MyIntegral'
-        })
+          path: "/My/MyIntegral"
+        });
       }
     },
     gopassword() {
-      this.notShowbox()
+      this.notShowbox();
       if (this.UserID) {
         this.$router.push({
-          path: '/MyPassword'
-        })
+          path: "/MyPassword"
+        });
       }
     },
     gologin() {
       this.$router.push({
-        path: '/Login'
-      })
+        path: "/Login"
+      });
     }
   },
   components: {
     NotLogged
   }
-}
+};
 </script>
 
 <style scoped>
@@ -254,7 +252,7 @@ img {
   text-align: center;
   line-height: 30px;
   border-radius: 50%;
-  background: #ED6969;
+  background: #ed6969;
   color: #fff;
   font-size: 18px;
 }

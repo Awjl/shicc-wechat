@@ -1,8 +1,13 @@
 <template>
   <div class="myadd">
     <ul>
-      <li class="myadd-item " v-for="(item,index) in list " data-type="0" :key="index">
-        <div class="myadd-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip(item.id)">
+      <li class="myadd-item" v-for="(item,index) in list " data-type="0" :key="index">
+        <div
+          class="myadd-box"
+          @touchstart.capture="touchStart"
+          @touchend.capture="touchEnd"
+          @click="skip(item.id)"
+        >
           <div class="myadd-content">
             <div class="myadd-left">
               <div class="myaddtitle">
@@ -11,139 +16,133 @@
               </div>
               <p>{{item.city}}{{item.address}}</p>
             </div>
-            <div class="myadd-right" @click.stop="addAddres(item.id)">
-              修改<img :src="rightImg" alt="">
+            <div class="myadd-right" @click.stop="addAddres(item.id)">修改
+              <img :src="rightImg" alt>
             </div>
           </div>
         </div>
         <div class="delete" @click="deleteItem(index, item.id)" :data-index="index">删除</div>
       </li>
     </ul>
-    <div class="addAddres" @click="addAddres(null)">
-      +添加收货信息
-    </div>
+    <div class="addAddres" @click="addAddres(null)">+添加收货信息</div>
     <div class="myaddline"></div>
-    <div class="footer">
-    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import { getAllAddress, deleteAddressById } from 'api/user'
-import { ERR_OK, vxconfig } from 'api/config'
+import { mapGetters, mapMutations } from "vuex";
+import { getAllAddress, deleteAddressById } from "api/user";
+import { ERR_OK, vxconfig } from "api/config";
 
 export default {
   data() {
     return {
-      rightImg: './static/icon/addres.png',
+      rightImg: "./static/icon/addres.png",
       list: [],
       startX: 0,
       endX: 0
-    }
+    };
   },
   created() {
-    vxconfig(window.location.href.split('#')[0])
-    this._getAllAddress()
+    vxconfig(window.location.href.split("#")[0]);
+    this._getAllAddress();
   },
   computed: {
-    ...mapGetters([
-      'UserID',
-      'AddresId'
-    ])
+    ...mapGetters(["UserID", "AddresId"])
   },
   methods: {
     ...mapMutations({
-      setAddres: 'SET_ADDRES'
+      setAddres: "SET_ADDRES"
     }),
     _getAllAddress() {
-      getAllAddress(this.UserID).then((res) => {
+      getAllAddress(this.UserID).then(res => {
         if (res.code === ERR_OK) {
           // console.log('查询所有地址信息=============')
           // console.log(res.data)
-          this.list = res.data
+          this.list = res.data;
         }
-      })
+      });
     },
     _deleteAddressById(id) {
-      deleteAddressById(id).then((res) => {
+      deleteAddressById(id).then(res => {
         if (res.code === ERR_OK) {
           // console.log('删除地址信息=============')
           // console.log(res.data)
         }
-      })
+      });
     },
     addAddres(id) {
       // console.log(id)
       this.$router.push({
         path: `/AddAddres/${id}`
-      })
+      });
     },
     // 跳转
     skip(id) {
       if (this.checkSlide()) {
-        this.restSlide()
+        this.restSlide();
       } else {
-        if (this.$route.params.type === '1') {
-          this.$store.commit('SET_ADDRES', id)
+        if (this.$route.params.type === "1") {
+          this.$store.commit("SET_ADDRES", id);
           // console.log(this.AddresId)
-          this.$router.back(-1)
+          this.$router.back(-1);
         }
       }
     },
     // 滑动开始
     touchStart(e) {
       // 记录初始位置
-      this.startX = e.touches[0].clientX
+      this.startX = e.touches[0].clientX;
     },
     // 滑动结束
     touchEnd(e) {
       // 当前滑动的父级元素
-      let parentElement = e.currentTarget.parentElement
+      let parentElement = e.currentTarget.parentElement;
       // 记录结束位置
-      this.endX = e.changedTouches[0].clientX
+      this.endX = e.changedTouches[0].clientX;
       // 左滑
-      if (parentElement.dataset.type === '0' && this.startX - this.endX > 30) {
-        this.restSlide()
-        parentElement.dataset.type = '1'
+      if (parentElement.dataset.type === "0" && this.startX - this.endX > 30) {
+        this.restSlide();
+        parentElement.dataset.type = "1";
       }
       // 右滑
-      if (parentElement.dataset.type === '1' && this.startX - this.endX < -30) {
-        this.restSlide()
-        parentElement.dataset.type = 0
+      if (parentElement.dataset.type === "1" && this.startX - this.endX < -30) {
+        this.restSlide();
+        parentElement.dataset.type = 0;
       }
-      this.startX = 0
-      this.endX = 0
+      this.startX = 0;
+      this.endX = 0;
     },
     // 判断当前是否有滑块处于滑动状态
     checkSlide() {
-      let listItems = document.querySelectorAll('.list-item')
+      let listItems = document.querySelectorAll(".list-item");
       for (let i = 0; i < listItems.length; i++) {
-        if (listItems[i].dataset.type === '1') {
-          return true
+        if (listItems[i].dataset.type === "1") {
+          return true;
         }
       }
-      return false
+      return false;
     },
     // 复位滑动状态
     restSlide() {
-      let listItems = document.querySelectorAll('.list-item')
+      let listItems = document.querySelectorAll(".list-item");
       // 复位
       for (let i = 0; i < listItems.length; i++) {
-        listItems[i].dataset.type = '0'
+        listItems[i].dataset.type = "0";
       }
     },
     // 删除
     deleteItem(index, id) {
       // 当前索引
       // 复位
-      this.restSlide()
+      this.restSlide();
       // 删除
-      this.list.splice(index, 1)
-      this._deleteAddressById(id)
+      this.list.splice(index, 1);
+      this._deleteAddressById(id);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -164,10 +163,10 @@ ul {
   transition: all 0.2s;
   margin-bottom: 10px;
 }
-.myadd-item[data-type='0'] {
+.myadd-item[data-type="0"] {
   transform: translate3d(0, 0, 0);
 }
-.myadd-item[data-type='1'] {
+.myadd-item[data-type="1"] {
   transform: translate3d(-100px, 0, 0);
 }
 

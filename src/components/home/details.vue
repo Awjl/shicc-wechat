@@ -4,59 +4,57 @@
       <stack ref="stack" :pages="someList" :stackinit="stackinit"></stack>
     </div>
     <div class="OverBox-img" @click="goBack">
-      <img :src="overImg" alt="">
+      <img :src="overImg" alt>
     </div>
   </div>
 </template>
 <script>
-import stack from 'base/stack/stack'
+import stack from "base/stack/stack";
 
-import { getBar } from 'api/homeapi'
-import { ERR_OK, vxconfig } from 'api/config'
-import { mapGetters } from 'vuex'
+import { getBar } from "api/homeapi";
+import { ERR_OK, vxconfig } from "api/config";
+import { mapGetters } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
-      overImg: './static/icon/done.png',
+      overImg: "./static/icon/done.png",
       someList: [],
       stackinit: {
         visible: 3
       },
       user: 0,
       dataList: []
-    }
+    };
   },
-  created () {
-    vxconfig(window.location.href.split('#')[0])
+  created() {
+    vxconfig(window.location.href.split("#")[0]);
     if (this.UserID) {
-      this.user = this.UserID
-      this._getBar(this.user)
+      this.user = this.UserID;
+      this._getBar(this.user);
     }
   },
   components: {
     stack
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
-    _getBar (user) {
-      getBar(user, this.$route.params.barid).then((res) => {
+    _getBar(user) {
+      getBar(user, this.$route.params.barid).then(res => {
         if (res.code === ERR_OK) {
           // console.log(`吧详情banner=====`)
           // console.log(res.data)
-          this.someList = res.data
+          this.someList = res.data;
         }
-      })
+      });
     },
-    goBack () {
-      this.$router.back(-1)
+    goBack() {
+      this.$router.back(-1);
     }
   }
-}
+};
 </script>
 <style>
 .stackAll {

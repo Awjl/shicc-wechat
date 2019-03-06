@@ -1,7 +1,7 @@
 <template>
   <div class="service">
     <div class="service-box">
-      <img :src="service" alt="" >
+      <img :src="service" alt>
       <div class="service-title">
         <p class="sie-24">在线客服</p>
         <div class="he10"></div>
@@ -20,71 +20,73 @@
       @click="detile($event)"
       style="height:16px;"
       v-for="(item, index) in dataList"
-      :key="index">
+      :key="index"
+    >
       <div class="hot-name">
         <div class="hot-span">
-          <span>&#8226;</span>{{item.question}}
+          <span>&#8226;</span>
+          {{item.question}}
         </div>
         <div class="hot-right">
-          <img :src="rightimg" alt="">
+          <img :src="rightimg" alt>
         </div>
       </div>
       <div class="he10"></div>
-      <div class="hot-text">
-        {{item.answer}}
-      </div>
+      <div class="hot-text">{{item.answer}}</div>
     </div>
   </div>
 </template>
 
 <script>
-import { getAllHotIssues, getPhone } from 'api/homeapi'
-import { ERR_OK, vxconfig} from 'api/config'
+import { getAllHotIssues, getPhone } from "api/homeapi";
+import { ERR_OK, vxconfig } from "api/config";
 
 export default {
   data() {
     return {
-      service: './static/myimg/service.png',
-      rightimg: './static/icon/ic_back.png',
+      service: "./static/myimg/service.png",
+      rightimg: "./static/icon/ic_back.png",
       dataList: [],
-      phone: ''
-    }
+      phone: ""
+    };
   },
   created() {
-    this._getAllHotIssues()
-    this._getPhone()
-    vxconfig(window.location.href.split('#')[0])
+    this._getAllHotIssues();
+    this._getPhone();
+    vxconfig(window.location.href.split("#")[0]);
   },
   methods: {
     _getPhone() {
-      getPhone().then((res) => {
+      getPhone().then(res => {
         if (res.code === ERR_OK) {
           // console.log('电话-----------------------')
           // console.log(res.data)
-          this.phone = `tel:${res.data}`
+          this.phone = `tel:${res.data}`;
         }
-      })
+      });
     },
     _getAllHotIssues() {
-      getAllHotIssues().then((res) => {
+      getAllHotIssues().then(res => {
         if (res.code === ERR_OK) {
           // console.log('热门问题=======')
           // console.log(res.data)
-          this.dataList = res.data
+          this.dataList = res.data;
         }
-      })
+      });
     },
     detile(e) {
       if (e.currentTarget.style.height) {
-        e.currentTarget.style.height = ''
-        e.currentTarget.children[0].children[1].style.transform = 'rotate(90deg)'
+        e.currentTarget.style.height = "";
+        e.currentTarget.children[0].children[1].style.transform =
+          "rotate(90deg)";
       } else {
-        e.currentTarget.style.height = 16 + 'px'
-        e.currentTarget.children[0].children[1].style.transform = 'rotate(-90deg)'
+        e.currentTarget.style.height = 16 + "px";
+        e.currentTarget.children[0].children[1].style.transform =
+          "rotate(-90deg)";
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>

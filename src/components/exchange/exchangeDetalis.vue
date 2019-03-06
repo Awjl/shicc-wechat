@@ -4,7 +4,7 @@
     <div class="exchangeDetalistitle">
       <div class="exchangeDetalisname">
         {{listImg.pointGoods.name}}
-        <p> {{listImg.pointGoods.summary}}</p>
+        <p>{{listImg.pointGoods.summary}}</p>
       </div>
       <div class="exchangeDetalistitle-jiage">
         <span class="new" v-if="type === '1'">{{listImg.pointGoods.v1NewPoint}}积分</span>
@@ -15,40 +15,33 @@
     <div class="line"></div>
     <div class="detalis">
       <div class="submission-iph" @click="showbox()">
-        <div class="iph-title">
-          已选择：{{listImg.pointGoods.kind[trueind]}}
-        </div>
+        <div class="iph-title">已选择：{{listImg.pointGoods.kind[trueind]}}</div>
         <div class="iph-jiage">
-          <img :src="imgRight" alt="">
+          <img :src="imgRight" alt>
         </div>
       </div>
       <div class="detalisLine"></div>
       <div class="detailsTitle">商品参数：</div>
       <div class="detailsItem">
-        <p v-for="(item, index) in listImg.pointGoods.param" :key="index">{{item.key}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.name}}</p>
+        <p
+          v-for="(item, index) in listImg.pointGoods.param"
+          :key="index"
+        >{{item.key}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.name}}</p>
       </div>
       <div class="detailsTitle">商品详情图：</div>
     </div>
     <div class="detalisImg">
-      <img :src="item.url" alt="" v-for="(item, index) in listImg.introduce" :key="index">
+      <img :src="item.url" alt v-for="(item, index) in listImg.introduce" :key="index">
     </div>
 
     <div v-if="level>= type">
       <div v-if="listImg.pointGoods.stock > 0">
-        <div class="footer" @click="goTrue" v-if='showtreu'>
-          立即兑换
-        </div>
-        <div class="footer-active" v-else>
-          积分不足
-        </div>
+        <div class="footer" @click="goTrue" v-if="showtreu">立即兑换</div>
+        <div class="footer-active" v-else>积分不足</div>
       </div>
-      <div class="footer-active" v-else>
-        库存不足
-      </div>
+      <div class="footer-active" v-else>库存不足</div>
     </div>
-    <div class="footer-active" v-else>
-      您的级别不够
-    </div>
+    <div class="footer-active" v-else>您的级别不够</div>
     <div class="box" v-if="show">
       <div class="box-width">
         <div class="box-title">
@@ -56,120 +49,137 @@
           <span @click="boxtrue">确定</span>
         </div>
         <ul>
-          <li v-for="(item, index) in listImg.pointGoods.kind" :key="index" :class="{ active: ind == index }" @click="tabsort(index)">{{item}}</li>
+          <li
+            v-for="(item, index) in listImg.pointGoods.kind"
+            :key="index"
+            :class="{ active: ind == index }"
+            @click="tabsort(index)"
+          >{{item}}</li>
         </ul>
-        <div class="box-btn">
-
-        </div>
+        <div class="box-btn"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Swiper from 'base/swiper/swiper'
-import { getPointGoodsDetailById, isEnoughPoint } from 'api/shopping'
-import { ERR_OK, vxconfig} from 'api/config'
-import { mapGetters } from 'vuex'
+import Swiper from "base/swiper/swiper";
+import { getPointGoodsDetailById, isEnoughPoint } from "api/shopping";
+import { ERR_OK, vxconfig } from "api/config";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      imgRight: './static/icon/ic_back.png',
+      imgRight: "./static/icon/ic_back.png",
       listImg: {
         pointGoods: {
-          name: '',
-          summary: '',
+          name: "",
+          summary: "",
           param: {},
           kind: []
         }
       },
-      imgItem: [{ img: './static/showImg/details3.png' }, { img: './static/showImg/details1.png' }, { img: './static/showImg/details2.png' }],
-      type: '',
-      level: '',
+      imgItem: [
+        { img: "./static/showImg/details3.png" },
+        { img: "./static/showImg/details1.png" },
+        { img: "./static/showImg/details2.png" }
+      ],
+      type: "",
+      level: "",
       ind: 0,
       trueind: 0,
       show: false,
       showtreu: false
-    }
+    };
   },
   created() {
-    this._getPointGoodsDetailById()
-    vxconfig(window.location.href.split('#')[0])
+    this._getPointGoodsDetailById();
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   methods: {
     _isEnoughPoint() {
-      if (this.type === '1') {
-        isEnoughPoint(this.UserID, this.listImg.pointGoods.v1NewPoint).then((res) => {
-          if (res.code === ERR_OK) {
-            // console.log('判断积分是否做够===========')
-            // console.log(res.data)
-            this.showtreu = res.data
+      if (this.type === "1") {
+        isEnoughPoint(this.UserID, this.listImg.pointGoods.v1NewPoint).then(
+          res => {
+            if (res.code === ERR_OK) {
+              // console.log('判断积分是否做够===========')
+              // console.log(res.data)
+              this.showtreu = res.data;
+            }
           }
-        })
+        );
       } else {
-        isEnoughPoint(this.UserID, this.listImg.pointGoods.v2NewPoint).then((res) => {
-          if (res.code === ERR_OK) {
-            // console.log('判断积分是否做够===========')
-            // console.log(res.data)
-            this.showtreu = res.data
+        isEnoughPoint(this.UserID, this.listImg.pointGoods.v2NewPoint).then(
+          res => {
+            if (res.code === ERR_OK) {
+              // console.log('判断积分是否做够===========')
+              // console.log(res.data)
+              this.showtreu = res.data;
+            }
           }
-        })
+        );
       }
     },
     _getPointGoodsDetailById() {
-      getPointGoodsDetailById(this.$route.params.id).then((res) => {
+      getPointGoodsDetailById(this.$route.params.id).then(res => {
         if (res.code === ERR_OK) {
           if (res.code === ERR_OK) {
             // console.log('积分详情=============')
             // console.log(res.data)
-            this.type = this.$route.params.type
-            this.level = this.$route.params.level
+            this.type = this.$route.params.type;
+            this.level = this.$route.params.level;
             // console.log(this.type === '1')
-            this.listImg = res.data
-            this.listImg.pointGoods.param = JSON.parse(this.listImg.pointGoods.param)
-            console.log(res.data)
-            console.log(this.listImg)
-            this.listImg.pointGoods.kind = this.listImg.pointGoods.kind.split('/')
-            this._isEnoughPoint()
+            this.listImg = res.data;
+            this.listImg.pointGoods.param = JSON.parse(
+              this.listImg.pointGoods.param
+            );
+            console.log(res.data);
+            console.log(this.listImg);
+            this.listImg.pointGoods.kind = this.listImg.pointGoods.kind.split(
+              "/"
+            );
+            this._isEnoughPoint();
           }
         }
-      })
+      });
     },
     boxtrue() {
-      this.trueind = this.ind
-      this.show = false
+      this.trueind = this.ind;
+      this.show = false;
     },
     boxquxiao() {
-      this.show = false
+      this.show = false;
     },
     showbox() {
-      this.show = true
+      this.show = true;
     },
     goTrue() {
-      if (this.type === '1') {
+      if (this.type === "1") {
         this.$router.push({
-          path: `/TrueExchange/${this.listImg.pointGoods.id}/${this.listImg.pointGoods.kind[this.trueind]}/${this.listImg.pointGoods.v1NewPoint}`
-        })
+          path: `/TrueExchange/${this.listImg.pointGoods.id}/${
+            this.listImg.pointGoods.kind[this.trueind]
+          }/${this.listImg.pointGoods.v1NewPoint}`
+        });
       } else {
         this.$router.push({
-          path: `/TrueExchange/${this.listImg.pointGoods.id}/${this.listImg.pointGoods.kind[this.trueind]}/${this.listImg.pointGoods.v2NewPoint}`
-        })
+          path: `/TrueExchange/${this.listImg.pointGoods.id}/${
+            this.listImg.pointGoods.kind[this.trueind]
+          }/${this.listImg.pointGoods.v2NewPoint}`
+        });
       }
     },
     tabsort(index) {
-      this.ind = index
+      this.ind = index;
     }
   },
   components: {
     Swiper
   }
-}
+};
 </script>
 
 <style scoped>
@@ -255,12 +265,10 @@ img {
   letter-spacing: 1px;
   text-align: left;
   padding: 0 30px;
-
 }
-.exchangeDetalisname >p {
+.exchangeDetalisname > p {
   font-size: 24px;
-    color: #9b9b9b;
-
+  color: #9b9b9b;
 }
 .name p {
   font-size: 20px;
@@ -284,7 +292,7 @@ img {
   text-align: center;
 }
 .exchangeDetalistitle-jiage .old::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 45%;

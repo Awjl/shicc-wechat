@@ -1,52 +1,16 @@
 <template>
   <div class="exchange">
     <div class="exchange-bg">
-      <img
-        :src="bg"
-        alt=""
-        style="vertical-align:middle"
-      >
-      <div
-        class="exchange-title"
-        v-if="showLevel"
-      >
-        您现有积分
-      </div>
-      <div
-        class="exchange-num"
-        v-if='showLevel'
-      >
-        {{Levelnum.points}}
-      </div>
-      <div
-        class="exchange-btn"
-        v-if='!showLevel'
-        @click="gologin"
-      >
-        去登陆
-      </div>
-      <div
-        class="lvavel"
-        v-if='showLevel && Levelnum.level == 1'
-      >
-        V1会员
-      </div>
-      <div
-        class="lvavel"
-        v-if='showLevel && Levelnum.level == 2'
-      >
-        V2会员
-      </div>
+      <img :src="bg" alt style="vertical-align:middle">
+      <div class="exchange-title" v-if="showLevel">您现有积分</div>
+      <div class="exchange-num" v-if="showLevel">{{Levelnum.points}}</div>
+      <div class="exchange-btn" v-if="!showLevel" @click="gologin">去登陆</div>
+      <div class="lvavel" v-if="showLevel && Levelnum.level == 1">V1会员</div>
+      <div class="lvavel" v-if="showLevel && Levelnum.level == 2">V2会员</div>
     </div>
     <div class="purchase-nav">
-      <span
-        :class="{active: show}"
-        @click="tabOne()"
-      >V1会员区</span>
-      <span
-        :class="{active: !show}"
-        @click="tabTwo()"
-      >V2尊享区</span>
+      <span :class="{active: show}" @click="tabOne()">V1会员区</span>
+      <span :class="{active: !show}" @click="tabTwo()">V2尊享区</span>
     </div>
     <div class="exchangelist">
       <div
@@ -56,55 +20,41 @@
         @click="goDetalis(item.id, type, Levelnum.level)"
       >
         <div class="exchangelist-img">
-          <img
-            :src="item.pictureUrl"
-            alt=""
-          >
+          <img :src="item.pictureUrl" alt>
         </div>
         <div class="item-title">
           <p>{{item.name}}</p>
           <div class="item-jiage">
-            <span
-              class="new"
-              v-if="show"
-            >{{item.v1NewPoint}}积分</span>
-            <span
-              class="new"
-              v-else
-            >{{item.v2NewPoint}}积分</span>
+            <span class="new" v-if="show">{{item.v1NewPoint}}积分</span>
+            <span class="new" v-else>{{item.v2NewPoint}}积分</span>
             <span class="old">￥{{item.oldPoint}}</span>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="bottom"
-      v-if="!showover"
-    >- 到底了 -</div>
+    <div class="bottom" v-if="!showover">- 到底了 -</div>
     <mugen-scroll
       :handler="fetchData"
       :should-handle="!loading"
       v-if="showover"
       class="bottom"
-    >
-      - 加载中 -
-    </mugen-scroll>
+    >- 加载中 -</mugen-scroll>
     <not-logged v-if="notShow"></not-logged>
   </div>
 </template>
 
 <script>
-import NotLogged from 'base/notlogin/notlogin'
-import MugenScroll from 'vue-mugen-scroll'
-import { ERR_OK, vxconfig } from 'api/config'
-import { getUserLevel } from 'api/user'
-import { getV1PointGoods, getV2PointGoods } from 'api/shopping'
-import { mapGetters } from 'vuex'
+import NotLogged from "base/notlogin/notlogin";
+import MugenScroll from "vue-mugen-scroll";
+import { ERR_OK, vxconfig } from "api/config";
+import { getUserLevel } from "api/user";
+import { getV1PointGoods, getV2PointGoods } from "api/shopping";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      bg: './static/exchangeImg/bg.png',
+      bg: "./static/exchangeImg/bg.png",
       show: true,
       notShow: false,
       showLevel: true,
@@ -115,21 +65,19 @@ export default {
       items: [],
       loading: false,
       type: 1
-    }
+    };
   },
   created() {
     if (this.UserID) {
-      this._getUserLevel(this.UserID)
+      this._getUserLevel(this.UserID);
     } else {
-      this.showLevel = false
+      this.showLevel = false;
     }
-    this._getV1PointGoods(this.pn, this.pg)
-    vxconfig(window.location.href.split('#')[0])
+    this._getV1PointGoods(this.pn, this.pg);
+    vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
-    ...mapGetters([
-      'UserID'
-    ])
+    ...mapGetters(["UserID"])
   },
   components: {
     NotLogged,
@@ -137,100 +85,100 @@ export default {
   },
   methods: {
     _getUserLevel(id) {
-      getUserLevel(id).then((res) => {
+      getUserLevel(id).then(res => {
         if (res.code === ERR_OK) {
           // console.log('会员积分=============')
           // console.log(res.data)
-          this.showLevel = true
-          this.Levelnum = res.data
+          this.showLevel = true;
+          this.Levelnum = res.data;
         }
-      })
+      });
     },
     _getV1PointGoods(pn, pg) {
-      getV1PointGoods(pn, pg).then((res) => {
+      getV1PointGoods(pn, pg).then(res => {
         if (res.code === ERR_OK) {
           // console.log('获取V1积分列表==================')
           // console.log(res.data)
-          let vm = this
+          let vm = this;
           if (res.data.length === 0) {
-            this.showover = false
+            this.showover = false;
           } else {
-            res.data.forEach(function (value, index, array) {
-              vm.items.push(value)
-            })
-            this.loading = false
+            res.data.forEach(function(value, index, array) {
+              vm.items.push(value);
+            });
+            this.loading = false;
           }
         }
-      })
+      });
     },
     _getV2PointGoods(pn, pg) {
-      getV2PointGoods(pn, pg).then((res) => {
+      getV2PointGoods(pn, pg).then(res => {
         if (res.code === ERR_OK) {
           // console.log('获取V2积分列表==================')
           // console.log(res.data)
-          let vm = this
+          let vm = this;
           if (res.data.length === 0) {
-            this.showover = false
+            this.showover = false;
           } else {
-            res.data.forEach(function (value, index, array) {
-              vm.items.push(value)
-            })
-            this.loading = false
+            res.data.forEach(function(value, index, array) {
+              vm.items.push(value);
+            });
+            this.loading = false;
           }
         }
-      })
+      });
     },
     gologin() {
       this.$router.push({
-        path: '/Login'
-      })
+        path: "/Login"
+      });
     },
     fetchData() {
-      this.loading = true
-      this.pn++
+      this.loading = true;
+      this.pn++;
       if (this.show) {
-        this._getV1PointGoods(this.pn, this.pg)
+        this._getV1PointGoods(this.pn, this.pg);
       } else {
-        this._getV2PointGoods(this.pn, this.pg)
+        this._getV2PointGoods(this.pn, this.pg);
       }
     },
     notShowbox() {
       if (!this.UserID) {
         this.$router.push({
-          path: '/Login'
-        })
+          path: "/Login"
+        });
       }
     },
     tabOne() {
-      this.showover = true
-      this.show = true
-      this.pn = 1
-      this.items = []
-      this.type = 1
-      this._getV1PointGoods(this.pn, this.pg)
+      this.showover = true;
+      this.show = true;
+      this.pn = 1;
+      this.items = [];
+      this.type = 1;
+      this._getV1PointGoods(this.pn, this.pg);
     },
     tabTwo() {
       if (this.Levelnum.level === 1) {
-        alert('您现在还没达到购买资格')
+        alert("您现在还没达到购买资格");
       }
-      this.showover = true
-      this.show = false
-      this.pn = 1
-      this.items = []
-      this.type = 2
-      this._getV2PointGoods(this.pn, this.pg)
+      this.showover = true;
+      this.show = false;
+      this.pn = 1;
+      this.items = [];
+      this.type = 2;
+      this._getV2PointGoods(this.pn, this.pg);
     },
     goDetalis(id, type, level) {
-      this.notShowbox()
+      this.notShowbox();
       // console.log(type)
       if (this.UserID) {
         this.$router.push({
           path: `/ExchangeDetalis/${id}/${type}/${level}`
-        })
+        });
       }
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -326,7 +274,7 @@ img {
 
 .exchangelist {
   width: 100%;
-  padding:0 40px 40px;
+  padding: 30px 30px 0;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;

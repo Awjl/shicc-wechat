@@ -3,33 +3,30 @@
     <div class="QRsuccess">
       <div class="QRsuccess-title">{{dataname}}</div>
       <div>
-        <img :src="TrueImg" alt="">
+        <img :src="TrueImg" alt>
       </div>
-      <div class="goHome" @click="closeWx">
-        关闭页面
-      </div>
+      <div class="goHome" @click="closeWx">关闭页面</div>
     </div>
   </div>
 </template>
 <script>
-import { successParkPay } from 'api/login'
+import { successParkPay } from "api/login";
 export default {
   data() {
     return {
-      dataname: '支付成功',
-      TrueImg: './static/icon/true-iocn.png',
-    }
+      dataname: "支付成功",
+      TrueImg: "./static/icon/true-iocn.png"
+    };
   },
   created() {
-    successParkPay(this.$route.params.id).then(res => {
-    })
+    successParkPay(this.$route.params.id).then(res => {});
   },
   methods: {
     closeWx() {
-      WeixinJSBridge.call('closeWindow');
+      WeixinJSBridge.call("closeWindow");
     }
   }
-}
+};
 </script>
 
 <style>

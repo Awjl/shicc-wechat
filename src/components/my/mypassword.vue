@@ -2,7 +2,7 @@
   <div class="password">
     <div class="yanzheng" v-if="show">
       <p>请完成以下认证</p>
-       <div class="yanzhengcode yanzhengcode-ipn">
+      <div class="yanzhengcode yanzhengcode-ipn">
         <input type="text" placeholder="请输入手机号" v-model="userdata.mobile" @blur="OnBlur()">
         <span class="iph-err">{{nameErr}}</span>
       </div>
@@ -10,152 +10,151 @@
         <input type="text" placeholder="请输入验证码" v-model="userdata.code">
         <span class="codebtn" @click="yanzheng()">{{content}}</span>
       </div>
-      <div class="next-btn" @click="nextPass">
-        下一步
-      </div>
+      <div class="next-btn" @click="nextPass">下一步</div>
     </div>
     <div class="yanzheng" v-if="nextshow">
       <p>设置新的登录密码</p>
       <div class="yanzhengcode yanzhengcode-ipn">
-        <input type="text" placeholder="请输入8-15位，中英文混合密码" v-model="userdata.password" @blur="OnPassWord()">
+        <input
+          type="text"
+          placeholder="请输入8-15位，中英文混合密码"
+          v-model="userdata.password"
+          @blur="OnPassWord()"
+        >
         <span class="iph-err">{{passwordeErr}}</span>
       </div>
-      <div class="next-btn" @click="overTrue">
-        确认修改
-      </div>
+      <div class="next-btn" @click="overTrue">确认修改</div>
     </div>
     <div class="yanzheng" v-if="over">
       <div class="overimg">
-        <img :src="overimg" alt="">
+        <img :src="overimg" alt>
         <div>修改成功</div>
       </div>
-      <div class="next-btn" @click="gomy">
-        返回首页
-      </div>
+      <div class="next-btn" @click="gomy">返回首页</div>
     </div>
   </div>
 </template>
 <script>
-import { matchCode, changePwd } from 'api/user'
-import { sendSMS } from 'api/login'
-import { ERR_OK, vxconfig } from 'api/config'
+import { matchCode, changePwd } from "api/user";
+import { sendSMS } from "api/login";
+import { ERR_OK, vxconfig } from "api/config";
 
-let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/
+let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
 
 export default {
-  data () {
+  data() {
     return {
       show: true,
       nextshow: false,
       over: false,
-      overimg: './static/icon/true-iocn.png',
-      content: '获取验证码',
+      overimg: "./static/icon/true-iocn.png",
+      content: "获取验证码",
       totalTime: 60,
       canClick: true,
       userdata: {
-        mobile: '',
-        code: '',
-        password: ''
+        mobile: "",
+        code: "",
+        password: ""
       },
-      nameErr: '',
-      passwordeErr: ''
-    }
+      nameErr: "",
+      passwordeErr: ""
+    };
   },
-  created(){
-    vxconfig(window.location.href.split('#')[0])
+  created() {
+    vxconfig(window.location.href.split("#")[0]);
   },
   methods: {
-    nextPass () {
+    nextPass() {
       // console.log(this.userdata)
-      if (this.nameErr == '' && this.userdata.code != '') {
-        matchCode(this.userdata).then((res) => {
+      if (this.nameErr == "" && this.userdata.code != "") {
+        matchCode(this.userdata).then(res => {
           if (res.code === ERR_OK) {
             // console.log(res.data)
             if (res.data) {
-              this.show = false
-              this.nextshow = true
-              this.over = false
+              this.show = false;
+              this.nextshow = true;
+              this.over = false;
             } else {
-              alert('验证码错误')
+              alert("验证码错误");
             }
           }
-        })
+        });
       }
     },
-    overTrue () {
+    overTrue() {
       // console.log(this.userdata)
-      if (this.userdata.password != '' && this.passwordeErr == '') {
-        changePwd(this.userdata).then((res) => {
+      if (this.userdata.password != "" && this.passwordeErr == "") {
+        changePwd(this.userdata).then(res => {
           if (res.code === ERR_OK) {
-            this.show = false
-            this.nextshow = false
-            this.over = true
+            this.show = false;
+            this.nextshow = false;
+            this.over = true;
           }
-        })
+        });
       }
     },
-    gomy () {
-      this.show = true
-      this.nextshow = false
-      this.over = false
+    gomy() {
+      this.show = true;
+      this.nextshow = false;
+      this.over = false;
       this.$router.push({
-        path: '/Home'
-      })
+        path: "/Home"
+      });
     },
-    OnPassWord () {
-      let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/
+    OnPassWord() {
+      let password = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/;
       if (this.userdata.password) {
         if (password.test(this.userdata.password)) {
-          this.passwordeErr = ''
+          this.passwordeErr = "";
         } else {
-          this.passwordeErr = '格式不正确'
+          this.passwordeErr = "格式不正确";
         }
       } else {
-        this.passwordeErr = '请输入密码'
+        this.passwordeErr = "请输入密码";
       }
     },
-    OnBlur () {
+    OnBlur() {
       if (this.userdata.mobile) {
         if (phoneReg.test(this.userdata.mobile)) {
-          this.nameErr = ''
+          this.nameErr = "";
         } else {
-          this.nameErr = '格式不正确'
+          this.nameErr = "格式不正确";
         }
       } else {
-        this.nameErr = '请输入手机号'
+        this.nameErr = "请输入手机号";
       }
     },
-    yanzheng () {
+    yanzheng() {
       if (this.userdata.mobile) {
         if (!phoneReg.test(this.userdata.mobile)) {
-          return
+          return;
         }
-        if (!this.canClick) return // 改动的是这两行代码
-        this.canClick = false
-        this.content = this.totalTime + 's后重新发送'
+        if (!this.canClick) return; // 改动的是这两行代码
+        this.canClick = false;
+        this.content = this.totalTime + "s后重新发送";
         let clock = window.setInterval(() => {
-          this.totalTime--
-          this.content = this.totalTime + 's后重新发送'
+          this.totalTime--;
+          this.content = this.totalTime + "s后重新发送";
           if (this.totalTime < 0) {
-            window.clearInterval(clock)
-            this.content = '重新发送'
-            this.totalTime = 10
-            this.canClick = true // 这里重新开启
+            window.clearInterval(clock);
+            this.content = "重新发送";
+            this.totalTime = 10;
+            this.canClick = true; // 这里重新开启
           }
-        }, 1000)
-        sendSMS(this.userdata.mobile).then((res) => {
+        }, 1000);
+        sendSMS(this.userdata.mobile).then(res => {
           // console.log(res.data)
-        })
+        });
       } else {
-        this.nameErr = '请输入手机号'
+        this.nameErr = "请输入手机号";
       }
     }
-  },
+  }
   // beforeRouteLeave (to, from, next) {
   //   to.meta.keepAlive = false
   //   next()
   // }
-}
+};
 </script>
 <style>
 .yanzheng {
@@ -199,21 +198,21 @@ export default {
   border-radius: 10px;
   outline: none;
   padding: 0 20px;
-  box-shadow:0px 0px 0px rgba(0,0,0,0);
-  -webkit-appearance:none;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -webkit-appearance: none;
 }
 .yanzhengcode input::-webkit-input-placeholder {
   color: #666;
   font-size: 24px;
 }
-.yanzhengcode-ipn input{
+.yanzhengcode-ipn input {
   width: 100%;
   color: #666;
   font-size: 24px;
-  box-shadow:0px 0px 0px rgba(0,0,0,0);
-  -webkit-appearance:none;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  -webkit-appearance: none;
 }
-.yanzhengcode-ipn input::-webkit-input-placeholder{
+.yanzhengcode-ipn input::-webkit-input-placeholder {
   color: #666;
   font-size: 24px;
 }
