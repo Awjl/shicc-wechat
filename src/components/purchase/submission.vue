@@ -169,7 +169,6 @@ export default {
     },
     _changeAddressById() {
       this.shoping.userId = this.UserID;
-      console.log(this.shoping);
       changeAddressById(this.shoping).then(res => {
         if (res.code === ERR_OK) {
           createWechatPayOrder(

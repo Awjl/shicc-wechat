@@ -15,7 +15,7 @@
         <img :src="iconTwo" alt>
         <input
           type="password"
-          placeholder="请输入8-15位，中英文混合密码"
+          placeholder="请输入8-15位，英文数字混合密码"
           v-model="user.password"
           @blur="OnPassWord()"
         >

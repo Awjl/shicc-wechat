@@ -71,7 +71,17 @@ export default {
     };
   },
   created() {
-    this._getCornerGoods(this.pn, this.pg);
+    if (window.sessionStorage.getItem('tab') === null) {
+      this._getCornerGoods(this.pn, this.pg);
+      this.show = true
+    } else {
+      if (window.sessionStorage.getItem('tab') == "1") {
+        this.tabOne();
+      }
+      if (window.sessionStorage.getItem('tab') == "2") {
+        this.tabTwo();
+      }
+    }
     vxconfig(window.location.href.split("#")[0]);
   },
   computed: {
@@ -81,8 +91,6 @@ export default {
     _getCornerGoods(pn, pg) {
       getCornerGoods(pn, pg).then(res => {
         if (res.code === ERR_OK) {
-          // console.log(`商品列表banner=====`)
-          // console.log(res.data)
           this.dataList = res.data;
           let vm = this;
           if (res.data.goodsOuts.length === 0) {
@@ -131,6 +139,7 @@ export default {
       }
     },
     tabOne() {
+      window.sessionStorage.setItem('tab', "1")
       this.showover = true;
       this.show = true;
       this.pn = 1;
@@ -144,6 +153,7 @@ export default {
       this._getCornerGoods(this.pn, this.pg);
     },
     tabTwo() {
+      window.sessionStorage.setItem('tab', "2")
       this.showover = true;
       this.show = false;
       this.pn = 1;
@@ -168,7 +178,13 @@ export default {
   components: {
     MugenScroll,
     NotLogged
-  }
+  },
+  beforeRouteEnter(to,from,next){
+    if(from.name !== 'PurchaseDetalis'){
+      window.sessionStorage.removeItem('tab')
+    }
+    next();
+},
 };
 </script>
 <style scoped>

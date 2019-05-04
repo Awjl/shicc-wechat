@@ -162,7 +162,7 @@ export default {
 
 <style scoped>
 .swiper-wrapper {
-  height: 650px;
+  height: 500px;
 }
 .swiper-slide {
   width: 100%;
