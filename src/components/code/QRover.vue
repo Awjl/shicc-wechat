@@ -15,16 +15,20 @@
         <p>{{obj.couponCode}}</p>
       </div>
       <div class="QRitem">
+        <span>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：</span>
+        <p>×1</p>
+      </div>
+      <div class="QRitem">
         <span>用户手机号&nbsp;：</span>
         <p>{{obj.mobile}}</p>
       </div>
       <div class="QRitem">
         <span>原&nbsp;&nbsp;&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;&nbsp;格：</span>
-        <p>{{obj.oldPrice}}</p>
+        <p>{{(obj.oldPrice / 100).toFixed(2)}}元</p>
       </div>
       <div class="QRitem">
         <span>现&nbsp;&nbsp;&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;&nbsp;格：</span>
-        <p>{{obj.newPrice}}</p>
+        <p>{{(obj.newPrice / 100).toFixed(2)}}元</p>
       </div>
       <div class="QRitem">
         <span>有&nbsp;&nbsp;&nbsp;&nbsp;效&nbsp;&nbsp;&nbsp;&nbsp;期：</span>
