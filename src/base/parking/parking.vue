@@ -1,9 +1,9 @@
 <template>
   <div class="packing">
     <div class="bg">
-      <img src="./pack.png" alt>
+      <img src="./pack.png" alt />
       <div class="bg-text">
-        <input type="text" placeholder="请输入车牌号" v-model="carList.number" disabled="disabled">
+        <input type="text" placeholder="请输入车牌号" v-model="carList.number" disabled="disabled" />
         <div class="packingtext">上海国际会议中心停车场</div>
       </div>
     </div>
@@ -47,7 +47,7 @@
       <div class="packingBoxBind">
         <div class="packingBoxBindTitle">绑定车牌号</div>
         <div class="packingBoxBindInp">
-          <input type="text" placeholder="请输入车牌号" v-model="carList.number">
+          <input type="text" placeholder="请输入车牌号" v-model="carList.number" />
         </div>
         <div class="packingBoxBindBtn" @click="_bindPlateNumber">绑定</div>
       </div>
@@ -78,10 +78,22 @@
             </div>
             <div class="couponitem-footer">
               <span>{{item.title}}</span>
-                <img src="./iconAct.png" alt="" v-if="index == typeindex">
-                <img src="./icon.png" alt="" v-else>
-              </div>
+              <img src="./iconAct.png" alt v-if="index == typeindex" />
+              <img src="./icon.png" alt v-else />
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="packingBox" v-if="carList.state === 1 && setIng">
+      <div class="packingBoxBind">
+        <div class="packingBoxBindTitle">
+          暂无订单
+          <br />是否修改绑定车牌
+        </div>
+        <div class="btn-list">
+          <div class="packingBoxBindBtn quxiaoBtn" @click="quxiaoSeting">取消</div>
+          <div class="packingBoxBindBtn" @click="trueSeting">修改</div>
         </div>
       </div>
     </div>
@@ -101,6 +113,7 @@ export default {
     return {
       showPacking: false,
       showbox: false,
+      setIng: true,
       items: [],
       typeindex: null,
       numquan: "暂无优惠券",
@@ -139,11 +152,11 @@ export default {
       this.showbox = true;
     },
     quxiao() {
-      this.showbox = false
-      this.youhuiId = ""
-      this.numquan = this.items.length + "个优惠券"
-      this.typeindex = 0
-      this._queryParkingCost(this.youhuiId)
+      this.showbox = false;
+      this.youhuiId = "";
+      this.numquan = this.items.length + "个优惠券";
+      this.typeindex = 0;
+      this._queryParkingCost(this.youhuiId);
     },
     trueover() {
       if (this.youhuiId) {
@@ -183,7 +196,7 @@ export default {
     _parkLogin() {
       //oWneGjsKZqi9nLceVHYeF1Y1qGSI
       parkLogin(window.location.href.split("=")[1]).then(res => {
-      // parkLogin('oWneGjj6FXnD30ZcPCdpbDLAKLl0').then(res => {
+        // parkLogin('oWneGjj6FXnD30ZcPCdpbDLAKLl0').then(res => {
         if (res.code === 0) {
           if (res.data.code === 500107) {
             this.$router.push({
@@ -208,12 +221,19 @@ export default {
           this._parkLogin();
         }
       });
+    },
+    trueSeting() {
+      this.showPacking = true;
+      this.setIng = false;
+    },
+    quxiaoSeting() {
+      this.setIng = false;
     }
   }
 };
 </script>
 
-<style>
+<style >
 .he20 {
   height: 20px;
 }
@@ -242,8 +262,13 @@ img {
   border-radius: 10px;
 }
 .packingBoxBindTitle {
+  line-height: 40px;
   font-size: 30px;
   margin-bottom: 30px;
+  text-align: center;
+}
+.btn-list {
+  display: flex;
 }
 .packingBoxBindInp input {
   width: 200px;
@@ -261,6 +286,12 @@ img {
   color: #fff;
   background: #59c2fa;
   border-radius: 10px;
+}
+.quxiaoBtn {
+  background: #fff;
+  color: #59c2fa;
+  border: 1px solid #59c2fa;
+  margin-right: 40px;
 }
 .packing {
   padding: 20px;
@@ -451,7 +482,7 @@ span.redsum {
   margin-left: 70px;
 }
 .couponitem-footer {
-  padding:0 40px;
+  padding: 0 40px;
   height: 50px;
   display: flex;
   justify-content: space-between;
