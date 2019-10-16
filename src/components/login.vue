@@ -1,24 +1,24 @@
 <template>
   <div class="login">
-    <img :src="imgbg" alt>
+    <img :src="imgbg" alt />
     <div class="login-conter">
       <div class="logoimg">
-        <img :src="logo" alt>
+        <img :src="logo" alt />
       </div>
       <div class="inp">
-        <img :src="iconOne" alt>
-        <input type="text" placeholder="请输入手机号" v-model="user.name" @blur="OnBlur()">
+        <img :src="iconOne" alt />
+        <input type="text" placeholder="请输入手机号" v-model="user.name" @blur="OnBlur()" />
         <span>{{nameErr}}</span>
       </div>
       <div class="line"></div>
       <div class="inp">
-        <img :src="iconTwo" alt>
+        <img :src="iconTwo" alt />
         <input
           type="password"
           placeholder="请输入8-15位，英文数字混合密码"
           v-model="user.password"
           @blur="OnPassWord()"
-        >
+        />
         <span>{{passwordeErr}}</span>
       </div>
       <div class="line"></div>
@@ -64,6 +64,10 @@ export default {
           if (res.data.code === ERR_OK) {
             this.$store.commit("SET_USERID", res.data.msg);
             setUserID(res.data.msg);
+            window.sessionStorage.setItem(
+              "sessionToken",
+              res.data.sessionToken
+            );
             // console.log(getUserID())
             this.show = true;
             this.$router.push({

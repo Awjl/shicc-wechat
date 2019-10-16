@@ -40,6 +40,9 @@ export function getNewbeeCoupon(userId) {
   return axios.get(url, {
     params: {
       userId: userId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -52,6 +55,9 @@ export function parkLogin(openId) {
   return axios.get(url, {
     params: {
       openId: openId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -65,6 +71,9 @@ export function bindPlateNumber(id, Num) {
     params: {
       userId: id,
       plateNumber: Num
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -80,6 +89,9 @@ export function queryParkingCost(id, Num, quanID) {
       userId: id,
       plateNumber: Num,
       couponId: quanID
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -92,6 +104,9 @@ export function payCost(id) {
   return axios.get(url, {
     params: {
       userId: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -103,6 +118,9 @@ export function successParkPay(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)

@@ -2,46 +2,70 @@ import axios from 'axios'
 //  获取userId
 export function defaultLogin(id) {
   const url = `${process.env.API_HOST}/sicc/user/defaultLogin`
-  return axios.get(url, {
-    params: {
-      openId: id
-    }
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  return axios.get(url,
+    {
+      params: {
+        openId: id
+      },
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 // 顶部Banner
 export function getTopBanner() {
   const url = `${process.env.API_HOST}/sicc/index/getTopBanner`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取一期一会
 export function getOneStageBanner() {
   const url = `${process.env.API_HOST}/sicc/index/getOneStageBanner`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取底部banner
 export function getBottomBanner() {
   const url = `${process.env.API_HOST}/sicc/index/getBottomBanner`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取介绍
 export function getIntroduce() {
   const url = `${process.env.API_HOST}/sicc/index/getIntroduce`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取一隅一食
 export function getCornerMealBanner() {
   const url = `${process.env.API_HOST}/sicc/index/getCornerMealBanner`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
@@ -52,6 +76,9 @@ export function getBar(id, barid) {
     params: {
       userId: id,
       barId: barid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -65,6 +92,10 @@ export function inLove(userid, id, type) {
     goodsId: id,
     userId: userid,
     type: type
+  }, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -76,6 +107,10 @@ export function outLove(userid, id, type) {
     goodsId: id,
     userId: userid,
     type: type
+  }, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -84,14 +119,22 @@ export function outLove(userid, id, type) {
 //  获取热门问题
 export function getAllHotIssues() {
   const url = `${process.env.API_HOST}/sicc/service/getAllHotIssues`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 获取电话
 export function getPhone() {
   const url = `${process.env.API_HOST}/sicc/service/getPhone`
-  return axios.get(url).then((res) => {
+  return axios.get(url, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
@@ -104,10 +147,15 @@ export function bookMeeting(data) {
     note: data.note,
     userId: data.userId,
     topic: data.topic,
-    num: data.num,  
+    num: data.num,
     email: data.email,
     bookDate: data.bookDate
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }

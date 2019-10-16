@@ -13,6 +13,9 @@ function getParam(urlList) {
   return axios.get(url, {
     params: {
       url: urlList
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     console.log(res)
@@ -145,6 +148,9 @@ export function wxChooseImage(urlList) {
   return axios.get(url, {
     params: {
       url: urlList
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     console.log(res)

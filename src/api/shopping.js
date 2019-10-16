@@ -6,6 +6,9 @@ export function getCornerGoods(pn, pg) {
     params: {
       pageNow: pn,
       pageNum: pg
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -18,6 +21,9 @@ export function getMealGoods(pn, pg) {
     params: {
       pageNow: pn,
       pageNum: pg
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -30,6 +36,9 @@ export function getGoodsDetail(userid, id) {
     params: {
       goodsId: id,
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -43,6 +52,9 @@ export function getV1PointGoods(pn, pg) {
     params: {
       pageNow: pn,
       pageNum: pg
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -56,6 +68,9 @@ export function getV2PointGoods(pn, pg) {
     params: {
       pageNow: pn,
       pageNum: pg
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -68,6 +83,9 @@ export function getPointGoodsDetailById(id) {
   return axios.get(url, {
     params: {
       pointGoodsId: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -81,6 +99,9 @@ export function exchangeGoods(userId, point) {
     params: {
       userId: userId,
       point: point
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -98,9 +119,14 @@ export function changeAddressById(data) {
     userId: data.userId,
     couponId: data.couponId,
     count: data.count
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 查询商品
@@ -110,6 +136,9 @@ export function getGoodsOrderDetail(userId, goodsId) {
     params: {
       userId: userId,
       goodsId: goodsId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -126,9 +155,14 @@ export function createPointOrder(data) {
     num: data.num,
     total: data.total,
     userId: data.userId
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 
 // 查询积分是否足够
@@ -138,6 +172,9 @@ export function isEnoughPoint(userId, point) {
     params: {
       userId: userId,
       point: point
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -153,6 +190,9 @@ export function getPointGoodsOrderDetail(data) {
       goodsId: data.goodsId,
       kind: data.kind,
       point: data.point
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -165,6 +205,9 @@ export function getVoucherInfo(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -176,6 +219,9 @@ export function writeOffVoucher(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)

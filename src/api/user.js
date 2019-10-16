@@ -9,9 +9,14 @@ export function editUserInfoDetail(data) {
     sex: data.sex,
     sign: data.sign,
     id: data.userId
-  }).then((res) => {
-    return Promise.resolve(res.data)
-  })
+  },
+    {
+      headers: {
+        "session-token": window.sessionStorage.getItem('sessionToken')
+      }
+    }).then((res) => {
+      return Promise.resolve(res.data)
+    })
 }
 // 获取配置
 export function getParam(urlList) {
@@ -19,6 +24,9 @@ export function getParam(urlList) {
   return axios.get(url, {
     params: {
       url: urlList
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -33,6 +41,9 @@ export function createWechatPayOrder(urlList, userId, orderId) {
       url: urlList,
       userId: userId,
       orderId: orderId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -45,6 +56,9 @@ export function uploadHead(pictureId, mediaId) {
     params: {
       pictureId: pictureId,
       mediaId: mediaId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -56,6 +70,9 @@ export function getUserInfo(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -70,18 +87,24 @@ export function getAllCoupon(userid, state, type) {
       userId: userid,
       state: state,
       type: type
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
 // 查优惠券 /coupon/judgeAvailableCoupon
-export function judgeAvailableCoupon(userid,amount) {
+export function judgeAvailableCoupon(userid, amount) {
   const url = `${process.env.API_HOST}/sicc/coupon/judgeAvailableCoupon`
   return axios.get(url, {
     params: {
       userId: userid,
       amount: amount
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -93,6 +116,9 @@ export function getUserInfoDetail(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -105,6 +131,9 @@ export function isVoucherOverdue(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -116,6 +145,9 @@ export function getAllNotice(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -127,6 +159,9 @@ export function setReadNotice(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -138,6 +173,9 @@ export function getUserLevel(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -150,6 +188,9 @@ export function getWishList(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -162,6 +203,10 @@ export function changePwd(data) {
   return axios.post(url, {
     mobile: data.mobile,
     password: data.password
+  }, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -174,6 +219,9 @@ export function matchCode(data) {
     params: {
       mobile: data.mobile,
       code: data.code
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -191,6 +239,10 @@ export function addAddress(data) {
     userId: data.userId,
     zipCode: data.zipCode,
     city: data.city
+  }, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -207,6 +259,10 @@ export function changeAddressById(data) {
     id: data.id,
     zipCode: data.zipCode,
     city: data.city
+  }, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -218,6 +274,9 @@ export function deleteAddressById(addressId) {
   return axios.get(url, {
     params: {
       addressId: addressId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -230,6 +289,9 @@ export function getAddressById(addressId) {
   return axios.get(url, {
     params: {
       addressId: addressId
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -242,6 +304,9 @@ export function getAllAddress(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -255,6 +320,9 @@ export function getAllGoodsOrder(userid, type) {
     params: {
       userId: userid,
       type: type
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -268,6 +336,9 @@ export function deleteOrder(userId, data) {
     params: {
       userId: userId,
       orderId: data
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -280,6 +351,9 @@ export function getAllPointGoodsOrder(userid) {
   return axios.get(url, {
     params: {
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -293,6 +367,9 @@ export function getALLVoucher(userid, type) {
     params: {
       userId: userid,
       type: type
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -306,6 +383,10 @@ export function givenToOne(data) {
     mobile: data.mobile,
     deliverer: data.deliverer,
     couponId: data.couponId
+  }, {
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
+    }
   }).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -318,6 +399,9 @@ export function checkMobile(mobile, userid) {
     params: {
       mobile: mobile,
       userId: userid
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
@@ -330,6 +414,9 @@ export function getQRcode(id) {
   return axios.get(url, {
     params: {
       id: id
+    },
+    headers: {
+      "session-token": window.sessionStorage.getItem('sessionToken')
     }
   }).then((res) => {
     return Promise.resolve(res.data)
