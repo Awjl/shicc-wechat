@@ -34,6 +34,7 @@
 import { login } from "api/login";
 import { ERR_OK, vxconfig } from "api/config";
 import { setUserID, getUserID, getOpen } from "common/js/auth";
+import md5 from 'js-md5';
 
 export default {
   data() {
@@ -114,13 +115,14 @@ export default {
       });
     },
     goLoing() {
-      // console.log('登录')
+      // console.log(md5(this.user.password))
       if (
         this.nameErr == "" &&
         this.passwordeErr == "" &&
         this.user.name != "" &&
         this.user.password != ""
       ) {
+        this.user.password = md5(this.user.password);
         this._login();
       }
     }

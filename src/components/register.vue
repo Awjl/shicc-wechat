@@ -62,6 +62,7 @@
 <script>
 import { Register, sendSMS, getNewbeeCoupon } from "api/login";
 import { setUserID, getOpen } from "common/js/auth";
+import md5 from "js-md5";
 
 import { ERR_OK, vxconfig } from "api/config";
 
@@ -207,6 +208,7 @@ export default {
         this.passwordeErr == "" &&
         this.user.password != ""
       ) {
+        this.user.password = md5(this.user.password);
         this._Register();
       }
     }

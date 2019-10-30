@@ -29,8 +29,8 @@ export default {
       defaultLogin(this.open).then(res => {
         if (res.code === 0) {
           if (res.data) {
-            this.$store.commit("SET_USERID", res.data);
-            setUserID(res.data);
+            this.$store.commit("SET_USERID", res.data.userId);
+            setUserID(res.data.userId);
             window.sessionStorage.setItem(
               "sessionToken",
               res.data.sessionToken

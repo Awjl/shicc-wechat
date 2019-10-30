@@ -38,6 +38,7 @@
 import { matchCode, changePwd } from "api/user";
 import { sendSMS } from "api/login";
 import { ERR_OK, vxconfig } from "api/config";
+import md5 from "js-md5";
 
 let phoneReg = /(^1[3|4|5|7|8]\d{9}$)|(^09\d{8}$)/;
 
@@ -84,6 +85,7 @@ export default {
     overTrue() {
       // console.log(this.userdata)
       if (this.userdata.password != "" && this.passwordeErr == "") {
+        this.userdata.password = md5(this.userdata.password);
         changePwd(this.userdata).then(res => {
           if (res.code === ERR_OK) {
             this.show = false;
